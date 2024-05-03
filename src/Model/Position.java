@@ -9,5 +9,9 @@ package Model;
  * @author ADMIN
  */
 public class Position {
-    
+
+    private int idChucVu;
+    private String maChucVu;
+    private String tenChucVu;
+    private String ghiChu;
 }

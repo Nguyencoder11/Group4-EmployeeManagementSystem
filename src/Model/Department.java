@@ -9,5 +9,11 @@ package Model;
  * @author ADMIN
  */
 public class Department {
-    
+
+    private int idPhongBan;
+    private String maPhongBan;
+    private String tenPhongBan;
+    private String diaChi;
+    private String sdtPhong;
+    private String ghiChu;
 }

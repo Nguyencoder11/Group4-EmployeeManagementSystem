@@ -4,7 +4,8 @@
  */
 package View;
 
-import Admin.Admin;
+import java.util.Arrays;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,6 +18,10 @@ public class SignUp extends javax.swing.JFrame {
      */
     public SignUp() {
         initComponents();
+    }
+
+    public void signUp() {
+        txtUser.grabFocus();
     }
 
     /**
@@ -33,14 +38,14 @@ public class SignUp extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        txtUser = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        txtPassword = new javax.swing.JPasswordField();
         jLabel6 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txtRepeatPassword = new javax.swing.JPasswordField();
+        btnSignUp = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        cmdToLogin = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -66,42 +71,48 @@ public class SignUp extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Username:");
 
+        txtUser.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Password:");
 
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-
-        jTextField2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-
-        jButton1.setBackground(new java.awt.Color(0, 204, 0));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Sign Up");
-        jButton1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 102, 0), 1, true));
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jLabel4.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel4.setText("You have already admin account?");
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(51, 51, 255));
-        jLabel5.setText("Login now");
-        jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        txtPassword.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setText("Repeat password:");
 
-        jTextField3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtRepeatPassword.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+
+        btnSignUp.setBackground(new java.awt.Color(0, 204, 0));
+        btnSignUp.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnSignUp.setForeground(new java.awt.Color(255, 255, 255));
+        btnSignUp.setText("Sign Up");
+        btnSignUp.setBorder(null);
+        btnSignUp.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnSignUp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSignUpActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel4.setText("You have already account?");
+
+        cmdToLogin.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        cmdToLogin.setForeground(new java.awt.Color(51, 51, 255));
+        cmdToLogin.setText("Login Now");
+        cmdToLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cmdToLogin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cmdToLoginMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -117,38 +128,38 @@ public class SignUp extends javax.swing.JFrame {
                             .addComponent(jLabel6))
                         .addGap(30, 30, 30)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
-                            .addComponent(jTextField2)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField3)))
+                            .addComponent(txtUser, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
+                            .addComponent(btnSignUp, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtRepeatPassword)
+                            .addComponent(txtPassword)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(96, 96, 96)
+                        .addGap(112, 112, 112)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel5)))
+                        .addComponent(cmdToLogin)))
                 .addContainerGap(39, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(34, 34, 34)
+                .addGap(28, 28, 28)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addGap(20, 20, 20)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                    .addComponent(txtRepeatPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnSignUp, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jLabel5))
+                    .addComponent(cmdToLogin))
                 .addContainerGap())
         );
 
@@ -187,12 +198,59 @@ public class SignUp extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        Admin window = new Admin();
-        window.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignUpActionPerformed
+        if (checkSignup()) {
+            // neu da nhap day du cac truong va mat khau nhap lai khop voi mat khau nhap trong truong password
+            // hien thi thong bao dang ky thanh cong
+            JOptionPane.showMessageDialog(rootPane, "Đăng ký tài khoản thành công");
+            clearTxtField();
+            
+            // va chuyen sang JFrame dang nhap de thuc hien dang nhap voi tai khoan da dang ky (neu can)
+            // dong thoi luu tai khoan mat khau vao file account.txt
+        }
+    }//GEN-LAST:event_btnSignUpActionPerformed
+
+    private void cmdToLoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmdToLoginMouseClicked
+        Login loginWindow = new Login();
+        loginWindow.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_cmdToLoginMouseClicked
+
+    private boolean checkSignup() {
+        // kiem tra da nhap het cac truong chua
+        if (txtUser.getText().trim().isEmpty() && new String(txtPassword.getPassword()).isEmpty() && new String(txtRepeatPassword.getPassword()).isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ các trường");
+            return false;
+        }
+        // neu chua nhap username thi thong bao loi
+        if (txtUser.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập tài khoản");
+            return false;
+        }
+        // neu chua nhap password thi thong bao loi
+        if (new String(txtPassword.getPassword()).isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập mật khẩu");
+            return false;
+        }
+        // neu chua nhap lai password thi thong bao loi
+        if (new String(txtRepeatPassword.getPassword()).isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập lại mật khẩu");
+            return false;
+        }
+        // neu mat khau nhap lai khong trung voi mat khau nhap truoc do thi thong bao loi
+        if (!Arrays.equals(txtRepeatPassword.getPassword(), txtPassword.getPassword())) {
+            JOptionPane.showMessageDialog(this, "Mật khẩu không trùng khớp");
+            return false;
+        }
+        return true;
+    }
+
+    private void clearTxtField() {
+        txtUser.setText("");
+        txtUser.grabFocus();
+        txtPassword.setText("");
+        txtRepeatPassword.setText("");
+    }
 
     /**
      * @param args the command line arguments
@@ -230,18 +288,18 @@ public class SignUp extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    javax.swing.JButton jButton1;
+    javax.swing.JButton btnSignUp;
+    javax.swing.JLabel cmdToLogin;
     javax.swing.JLabel jLabel1;
     javax.swing.JLabel jLabel2;
     javax.swing.JLabel jLabel3;
     javax.swing.JLabel jLabel4;
-    javax.swing.JLabel jLabel5;
     javax.swing.JLabel jLabel6;
     javax.swing.JPanel jPanel1;
     javax.swing.JPanel jPanel2;
     javax.swing.JPanel jPanel3;
-    javax.swing.JTextField jTextField1;
-    javax.swing.JTextField jTextField2;
-    javax.swing.JTextField jTextField3;
+    javax.swing.JPasswordField txtPassword;
+    javax.swing.JPasswordField txtRepeatPassword;
+    javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
 }
