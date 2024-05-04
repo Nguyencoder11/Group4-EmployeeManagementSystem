@@ -10,10 +10,67 @@ package Model;
  */
 public class Department {
 
-    private int idPhongBan;
-    private String maPhongBan;
-    private String tenPhongBan;
-    private String diaChi;
-    private String sdtPhong;
-    private String ghiChu;
+    private int idPhongBan; // id phong ban
+    private String maPhongBan;  // ma phong ban
+    private String tenPhongBan; // ten phong ban
+    private String diaChi;  // dia chi
+    private String sdtPhong;    // so dien thoai phong
+    private String ghiChu;  // ghi chu
+
+    public Department(int idPhongBan, String maPhongBan, String tenPhongBan, String diaChi, String sdtPhong, String ghiChu) {
+        this.idPhongBan = idPhongBan;
+        this.maPhongBan = maPhongBan;
+        this.tenPhongBan = tenPhongBan;
+        this.diaChi = diaChi;
+        this.sdtPhong = sdtPhong;
+        this.ghiChu = ghiChu;
+    }
+
+    public int getIdPhongBan() {
+        return idPhongBan;
+    }
+
+    public void setIdPhongBan(int idPhongBan) {
+        this.idPhongBan = idPhongBan;
+    }
+
+    public String getMaPhongBan() {
+        return maPhongBan;
+    }
+
+    public void setMaPhongBan(String maPhongBan) {
+        this.maPhongBan = maPhongBan;
+    }
+
+    public String getTenPhongBan() {
+        return tenPhongBan;
+    }
+
+    public void setTenPhongBan(String tenPhongBan) {
+        this.tenPhongBan = tenPhongBan;
+    }
+
+    public String getDiaChi() {
+        return diaChi;
+    }
+
+    public void setDiaChi(String diaChi) {
+        this.diaChi = diaChi;
+    }
+
+    public String getSdtPhong() {
+        return sdtPhong;
+    }
+
+    public void setSdtPhong(String sdtPhong) {
+        this.sdtPhong = sdtPhong;
+    }
+
+    public String getGhiChu() {
+        return ghiChu;
+    }
+
+    public void setGhiChu(String ghiChu) {
+        this.ghiChu = ghiChu;
+    }
 }
