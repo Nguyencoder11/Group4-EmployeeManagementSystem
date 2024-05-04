@@ -20,3 +20,6 @@ Download JDK Oracle package: <a href="https://www.oracle.com/java/technologies/d
 Tài liệu tham khảo:<br>
 <a href="https://www.javatpoint.com/exception-handling-in-java">Exception Handling in Java</a><br>
 <a href="https://www.javatpoint.com/java-io">Java I/O Tutorial</a><br>
+<a href="https://www.javatpoint.com/java-swing">Java Swing Tutorial</a><br>
+hoặc
+<a href="https://www.javatpoint.com/java-awt">Java AWT Tutorial</a><br>
