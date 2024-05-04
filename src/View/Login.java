@@ -6,6 +6,9 @@ package View;
 
 import Admin.Admin;
 import Employee.Employees;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,7 +23,7 @@ public class Login extends javax.swing.JFrame {
     public Login() {
         initComponents();
     }
-    
+
     public void login() {
         txtUser.grabFocus();
     }
@@ -106,6 +109,8 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
+        txtPassword.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -186,17 +191,42 @@ public class Login extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         if (checkAcc()) {
-            // Check xem tai khoan & mat khau co ton tai trong file account.txt khong
-            // neu ton tai thi moi cho dang nhap khong thi yeu cau nhap dung
-            // tuong tu voi tai khoan cua nhan vien
+            // lay thong tin nguoi dung nhap
+            String username = txtUser.getText().trim();
+            String password = new String(txtPassword.getPassword());
 
-            // kiem tra neu la tai khoan admin thi dang nhap vao trang Quan tri
-            Admin adminFrame = new Admin();
-            adminFrame.setVisible(true);
+            // kiem tra thong tin dang nhap
+            if (authenticate(username, password)) {
+                try {
+                    BufferedReader reader = new BufferedReader(new FileReader("F:\\IT_Field_Learning\\Developer\\Java\\Group4-EmployeeManagementSystem\\data\\account.txt"));
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        String[] parts = line.split(",");
+                        if (parts.length == 3) {
+                            String storedUsername = parts[0].trim();
+                            String storedPassword = parts[1].trim();
+                            int userType = Integer.parseInt(parts[2].trim());
 
-            // neu la tai khoan nhan vien thi dang nhap vao trang cua Nhan vien
-            Employees empFrame = new Employees();
-            empFrame.setVisible(true);
+                            if (storedUsername.equals(username) && storedPassword.equals(password)) {
+                                if (userType == 0) {
+                                    Admin adminFrame = new Admin();
+                                    adminFrame.setVisible(true);
+                                } else if (userType == 1) {
+                                    Employees empFrame = new Employees();
+                                    empFrame.setVisible(true);
+                                }
+                                this.dispose();
+                                break;
+                            }
+                        }
+                    }
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Tên đăng nhập hoặc mật khẩu không chính xác");
+            }
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
@@ -205,7 +235,7 @@ public class Login extends javax.swing.JFrame {
         signUpWindow.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_cmdToSignupMouseClicked
-    
+
     private boolean checkAcc() {
         // kiem tra da nhap het cac truong chua
         if (txtUser.getText().trim().isEmpty() && new String(txtPassword.getPassword()).isEmpty()) {
@@ -222,7 +252,30 @@ public class Login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập mật khẩu");
             return false;
         }
+
         return true;
+    }
+
+    private boolean authenticate(String username, String password) {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("F:\\IT_Field_Learning\\Developer\\Java\\Group4-EmployeeManagementSystem\\data\\account.txt"));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 3) {
+                    String storedUsername = parts[0].trim();
+                    String storedPassword = parts[1].trim();
+                    if (storedUsername.equals(username) && storedPassword.equals(password)) {
+                        reader.close();
+                        return true;
+                    }
+                }
+            }
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     /**

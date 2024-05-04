@@ -77,17 +77,17 @@ public class SignUp extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Username:");
 
-        txtUser.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        txtUser.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Password:");
 
-        txtPassword.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        txtPassword.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setText("Repeat password:");
 
-        txtRepeatPassword.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        txtRepeatPassword.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         btnSignUp.setBackground(new java.awt.Color(0, 204, 0));
         btnSignUp.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -201,12 +201,18 @@ public class SignUp extends javax.swing.JFrame {
     private void btnSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignUpActionPerformed
         if (checkSignup()) {
             // neu da nhap day du cac truong va mat khau nhap lai khop voi mat khau nhap trong truong password
+            // luu tai khoan mat khau vao file account.txt
+            String username = txtUser.getText().trim();
+            String password = new String(txtPassword.getPassword()).trim();
+
             // hien thi thong bao dang ky thanh cong
             JOptionPane.showMessageDialog(rootPane, "Đăng ký tài khoản thành công");
             clearTxtField();
-            
+
             // va chuyen sang JFrame dang nhap de thuc hien dang nhap voi tai khoan da dang ky (neu can)
-            // dong thoi luu tai khoan mat khau vao file account.txt
+            Login loginWindow = new Login();
+            loginWindow.setVisible(true);
+            this.setVisible(false);
         }
     }//GEN-LAST:event_btnSignUpActionPerformed
 

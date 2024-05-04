@@ -188,7 +188,7 @@
             <Component class="javax.swing.JTextField" name="txtUser">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Times New Roman" size="14" style="0"/>
+                  <Font name="Segoe UI" size="14" style="0"/>
                 </Property>
               </Properties>
             </Component>
@@ -203,7 +203,7 @@
             <Component class="javax.swing.JPasswordField" name="txtPassword">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Times New Roman" size="14" style="0"/>
+                  <Font name="Segoe UI" size="14" style="0"/>
                 </Property>
               </Properties>
             </Component>
@@ -218,7 +218,7 @@
             <Component class="javax.swing.JPasswordField" name="txtRepeatPassword">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Times New Roman" size="14" style="0"/>
+                  <Font name="Segoe UI" size="14" style="0"/>
                 </Property>
               </Properties>
             </Component>
