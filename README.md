@@ -23,3 +23,4 @@ Tài liệu tham khảo:<br>
 <a href="https://www.javatpoint.com/java-swing">Java Swing Tutorial</a><br>
 hoặc
 <a href="https://www.javatpoint.com/java-awt">Java AWT Tutorial</a><br>
+<a href="https://www.javatpoint.com/serialization-in-java">Serialization and Deserialization in Java</a>
