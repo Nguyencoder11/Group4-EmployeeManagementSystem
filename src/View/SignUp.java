@@ -4,6 +4,11 @@
  */
 package View;
 
+import Controller.DataConnection;
+import Model.Account;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
 import javax.swing.JOptionPane;
 
@@ -200,10 +205,27 @@ public class SignUp extends javax.swing.JFrame {
 
     private void btnSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignUpActionPerformed
         if (checkSignup()) {
-            // neu da nhap day du cac truong va mat khau nhap lai khop voi mat khau nhap trong truong password
-            // luu tai khoan mat khau vao file account.txt
+            // lay thong tin nguoi dung
             String username = txtUser.getText().trim();
             String password = new String(txtPassword.getPassword()).trim();
+            int userType = 1;   // set mac dinh tk admin
+
+            // neu dang ky username co chua tu "admin" thi la tai khoan admin
+            if (username.toLowerCase().contains("admin")) {
+                userType = 0;
+            }
+
+            // luu thong tin tk vao file account.txt
+            try {
+                BufferedWriter writer = new BufferedWriter(new FileWriter("F:\\IT_Field_Learning\\Developer\\Java\\Group4-EmployeeManagementSystem\\data\\account.txt", true));
+                writer.write(username + "," + password + "," + userType);
+                writer.newLine();
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(rootPane, "Đã xảy ra lỗi khi lưu tài khoản");
+                return;
+            }
 
             // hien thi thong bao dang ky thanh cong
             JOptionPane.showMessageDialog(rootPane, "Đăng ký tài khoản thành công");

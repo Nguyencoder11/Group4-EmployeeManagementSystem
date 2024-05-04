@@ -203,15 +203,18 @@ public class Login extends javax.swing.JFrame {
                     while ((line = reader.readLine()) != null) {
                         String[] parts = line.split(",");
                         if (parts.length == 3) {
+                            // Lay du lieu cua tai khoan
                             String storedUsername = parts[0].trim();
                             String storedPassword = parts[1].trim();
                             int userType = Integer.parseInt(parts[2].trim());
 
                             if (storedUsername.equals(username) && storedPassword.equals(password)) {
                                 if (userType == 0) {
+                                    // neu dang nhap voi admin thi mo trang quan tri
                                     Admin adminFrame = new Admin();
                                     adminFrame.setVisible(true);
                                 } else if (userType == 1) {
+                                    // neu dang nhap voi employee thi mo trang nhan vien
                                     Employees empFrame = new Employees();
                                     empFrame.setVisible(true);
                                 }
@@ -220,11 +223,13 @@ public class Login extends javax.swing.JFrame {
                             }
                         }
                     }
+
                     reader.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             } else {
+                // hien thi thong bao loi neu tk va mk k khop voi du lieu trong file
                 JOptionPane.showMessageDialog(this, "Tên đăng nhập hoặc mật khẩu không chính xác");
             }
         }
@@ -256,6 +261,7 @@ public class Login extends javax.swing.JFrame {
         return true;
     }
 
+    // ham kiem tra thong tin tk va mk trong file du lieu
     private boolean authenticate(String username, String password) {
         try {
             BufferedReader reader = new BufferedReader(new FileReader("F:\\IT_Field_Learning\\Developer\\Java\\Group4-EmployeeManagementSystem\\data\\account.txt"));
