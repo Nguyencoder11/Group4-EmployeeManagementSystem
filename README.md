@@ -2,6 +2,19 @@ Xây dựng phầm mềm quản lý nhân sự bằng Java
 <br>
 ----------------- Group 4 -----------------
 <br>
+- Các công nghệ sử dụng:
++ Sử dụng JavaSwing để thiết kế các giao diện của hệ thống
++ Làm việc và thao tác với file để đọc và ghi dữ liệu (vì thầy giáo không yêu cầu sử dụng đến SQL nên nhóm không kết nối JDBC)
+
+- Các chức năng chính:
++ Đăng nhập (theo tài khoản admin hoặc nhân viên)
++ Đăng ký (tài khoản admin hoặc nhân viên)
++ Các chức năng giao diện của trang nhân viên (khi đăng nhập bằng tài khoản nhân viên)
++ Các chức năng giao diện của trang quản trị (khi đăng nhập bằng tk admin)
+
+
+- Các giao diện của phần mềm:
+
 Download IDE Netbeans: <a href="https://netbeans.apache.org/front/main/download/index.html">https://netbeans.apache.org/front/main/download/index.html</a><br>
 Download JDK Oracle package: <a href="https://www.oracle.com/java/technologies/downloads/">https://www.oracle.com/java/technologies/downloads/</a><br>
 Tài liệu tham khảo:<br>
