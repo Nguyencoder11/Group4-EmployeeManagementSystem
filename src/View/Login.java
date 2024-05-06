@@ -198,7 +198,7 @@ public class Login extends javax.swing.JFrame {
             // kiem tra thong tin dang nhap
             if (authenticate(username, password)) {
                 try {
-                    BufferedReader reader = new BufferedReader(new FileReader("F:\\IT_Field_Learning\\Developer\\Java\\Group4-EmployeeManagementSystem\\data\\account.txt"));
+                    BufferedReader reader = new BufferedReader(new FileReader("data\\account.txt"));
                     String line;
                     while ((line = reader.readLine()) != null) {
                         String[] parts = line.split(",");
@@ -264,7 +264,7 @@ public class Login extends javax.swing.JFrame {
     // ham kiem tra thong tin tk va mk trong file du lieu
     private boolean authenticate(String username, String password) {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("F:\\IT_Field_Learning\\Developer\\Java\\Group4-EmployeeManagementSystem\\data\\account.txt"));
+            BufferedReader reader = new BufferedReader(new FileReader("data\\account.txt"));
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");

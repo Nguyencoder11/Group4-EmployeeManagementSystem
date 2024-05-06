@@ -12,9 +12,9 @@ public class DataInit {
 
     public static void main(String args[]) {
         try {
-            DataConnection.writeObjectToFile("F:\\IT_Field_Learning\\Developer\\Java\\Group4-EmployeeManagementSystem\\data\\employee.txt", "");
-            DataConnection.writeObjectToFile("F:\\IT_Field_Learning\\Developer\\Java\\Group4-EmployeeManagementSystem\\data\\department.txt", "");
-            DataConnection.writeObjectToFile("F:\\IT_Field_Learning\\Developer\\Java\\Group4-EmployeeManagementSystem\\data\\position.txt","");
+            DataConnection.writeObjectToFile("data\\employee.txt", "");
+            DataConnection.writeObjectToFile("data\\department.txt", "");
+            DataConnection.writeObjectToFile("data\\position.txt","");
             System.out.println("KHOI TAO DU LIEU THANH CONG!");
         } catch (Exception ex) {
             System.out.println(ex.toString());

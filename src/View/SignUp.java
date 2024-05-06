@@ -217,7 +217,7 @@ public class SignUp extends javax.swing.JFrame {
 
             // luu thong tin tk vao file account.txt
             try {
-                BufferedWriter writer = new BufferedWriter(new FileWriter("F:\\IT_Field_Learning\\Developer\\Java\\Group4-EmployeeManagementSystem\\data\\account.txt", true));
+                BufferedWriter writer = new BufferedWriter(new FileWriter("data\\account.txt", true));
                 writer.write(username + "," + password + "," + userType);
                 writer.newLine();
                 writer.close();

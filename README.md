@@ -14,6 +14,14 @@ Xây dựng phầm mềm quản lý nhân sự bằng Java
 
 
 - Các giao diện của phần mềm:
++ Giao diện đăng nhập
+<img src="./loginGUI.png">
++ Giao diện đăng ký
+<img src="./signupGUI.png">
++ Giao diện trang quản trị
+<img src="./adminGUI.png">
++ Giao diện trang nhân viên
+<img src="./menuEmployeeGUI.png">
 
 Download IDE Netbeans: <a href="https://netbeans.apache.org/front/main/download/index.html">https://netbeans.apache.org/front/main/download/index.html</a><br>
 Download JDK Oracle package: <a href="https://www.oracle.com/java/technologies/downloads/">https://www.oracle.com/java/technologies/downloads/</a><br>

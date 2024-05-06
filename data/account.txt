@@ -3,3 +3,4 @@ nongmanh,1234,1
 NguyenAdmin,admin,0
 manh26,6666,1
 nguyen,123456,1
+hau1248,haui,1
