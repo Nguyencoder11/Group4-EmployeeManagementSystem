@@ -19,14 +19,14 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class Admin extends javax.swing.JFrame {
 
     private String imagePath;
-
+    private String abc;
     /**
      * Creates new form Admin
      */
     public Admin() {
         initComponents();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
