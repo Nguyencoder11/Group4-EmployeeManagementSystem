@@ -20,9 +20,11 @@ public class Employee {
     private String address; // dia chi lien he
     private String hireDate;    // ngay bat dau lam viec
     private String imagePath;   // anh profile
+    private String department;
+    private String position;
     private double salary; // luong
 
-    public Employee(int employeeID, String employeeName, String dateOfBirth, String gender, String hometown, String phoneNumber, String email, String address, String hireDate, double salary, String imagePath) {
+    public Employee(int employeeID, String employeeName, String dateOfBirth, String gender, String hometown, String phoneNumber, String email, String address, String hireDate, double salary, String department, String position, String imagePath) {
         this.employeeID = employeeID;
         this.employeeName = employeeName;
         this.dateOfBirth = dateOfBirth;
@@ -33,7 +35,17 @@ public class Employee {
         this.address = address;
         this.hireDate = hireDate;
         this.salary = salary;
+        this.position = position;
+        this.department = department;
         this.imagePath = imagePath;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public String getPosition() {
+        return position;
     }
 
     public int getEmployeeID() {

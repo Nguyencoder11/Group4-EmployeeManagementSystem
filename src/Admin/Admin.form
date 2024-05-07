@@ -209,6 +209,8 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jButton1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
+                              <Component id="btnSaveEmployeeData" min="-2" pref="99" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="btnAddEmployee" min="-2" pref="99" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                           </Group>
@@ -219,7 +221,10 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="btnAddEmployee" max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="btnAddEmployee" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="btnSaveEmployeeData" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                                   <Component id="jButton1" min="-2" pref="31" max="-2" attributes="0"/>
                                   <Component id="jTextField1" alignment="0" max="32767" attributes="0"/>
                               </Group>
@@ -257,6 +262,17 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddEmployeeActionPerformed"/>
                       </Events>
                     </Component>
+                    <Component class="javax.swing.JButton" name="btnSaveEmployeeData">
+                      <Properties>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Segoe UI" size="13" style="0"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="L&#x1b0;u"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSaveEmployeeDataActionPerformed"/>
+                      </Events>
+                    </Component>
                   </SubComponents>
                 </Container>
                 <Container class="javax.swing.JPanel" name="jPanel12">
@@ -286,12 +302,12 @@
                                                   <Group type="102" alignment="0" attributes="0">
                                                       <Component id="jLabel25" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                      <Component id="txtContactAddress3" min="-2" pref="246" max="-2" attributes="0"/>
+                                                      <Component id="txtDepartment" min="-2" pref="246" max="-2" attributes="0"/>
                                                   </Group>
                                                   <Group type="102" alignment="1" attributes="0">
                                                       <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
-                                                      <Component id="workDay" max="32767" attributes="0"/>
+                                                      <Component id="hireDate" max="32767" attributes="0"/>
                                                   </Group>
                                                   <Group type="102" alignment="0" attributes="0">
                                                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
@@ -327,13 +343,13 @@
                                                           <Component id="txtGender" pref="204" max="32767" attributes="0"/>
                                                           <Component id="txtHoTen" alignment="0" max="32767" attributes="0"/>
                                                           <Component id="txtContactAddress" alignment="0" max="32767" attributes="0"/>
-                                                          <Component id="txtContactAddress2" max="32767" attributes="0"/>
+                                                          <Component id="salary" max="32767" attributes="0"/>
                                                       </Group>
                                                   </Group>
                                                   <Group type="102" attributes="0">
                                                       <Component id="jLabel26" min="-2" pref="68" max="-2" attributes="0"/>
                                                       <EmptySpace max="-2" attributes="0"/>
-                                                      <Component id="txtContactAddress4" max="32767" attributes="0"/>
+                                                      <Component id="txtPosition" max="32767" attributes="0"/>
                                                   </Group>
                                               </Group>
                                               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -432,19 +448,19 @@
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
                                           <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="workDay" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="hireDate" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="txtContactAddress2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="salary" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                                               <Component id="jLabel26" alignment="3" min="-2" max="-2" attributes="0"/>
-                                              <Component id="txtContactAddress4" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="txtPosition" alignment="3" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="103" groupAlignment="3" attributes="0">
                                               <Component id="jLabel25" alignment="3" min="-2" max="-2" attributes="0"/>
-                                              <Component id="txtContactAddress3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="txtDepartment" alignment="3" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -479,6 +495,9 @@
                       <Properties>
                         <Property name="text" type="java.lang.String" value="X&#xf3;a"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteEmployeeActionPerformed"/>
+                      </Events>
                     </Component>
                     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
                       <AuxValues>
@@ -498,14 +517,14 @@
                                 <Column editable="false" title="H&#x1ecd; t&#xea;n" type="java.lang.Object"/>
                                 <Column editable="false" title="Ng&#xe0;y sinh" type="java.lang.Object"/>
                                 <Column editable="false" title="Gi&#x1edb;i t&#xed;nh" type="java.lang.Object"/>
-                                <Column editable="false" title="Email" type="java.lang.Object"/>
-                                <Column editable="false" title="S&#x1ed1; &#x110;T" type="java.lang.Object"/>
                                 <Column editable="false" title="Qu&#xea; qu&#xe1;n" type="java.lang.Object"/>
+                                <Column editable="false" title="S&#x1ed1; &#x110;T" type="java.lang.Object"/>
+                                <Column editable="false" title="Email" type="java.lang.Object"/>
                                 <Column editable="false" title="&#x110;C li&#xea;n h&#x1ec7;" type="java.lang.Object"/>
-                                <Column editable="false" title="Ph&#xf2;ng ban" type="java.lang.Object"/>
-                                <Column editable="false" title="Ch&#x1ee9;c v&#x1ee5;" type="java.lang.Object"/>
                                 <Column editable="false" title="Ng&#xe0;y l&#xe0;m vi&#x1ec7;c" type="java.lang.Object"/>
                                 <Column editable="false" title="L&#x1b0;&#x1a1;ng" type="java.lang.Object"/>
+                                <Column editable="false" title="Ph&#xf2;ng ban" type="java.lang.Object"/>
+                                <Column editable="false" title="Ch&#x1ee9;c v&#x1ee5;" type="java.lang.Object"/>
                                 <Column editable="false" title="&#x1ea2;nh" type="java.lang.Object"/>
                               </Table>
                             </Property>
@@ -698,7 +717,7 @@
                         </Property>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="workDay">
+                    <Component class="javax.swing.JTextField" name="hireDate">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Segoe UI" size="13" style="0"/>
@@ -721,7 +740,7 @@
                         <Property name="text" type="java.lang.String" value="L&#x1b0;&#x1a1;ng:"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtContactAddress2">
+                    <Component class="javax.swing.JTextField" name="salary">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Segoe UI" size="13" style="0"/>
@@ -786,7 +805,7 @@
                         <Property name="text" type="java.lang.String" value="Ph&#xf2;ng ban:"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtContactAddress3">
+                    <Component class="javax.swing.JTextField" name="txtDepartment">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Segoe UI" size="13" style="0"/>
@@ -801,7 +820,7 @@
                         <Property name="text" type="java.lang.String" value="Ch&#x1ee9;c v&#x1ee5;:"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtContactAddress4">
+                    <Component class="javax.swing.JTextField" name="txtPosition">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Segoe UI" size="13" style="0"/>

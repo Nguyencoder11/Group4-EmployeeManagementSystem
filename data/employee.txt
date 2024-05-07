@@ -1,1 +1,1 @@
-123,Trần Hiếu Trung,Hưng Yên,Nam,whyiam200@gmail.com,HUnwg Yen,1/2/2000,12333555,IT,ITer,0243654,19,12,2003,ImgEmployee\\TTrung-4-19-2024.png
+100,Trần Hiếu Trung,19/12/2003,Nam,Hưng yên,0345695203,t.hieutrung2k3@gmail.com,Hưng Yên,2/2/2021,500.0,IT,ITer,ImgEmployee\\img3.jpg

@@ -25,20 +25,89 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.BufferedWriter;
-
+import java.util.LinkedList;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import javax.annotation.processing.FilerException;
+import javax.swing.table.DefaultTableModel;
 public class Admin extends javax.swing.JFrame {
     
     private boolean checkImg;
     private String getFileName;
+    private List<Employee> employeesList = new ArrayList<>();
+    private DefaultTableModel model;
     public Admin() {
-        
         initComponents();
         insertCbxDay();
         insertCbxMonth();
         insertCbxYear();
+        initList();
+        updateTable();
     }
-    private void insert(){
+    private void initList(){
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("data\\employee.txt"));
+            String line;
+            while((line = reader.readLine()) != null){
+                
+                String[] parts = line.split(",");
+                    Employee e = new Employee(Integer.parseInt(parts[0]), parts[1],parts[2], parts[3], parts[4], parts[5], parts[6], parts[7], parts[8], Double.parseDouble(parts[9]), parts[10], parts[11],parts[12]);
+                    employeesList.add(e);
+            }
+            reader.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    private void addList(){
+        Employee e = new Employee(Integer.parseInt(txtMaNV.getText()), txtHoTen.getText(), birthDay.getSelectedItem() + "/" + birthMonth.getSelectedItem() + "/" + birthYear.getSelectedItem(), txtGender.getText(), txtHomeTown.getText(), txtPhoneNum.getText(), txtEmail.getText(), txtContactAddress.getText(), hireDate.getText(), Double.parseDouble(salary.getText()), txtDepartment.getText(), txtPosition.getText(),"ImgEmployee\\\\" + getFileName);
+        employeesList.add(e);
+    }
+    private void removeItemFromTable(){
+        int sr = tableEmployee.getSelectedRow();
+        List<Employee> removeList = new ArrayList<>();
+        if(sr != -1){
+            int id = Integer.parseInt(tableEmployee.getValueAt(sr, 0).toString());
+            for(Employee e : employeesList){
+                if(e.getEmployeeID() == id){
+                    removeList.add(e);
+                }
+            }
+            for(Employee e : removeList){
+                employeesList.remove(e);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 đối tượng!");
+        }
+    }
+    private void writeListToFile(){
+        try{
+            BufferedWriter writer = new BufferedWriter(new FileWriter("data\\employee.txt", false));
+            for(Employee e : employeesList){
+                String data = String.valueOf(e.getEmployeeID()) + "," + e.getEmployeeName()+ "," 
+                        + e.getDateOfBirth()+ "," + e.getGender()+ "," + e.getHometown()+ "," + e.getPhoneNumber()+ ","
+                        + e.getEmail()+ "," + e.getAddress()+ "," + e.getHireDate()+ "," + String.valueOf(e.getSalary())+ "," + e.getDepartment()+ "," + e.getPosition()+ "," + e.getImagePath();
+                writer.write(data);
+                writer.newLine();
+        }
+            JOptionPane.showMessageDialog(null, "Lưu thành công!");
+            writer.close();
+        }catch(IOException ex){
+            JOptionPane.showMessageDialog(null, "Lưu không thành công!");
+        }
         
+      
+    }
+    private void updateTable(){
+        model = (DefaultTableModel) tableEmployee.getModel();
+        model.setRowCount(0);
+        for(Employee e : employeesList){
+            String[] dataRow = {String.valueOf(e.getEmployeeID()), e.getEmployeeName(), e.getDateOfBirth(), e.getGender(), e.getHometown(), e.getPhoneNumber(), e.getEmail(), e.getAddress(), e.getHireDate(), String.valueOf(e.getSalary()), e.getDepartment(), e.getPosition(), e.getImagePath()};
+            model.addRow(dataRow);
+        }
+            
     }
     public void insertCbxDay(){
         birthDay.removeAllItems();
@@ -90,7 +159,9 @@ public class Admin extends javax.swing.JFrame {
             ex.printStackTrace();
         }
     }
-    
+    public void windowClosing(){
+        
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -106,6 +177,7 @@ public class Admin extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         btnAddEmployee = new javax.swing.JButton();
+        btnSaveEmployeeData = new javax.swing.JButton();
         jPanel12 = new javax.swing.JPanel();
         btnUpdateEmployee = new javax.swing.JButton();
         btnDeleteEmployee = new javax.swing.JButton();
@@ -126,18 +198,18 @@ public class Admin extends javax.swing.JFrame {
         txtHomeTown = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         txtContactAddress = new javax.swing.JTextField();
-        workDay = new javax.swing.JTextField();
+        hireDate = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        txtContactAddress2 = new javax.swing.JTextField();
+        salary = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         jButton33 = new javax.swing.JButton();
         jPanel27 = new javax.swing.JPanel();
         labelImg = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
-        txtContactAddress3 = new javax.swing.JTextField();
+        txtDepartment = new javax.swing.JTextField();
         jLabel26 = new javax.swing.JLabel();
-        txtContactAddress4 = new javax.swing.JTextField();
+        txtPosition = new javax.swing.JTextField();
         txtPrintEmpList = new javax.swing.JButton();
         jLabel28 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
@@ -276,6 +348,14 @@ public class Admin extends javax.swing.JFrame {
             }
         });
 
+        btnSaveEmployeeData.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        btnSaveEmployeeData.setText("Lưu");
+        btnSaveEmployeeData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveEmployeeDataActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
         jPanel11.setLayout(jPanel11Layout);
         jPanel11Layout.setHorizontalGroup(
@@ -286,6 +366,8 @@ public class Admin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnSaveEmployeeData, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnAddEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26))
         );
@@ -294,7 +376,9 @@ public class Admin extends javax.swing.JFrame {
             .addGroup(jPanel11Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnAddEmployee, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnAddEmployee)
+                        .addComponent(btnSaveEmployeeData))
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -311,6 +395,11 @@ public class Admin extends javax.swing.JFrame {
         });
 
         btnDeleteEmployee.setText("Xóa");
+        btnDeleteEmployee.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteEmployeeActionPerformed(evt);
+            }
+        });
 
         tableEmployee.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         tableEmployee.setModel(new javax.swing.table.DefaultTableModel(
@@ -321,7 +410,7 @@ public class Admin extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Mã nhân viên", "Họ tên", "Ngày sinh", "Giới tính", "Email", "Số ĐT", "Quê quán", "ĐC liên hệ", "Phòng ban", "Chức vụ", "Ngày làm việc", "Lương", "Ảnh"
+                "Mã nhân viên", "Họ tên", "Ngày sinh", "Giới tính", "Quê quán", "Số ĐT", "Email", "ĐC liên hệ", "Ngày làm việc", "Lương", "Phòng ban", "Chức vụ", "Ảnh"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -372,7 +461,7 @@ public class Admin extends javax.swing.JFrame {
 
         txtContactAddress.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
 
-        workDay.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        hireDate.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         jLabel11.setText("Ngày làm việc:");
@@ -380,7 +469,7 @@ public class Admin extends javax.swing.JFrame {
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         jLabel12.setText("Lương:");
 
-        txtContactAddress2.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        salary.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         jLabel13.setText("Ảnh:");
@@ -411,12 +500,12 @@ public class Admin extends javax.swing.JFrame {
         jLabel25.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         jLabel25.setText("Phòng ban:");
 
-        txtContactAddress3.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        txtDepartment.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
 
         jLabel26.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         jLabel26.setText("Chức vụ:");
 
-        txtContactAddress4.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        txtPosition.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
 
         txtPrintEmpList.setText("In danh sách");
 
@@ -450,11 +539,11 @@ public class Admin extends javax.swing.JFrame {
                                     .addGroup(jPanel12Layout.createSequentialGroup()
                                         .addComponent(jLabel25)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtContactAddress3, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(txtDepartment, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
                                         .addComponent(jLabel11)
                                         .addGap(3, 3, 3)
-                                        .addComponent(workDay))
+                                        .addComponent(hireDate))
                                     .addGroup(jPanel12Layout.createSequentialGroup()
                                         .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                             .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -481,11 +570,11 @@ public class Admin extends javax.swing.JFrame {
                                             .addComponent(txtGender, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
                                             .addComponent(txtHoTen)
                                             .addComponent(txtContactAddress)
-                                            .addComponent(txtContactAddress2)))
+                                            .addComponent(salary)))
                                     .addGroup(jPanel12Layout.createSequentialGroup()
                                         .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtContactAddress4)))
+                                        .addComponent(txtPosition)))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -560,17 +649,17 @@ public class Admin extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel11)
-                            .addComponent(workDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(hireDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel12)
-                            .addComponent(txtContactAddress2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(salary, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel26)
-                                .addComponent(txtContactAddress4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtPosition, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel25)
-                                .addComponent(txtContactAddress3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(txtDepartment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addComponent(jLabel28))
                     .addComponent(jPanel27, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1265,23 +1354,13 @@ public class Admin extends javax.swing.JFrame {
 
     private void btnAddEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddEmployeeActionPerformed
         if(txtMaNV.getText().isEmpty() || txtHoTen.getText().isEmpty() || txtHomeTown.getText().isEmpty() || txtGender.getText().isEmpty() || txtEmail.getText().isEmpty() || txtContactAddress.getText().isEmpty()
-                || workDay.getText().isEmpty() || txtContactAddress2.getText().isEmpty() || txtContactAddress3.getText().isEmpty() || txtContactAddress4.getText().isEmpty() || txtPhoneNum.getText().isEmpty()
+                || hireDate.getText().isEmpty() || salary.getText().isEmpty() || txtDepartment.getText().isEmpty() || txtPosition.getText().isEmpty() || txtPhoneNum.getText().isEmpty()
                  || !checkSelected() || !checkImg){   
             JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin!");
         }
         else{
-            BufferedWriter writer;
-            try {
-                writer = new BufferedWriter(new FileWriter("data\\employee.txt", true));
-                writer.write(txtMaNV.getText()  + "," + txtHoTen.getText()  + "," + txtHomeTown.getText()  + "," + txtGender.getText()  + "," + txtEmail.getText()  + "," + txtContactAddress.getText()
-                 + "," + workDay.getText()  + "," + txtContactAddress2.getText()  + "," + txtContactAddress3.getText()  + "," + txtContactAddress4.getText()  + "," 
-                        + txtPhoneNum.getText() + "," + birthDay.getSelectedItem() + "," + birthMonth.getSelectedItem() + "," + birthYear.getSelectedItem() + "," + "ImgEmployee\\\\" + getFileName);
-                writer.newLine();
-                writer.close();
-            } catch (IOException ex) {
-                Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
+            addList();
+            updateTable();   
         }
     }//GEN-LAST:event_btnAddEmployeeActionPerformed
 
@@ -1317,6 +1396,21 @@ public class Admin extends javax.swing.JFrame {
       
     }//GEN-LAST:event_birthDayActionPerformed
 
+    private void btnDeleteEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteEmployeeActionPerformed
+        removeItemFromTable();
+        updateTable();
+    }//GEN-LAST:event_btnDeleteEmployeeActionPerformed
+
+    private void btnSaveEmployeeDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveEmployeeDataActionPerformed
+        int op = JOptionPane.showConfirmDialog(null, "Bạn có muốn lưu dữ liệu?");
+        if(op == JOptionPane.YES_OPTION){
+            writeListToFile();
+        }
+        else{
+            return;
+        }
+    }//GEN-LAST:event_btnSaveEmployeeDataActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1337,7 +1431,9 @@ public class Admin extends javax.swing.JFrame {
     javax.swing.JButton btnAddEmployee;
     javax.swing.JButton btnDeleteEmployee;
     javax.swing.JButton btnQuitClicked;
+    javax.swing.JButton btnSaveEmployeeData;
     javax.swing.JButton btnUpdateEmployee;
+    javax.swing.JTextField hireDate;
     javax.swing.JButton jButton1;
     javax.swing.JButton jButton10;
     javax.swing.JButton jButton11;
@@ -1421,14 +1517,13 @@ public class Admin extends javax.swing.JFrame {
     javax.swing.JTextField jTextField4;
     javax.swing.JTextField jTextField5;
     javax.swing.JLabel labelImg;
+    javax.swing.JTextField salary;
     javax.swing.JTable tableDepartment;
     javax.swing.JTable tableEmployee;
     javax.swing.JTable tablePosition;
     javax.swing.JTextField txtAddress;
     javax.swing.JTextField txtContactAddress;
-    javax.swing.JTextField txtContactAddress2;
-    javax.swing.JTextField txtContactAddress3;
-    javax.swing.JTextField txtContactAddress4;
+    javax.swing.JTextField txtDepartment;
     javax.swing.JTextField txtDepartmentID;
     javax.swing.JTextField txtDepartmentName;
     javax.swing.JTextField txtEmail;
@@ -1442,9 +1537,9 @@ public class Admin extends javax.swing.JFrame {
     javax.swing.JTextField txtPhoneNumber;
     javax.swing.JTextField txtPosID;
     javax.swing.JTextArea txtPosNote;
+    javax.swing.JTextField txtPosition;
     javax.swing.JTextField txtPositionID;
     javax.swing.JTextField txtPositionName;
     javax.swing.JButton txtPrintEmpList;
-    javax.swing.JTextField workDay;
     // End of variables declaration//GEN-END:variables
 }
