@@ -11,15 +11,13 @@ package Model;
 public class Department {
 
     private int idPhongBan; // id phong ban
-    private String maPhongBan;  // ma phong ban
     private String tenPhongBan; // ten phong ban
     private String diaChi;  // dia chi
     private String sdtPhong;    // so dien thoai phong
     private String ghiChu;  // ghi chu
 
-    public Department(int idPhongBan, String maPhongBan, String tenPhongBan, String diaChi, String sdtPhong, String ghiChu) {
+    public Department(int idPhongBan, String tenPhongBan, String diaChi, String sdtPhong, String ghiChu) {
         this.idPhongBan = idPhongBan;
-        this.maPhongBan = maPhongBan;
         this.tenPhongBan = tenPhongBan;
         this.diaChi = diaChi;
         this.sdtPhong = sdtPhong;
@@ -33,15 +31,6 @@ public class Department {
     public void setIdPhongBan(int idPhongBan) {
         this.idPhongBan = idPhongBan;
     }
-
-    public String getMaPhongBan() {
-        return maPhongBan;
-    }
-
-    public void setMaPhongBan(String maPhongBan) {
-        this.maPhongBan = maPhongBan;
-    }
-
     public String getTenPhongBan() {
         return tenPhongBan;
     }

@@ -11,13 +11,11 @@ package Model;
 public class Position {
 
     private int idChucVu;   // id chuc vu
-    private String maChucVu;    // ma chuc vu
     private String tenChucVu;   // ten chuc vu
     private String ghiChu;  // ghi chu
 
     public Position(int idChucVu, String maChucVu, String tenChucVu, String ghiChu) {
         this.idChucVu = idChucVu;
-        this.maChucVu = maChucVu;
         this.tenChucVu = tenChucVu;
         this.ghiChu = ghiChu;
     }
@@ -28,14 +26,6 @@ public class Position {
 
     public void setIdChucVu(int idChucVu) {
         this.idChucVu = idChucVu;
-    }
-
-    public String getMaChucVu() {
-        return maChucVu;
-    }
-
-    public void setMaChucVu(String maChucVu) {
-        this.maChucVu = maChucVu;
     }
 
     public String getTenChucVu() {

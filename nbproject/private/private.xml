@@ -3,9 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/whyia/Desktop/Group4-EmployeeManagementSystem/src/Controller/DataConnection.java</file>
+            <file>file:/C:/Users/whyia/Desktop/Group4-EmployeeManagementSystem/src/View/Login.java</file>
+            <file>file:/C:/Users/whyia/Desktop/Group4-EmployeeManagementSystem/src/Model/Employee.java</file>
+            <file>file:/C:/Users/whyia/Desktop/Group4-EmployeeManagementSystem/src/Model/Account.java</file>
+            <file>file:/C:/Users/whyia/Desktop/Group4-EmployeeManagementSystem/src/Resources/quit.png</file>
             <file>file:/C:/Users/whyia/Desktop/Group4-EmployeeManagementSystem/src/Admin/Admin.java</file>
             <file>file:/C:/Users/whyia/Desktop/Group4-EmployeeManagementSystem/src/View/SignUp.java</file>
+            <file>file:/C:/Users/whyia/Desktop/Group4-EmployeeManagementSystem/src/Model/Department.java</file>
+            <file>file:/C:/Users/whyia/Desktop/Group4-EmployeeManagementSystem/src/Resources/search.png</file>
+            <file>file:/C:/Users/whyia/Desktop/Group4-EmployeeManagementSystem/src/Model/Position.java</file>
         </group>
     </open-files>
 </project-private>

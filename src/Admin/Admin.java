@@ -1,5 +1,6 @@
 package Admin;
 
+import Model.Department;
 import View.Login;
 import Model.Employee;
 import java.util.List;
@@ -36,16 +37,22 @@ public class Admin extends javax.swing.JFrame {
     private boolean checkImg;
     private String getFileName;
     private List<Employee> employeesList = new ArrayList<>();
-    private DefaultTableModel model;
+    private List<Department> departmentList = new ArrayList<>();
+    private DefaultTableModel employeeModel;
+    private DefaultTableModel departmentModel;
     public Admin() {
         initComponents();
         insertCbxDay();
         insertCbxMonth();
         insertCbxYear();
-        initList();
-        updateTable();
+        initEmployeeList();
+        initDepartmentList();
+        updateEmployeeTable();
+        updateDepartmentTable();
+        insertCbxDepartmentFromEmployeeTable();
     }
-    private void initList(){
+    //EMPLOYEE====================================================================================================================
+    private void initEmployeeList(){ //Khởi tạo list từ file
         try {
             BufferedReader reader = new BufferedReader(new FileReader("data\\employee.txt"));
             String line;
@@ -60,14 +67,11 @@ public class Admin extends javax.swing.JFrame {
             Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    private void updateList(){
-        
-    }
-    private void addList(){
-        Employee e = new Employee(Integer.parseInt(txtMaNV.getText()), txtHoTen.getText(), birthDay.getSelectedItem() + "/" + birthMonth.getSelectedItem() + "/" + birthYear.getSelectedItem(), txtGender.getText(), txtHomeTown.getText(), txtPhoneNum.getText(), txtEmail.getText(), txtContactAddress.getText(), hireDate.getText(), Double.parseDouble(salary.getText()), txtDepartment.getText(), txtPosition.getText(),"ImgEmployee\\\\" + getFileName);
+    private void addEmployeeList(){ //Thêm nhân viên vào list
+        Employee e = new Employee(Integer.parseInt(txtMaNV.getText()), txtHoTen.getText(), birthDay.getSelectedItem() + "/" + birthMonth.getSelectedItem() + "/" + birthYear.getSelectedItem(), txtGender.getText(), txtHomeTown.getText(), txtPhoneNum.getText(), txtEmail.getText(), txtContactAddress.getText(), hireDate.getText(), Double.parseDouble(salary.getText()), CbxDepartmentFromET.getSelectedItem().toString(), txtPosition.getText(),"ImgEmployee\\\\" + getFileName);
         employeesList.add(e);
     }
-    private void removeItemFromTable(){
+    private void removeEmployeeFromTable(){ //Xóa nhân viên khỏi list và bảng
         int sr = tableEmployee.getSelectedRow();
         List<Employee> removeList = new ArrayList<>();
         if(sr != -1){
@@ -85,7 +89,8 @@ public class Admin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 đối tượng!");
         }
     }
-    private void writeListToFile(){
+    
+    private void writeEmployeeListToFile(){ // Lưu dữ liệu vào file
         try{
             BufferedWriter writer = new BufferedWriter(new FileWriter("data\\employee.txt", false));
             for(Employee e : employeesList){
@@ -100,17 +105,14 @@ public class Admin extends javax.swing.JFrame {
         }catch(IOException ex){
             JOptionPane.showMessageDialog(null, "Lưu không thành công!");
         }
-        
-      
     }
-    private void updateTable(){
-        model = (DefaultTableModel) tableEmployee.getModel();
-        model.setRowCount(0);
+    private void updateEmployeeTable(){ // Cập nhật bảng sau khi chỉnh sửa
+        employeeModel = (DefaultTableModel) tableEmployee.getModel();
+        employeeModel.setRowCount(0);
         for(Employee e : employeesList){
             String[] dataRow = {String.valueOf(e.getEmployeeID()), e.getEmployeeName(), e.getDateOfBirth(), e.getGender(), e.getHometown(), e.getPhoneNumber(), e.getEmail(), e.getAddress(), e.getHireDate(), String.valueOf(e.getSalary()), e.getDepartment(), e.getPosition(), e.getImagePath()};
-            model.addRow(dataRow);
-        }
-            
+            employeeModel.addRow(dataRow);
+        }       
     }
     public void insertCbxDay(){
         birthDay.removeAllItems();
@@ -133,12 +135,24 @@ public class Admin extends javax.swing.JFrame {
         }
         birthYear.setSelectedIndex(-1);
     }
-    public boolean checkSelected(){
+    private void insertCbxDepartmentFromEmployeeTable(){
+        CbxDepartmentFromET.removeAllItems();
+        for(Department d : departmentList){
+            CbxDepartmentFromET.addItem(d.getTenPhongBan());
+        }
+        CbxDepartmentFromET.setSelectedItem(-1);
+    }
+    private boolean checkDepartmentIsSelected(){
+        if(CbxDepartmentFromET.getSelectedIndex() == -1){
+            return false;
+        }
+        return true;
+    }
+    public boolean checkBirthdayIsSelected(){
         if(birthDay.getSelectedIndex() == -1 || birthMonth.getSelectedIndex() == -1 || birthYear.getSelectedIndex() == -1){
             return false;
         }
         return true;
-        
     }
     private void saveImage(File imageFile) throws IOException{
         try{
@@ -162,7 +176,72 @@ public class Admin extends javax.swing.JFrame {
             ex.printStackTrace();
         }
     }
-    public void windowClosing(){
+    //=============================================================================================================================
+    //DEPARTMENT===================================================================================================================
+    private void initDepartmentList(){
+        try{
+            BufferedReader reader = new BufferedReader(new FileReader("data\\department.txt"));
+            String line;
+            while((line = reader.readLine()) != null){
+                String[] parts = line.split(",");
+                Department d = new Department(Integer.parseInt(parts[0]), parts[1], parts[2], parts[3], parts[4]);
+                departmentList.add(d);
+                
+            }
+            reader.close();
+        }catch(IOException ex){
+            JOptionPane.showMessageDialog(null, "Khởi tạo dữ liệu Department không thành công!");
+        }
+    }
+    private void addDepartmentList(){
+        Department d = new Department(Integer.parseInt(txtDpmID.getText()),txtDepartmentName.getText(), txtDpmAddress.getText(), txtDpmPhoneNumber.getText() , txtDpmNote.getText());
+        departmentList.add(d);
+    }
+    private void removeDepartment(){
+        int sr = tableDepartment.getSelectedRow();
+        List<Department> removeList = new ArrayList<>();
+        if(sr != -1){
+            int id = Integer.parseInt(tableDepartment.getValueAt(sr, 0).toString());
+            for(Department d : departmentList){
+                if(d.getIdPhongBan() == id ){
+                    removeList.add(d);
+                }
+            }
+            for(Department d : removeList){
+                departmentList.remove(d);
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 đối tượng!");
+        }
+    }
+    private void updateDepartmentTable(){
+        departmentModel = (DefaultTableModel) tableDepartment.getModel();
+        departmentModel.setRowCount(0);
+        for(Department d : departmentList){
+            int countEmployee = 0;
+            for(Employee e : employeesList){
+                if(e.getDepartment().equals(d.getTenPhongBan())){
+                    countEmployee++;
+                }
+            }
+            
+            String[] datarow = {String.valueOf(d.getIdPhongBan()), d.getTenPhongBan(), d.getDiaChi(), d.getSdtPhong(), String.valueOf(countEmployee), d.getGhiChu()};
+            departmentModel.addRow(datarow);
+        }
+    }
+    private void writeDepartmentToFile(){
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("data\\department.txt"));
+            for(Department d : departmentList){
+                String data = d.getIdPhongBan() + "," + d.getTenPhongBan() + "," + d.getDiaChi() + "," + d.getSdtPhong() + "," + d.getGhiChu();
+                writer.write(data);
+                writer.newLine();
+            }
+            writer.close();
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Lưu không thành công!");
+        }
         
     }
     @SuppressWarnings("unchecked")
@@ -210,7 +289,6 @@ public class Admin extends javax.swing.JFrame {
         jPanel27 = new javax.swing.JPanel();
         labelImg = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
-        txtDepartment = new javax.swing.JTextField();
         jLabel26 = new javax.swing.JLabel();
         txtPosition = new javax.swing.JTextField();
         txtPrintEmpList = new javax.swing.JButton();
@@ -219,29 +297,29 @@ public class Admin extends javax.swing.JFrame {
         birthDay = new javax.swing.JComboBox<>();
         birthMonth = new javax.swing.JComboBox<>();
         birthYear = new javax.swing.JComboBox<>();
+        CbxDepartmentFromET = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         jPanel13 = new javax.swing.JPanel();
         jTextField2 = new javax.swing.JTextField();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        btnSaveDepartmentData = new javax.swing.JButton();
         jPanel14 = new javax.swing.JPanel();
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tableDepartment = new javax.swing.JTable();
         jLabel15 = new javax.swing.JLabel();
-        txtID = new javax.swing.JTextField();
-        jLabel16 = new javax.swing.JLabel();
-        txtDepartmentID = new javax.swing.JTextField();
+        txtDpmID = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
         txtDepartmentName = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
-        txtPhoneNumber = new javax.swing.JTextField();
+        txtDpmPhoneNumber = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
-        txtAddress = new javax.swing.JTextField();
+        txtDpmAddress = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
         jScrollPane9 = new javax.swing.JScrollPane();
-        txtNote = new javax.swing.JTextArea();
+        txtDpmNote = new javax.swing.JTextArea();
         jLabel27 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jPanel15 = new javax.swing.JPanel();
@@ -255,8 +333,6 @@ public class Admin extends javax.swing.JFrame {
         tablePosition = new javax.swing.JTable();
         jLabel21 = new javax.swing.JLabel();
         txtPosID = new javax.swing.JTextField();
-        jLabel22 = new javax.swing.JLabel();
-        txtPositionID = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
         txtPositionName = new javax.swing.JTextField();
         jLabel24 = new javax.swing.JLabel();
@@ -503,8 +579,6 @@ public class Admin extends javax.swing.JFrame {
         jLabel25.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         jLabel25.setText("Phòng ban:");
 
-        txtDepartment.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-
         jLabel26.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         jLabel26.setText("Chức vụ:");
 
@@ -528,6 +602,8 @@ public class Admin extends javax.swing.JFrame {
 
         birthYear.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        CbxDepartmentFromET.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
         jPanel12Layout.setHorizontalGroup(
@@ -538,15 +614,7 @@ public class Admin extends javax.swing.JFrame {
                     .addGroup(jPanel12Layout.createSequentialGroup()
                         .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel12Layout.createSequentialGroup()
-                                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPanel12Layout.createSequentialGroup()
-                                        .addComponent(jLabel25)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtDepartment, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
-                                        .addComponent(jLabel11)
-                                        .addGap(3, 3, 3)
-                                        .addComponent(hireDate))
+                                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel12Layout.createSequentialGroup()
                                         .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                             .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -557,7 +625,20 @@ public class Admin extends javax.swing.JFrame {
                                             .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                                 .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
                                                 .addComponent(txtMaNV))
-                                            .addComponent(txtHomeTown, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                            .addComponent(txtHomeTown, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
+                                        .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel12Layout.createSequentialGroup()
+                                                .addComponent(jLabel11)
+                                                .addGap(3, 3, 3))
+                                            .addGroup(jPanel12Layout.createSequentialGroup()
+                                                .addComponent(jLabel25)
+                                                .addGap(23, 23, 23)))
+                                        .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addGroup(jPanel12Layout.createSequentialGroup()
+                                                .addGap(6, 6, 6)
+                                                .addComponent(CbxDepartmentFromET, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                            .addComponent(hireDate, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel12Layout.createSequentialGroup()
@@ -662,7 +743,7 @@ public class Admin extends javax.swing.JFrame {
                                 .addComponent(txtPosition, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel25)
-                                .addComponent(txtDepartment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(CbxDepartmentFromET, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addComponent(jLabel28))
                     .addComponent(jPanel27, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -707,6 +788,18 @@ public class Admin extends javax.swing.JFrame {
         jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jButton6.setText("Thêm mới");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        btnSaveDepartmentData.setText("Lưu");
+        btnSaveDepartmentData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveDepartmentDataActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
@@ -717,7 +810,9 @@ public class Admin extends javax.swing.JFrame {
                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 472, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnSaveDepartmentData, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26))
         );
@@ -728,7 +823,8 @@ public class Admin extends javax.swing.JFrame {
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField2))
+                    .addComponent(jTextField2)
+                    .addComponent(btnSaveDepartmentData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -738,20 +834,25 @@ public class Admin extends javax.swing.JFrame {
         jButton7.setText("Cập nhật");
 
         jButton8.setText("Xóa");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
 
         tableDepartment.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Số phòng", "Mã phòng ", "Tên phòng", "Địa chỉ", "Số điện thoại", "SL nhân viên", "Ghi chú"
+                "Số phòng", "Tên phòng", "Địa chỉ", "Số điện thoại", "SL nhân viên", "Ghi chú"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -763,12 +864,7 @@ public class Admin extends javax.swing.JFrame {
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         jLabel15.setText("ID Phòng:");
 
-        txtID.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-
-        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        jLabel16.setText("Mã phòng:");
-
-        txtDepartmentID.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        txtDpmID.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
 
         jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         jLabel17.setText("Tên phòng:");
@@ -778,20 +874,20 @@ public class Admin extends javax.swing.JFrame {
         jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         jLabel18.setText("Số điện thoại:");
 
-        txtPhoneNumber.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        txtDpmPhoneNumber.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
 
         jLabel19.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         jLabel19.setText("Địa chỉ:");
 
-        txtAddress.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        txtDpmAddress.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
 
         jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         jLabel20.setText("Ghi chú:");
 
-        txtNote.setColumns(20);
-        txtNote.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        txtNote.setRows(5);
-        jScrollPane9.setViewportView(txtNote);
+        txtDpmNote.setColumns(20);
+        txtDpmNote.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        txtDpmNote.setRows(5);
+        jScrollPane9.setViewportView(txtDpmNote);
 
         jLabel27.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel27.setText("Danh sách các phòng:");
@@ -812,30 +908,25 @@ public class Admin extends javax.swing.JFrame {
                                 .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel14Layout.createSequentialGroup()
                                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel15)
-                                    .addComponent(jLabel16))
-                                .addGap(14, 14, 14)
-                                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtID, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
-                                    .addComponent(txtDepartmentID))
-                                .addGap(58, 58, 58)
-                                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel18)
-                                    .addComponent(jLabel17))
+                                    .addComponent(jLabel15))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtDepartmentName, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
-                                    .addComponent(txtPhoneNumber))
-                                .addGap(104, 104, 104)
-                                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtDpmID, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtDpmPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(21, 21, 21)
+                                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel20)
+                                    .addComponent(jLabel17))
+                                .addGap(21, 21, 21)
+                                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel14Layout.createSequentialGroup()
-                                        .addComponent(jLabel20)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel14Layout.createSequentialGroup()
+                                        .addComponent(txtDepartmentName, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(104, 104, 104)
                                         .addComponent(jLabel19)
                                         .addGap(18, 18, 18)
-                                        .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(txtDpmAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -849,18 +940,16 @@ public class Admin extends javax.swing.JFrame {
                         .addComponent(jLabel17)
                         .addComponent(txtDepartmentName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel19)
-                        .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtDpmAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel15)
-                        .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtDpmID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtDepartmentID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel18)
-                        .addComponent(txtPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtDpmPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel20))
-                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
                 .addComponent(jLabel27)
@@ -961,11 +1050,6 @@ public class Admin extends javax.swing.JFrame {
 
         txtPosID.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
 
-        jLabel22.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        jLabel22.setText("Mã chức vụ:");
-
-        txtPositionID.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-
         jLabel23.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         jLabel23.setText("Tên chức vụ:");
 
@@ -994,22 +1078,19 @@ public class Admin extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel16Layout.createSequentialGroup()
-                                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
                                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtPositionID, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtPosID, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(85, 85, 85)
-                                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel23)
+                                    .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel24))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtPositionName, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                    .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel16Layout.createSequentialGroup()
+                                        .addComponent(txtPosID, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(110, 110, 110)
+                                        .addComponent(jLabel23)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtPositionName, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(0, 404, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel16Layout.setVerticalGroup(
@@ -1024,12 +1105,8 @@ public class Admin extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel16Layout.createSequentialGroup()
-                        .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel24)
-                            .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtPositionID)))
-                        .addGap(0, 52, Short.MAX_VALUE))
+                        .addComponent(jLabel24)
+                        .addGap(0, 55, Short.MAX_VALUE))
                     .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1310,11 +1387,11 @@ public class Admin extends javax.swing.JFrame {
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+            .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTabbedPane1)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTabbedPane1))
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
@@ -1322,9 +1399,8 @@ public class Admin extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1)
-                .addContainerGap())
+                .addGap(12, 12, 12)
+                .addComponent(jTabbedPane1))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -1357,13 +1433,13 @@ public class Admin extends javax.swing.JFrame {
 
     private void btnAddEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddEmployeeActionPerformed
         if(txtMaNV.getText().isEmpty() || txtHoTen.getText().isEmpty() || txtHomeTown.getText().isEmpty() || txtGender.getText().isEmpty() || txtEmail.getText().isEmpty() || txtContactAddress.getText().isEmpty()
-                || hireDate.getText().isEmpty() || salary.getText().isEmpty() || txtDepartment.getText().isEmpty() || txtPosition.getText().isEmpty() || txtPhoneNum.getText().isEmpty()
-                 || !checkSelected() || !checkImg){   
+                || hireDate.getText().isEmpty() || salary.getText().isEmpty() || !checkDepartmentIsSelected() || txtPosition.getText().isEmpty() || txtPhoneNum.getText().isEmpty()
+                 || !checkBirthdayIsSelected() || !checkImg){   
             JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin!");
         }
         else{
-            addList();
-            updateTable();   
+            addEmployeeList();
+            updateEmployeeTable();   
         }
     }//GEN-LAST:event_btnAddEmployeeActionPerformed
 
@@ -1400,19 +1476,41 @@ public class Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_birthDayActionPerformed
 
     private void btnDeleteEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteEmployeeActionPerformed
-        removeItemFromTable();
-        updateTable();
+        removeEmployeeFromTable();
+        updateEmployeeTable();
     }//GEN-LAST:event_btnDeleteEmployeeActionPerformed
 
     private void btnSaveEmployeeDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveEmployeeDataActionPerformed
         int op = JOptionPane.showConfirmDialog(null, "Bạn có muốn lưu dữ liệu?");
         if(op == JOptionPane.YES_OPTION){
-            writeListToFile();
+            writeEmployeeListToFile();
         }
         else{
             return;
         }
     }//GEN-LAST:event_btnSaveEmployeeDataActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        addDepartmentList();
+        insertCbxDepartmentFromEmployeeTable();
+        updateDepartmentTable();
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        removeDepartment();
+        insertCbxDepartmentFromEmployeeTable();
+        updateDepartmentTable();
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void btnSaveDepartmentDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveDepartmentDataActionPerformed
+        int op = JOptionPane.showConfirmDialog(null, "Bạn có muốn lưu dữ liệu?");
+        if(op == JOptionPane.YES_OPTION){
+            writeDepartmentToFile();
+        }
+        else{
+            return;
+        }
+    }//GEN-LAST:event_btnSaveDepartmentDataActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1428,12 +1526,14 @@ public class Admin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    javax.swing.JComboBox<String> CbxDepartmentFromET;
     javax.swing.JComboBox<String> birthDay;
     javax.swing.JComboBox<String> birthMonth;
     javax.swing.JComboBox<String> birthYear;
     javax.swing.JButton btnAddEmployee;
     javax.swing.JButton btnDeleteEmployee;
     javax.swing.JButton btnQuitClicked;
+    javax.swing.JButton btnSaveDepartmentData;
     javax.swing.JButton btnSaveEmployeeData;
     javax.swing.JButton btnUpdateEmployee;
     javax.swing.JTextField hireDate;
@@ -1462,14 +1562,12 @@ public class Admin extends javax.swing.JFrame {
     javax.swing.JLabel jLabel12;
     javax.swing.JLabel jLabel13;
     javax.swing.JLabel jLabel15;
-    javax.swing.JLabel jLabel16;
     javax.swing.JLabel jLabel17;
     javax.swing.JLabel jLabel18;
     javax.swing.JLabel jLabel19;
     javax.swing.JLabel jLabel2;
     javax.swing.JLabel jLabel20;
     javax.swing.JLabel jLabel21;
-    javax.swing.JLabel jLabel22;
     javax.swing.JLabel jLabel23;
     javax.swing.JLabel jLabel24;
     javax.swing.JLabel jLabel25;
@@ -1524,24 +1622,21 @@ public class Admin extends javax.swing.JFrame {
     javax.swing.JTable tableDepartment;
     javax.swing.JTable tableEmployee;
     javax.swing.JTable tablePosition;
-    javax.swing.JTextField txtAddress;
     javax.swing.JTextField txtContactAddress;
-    javax.swing.JTextField txtDepartment;
-    javax.swing.JTextField txtDepartmentID;
     javax.swing.JTextField txtDepartmentName;
+    javax.swing.JTextField txtDpmAddress;
+    javax.swing.JTextField txtDpmID;
+    javax.swing.JTextArea txtDpmNote;
+    javax.swing.JTextField txtDpmPhoneNumber;
     javax.swing.JTextField txtEmail;
     javax.swing.JTextField txtGender;
     javax.swing.JTextField txtHoTen;
     javax.swing.JTextField txtHomeTown;
-    javax.swing.JTextField txtID;
     javax.swing.JTextField txtMaNV;
-    javax.swing.JTextArea txtNote;
     javax.swing.JTextField txtPhoneNum;
-    javax.swing.JTextField txtPhoneNumber;
     javax.swing.JTextField txtPosID;
     javax.swing.JTextArea txtPosNote;
     javax.swing.JTextField txtPosition;
-    javax.swing.JTextField txtPositionID;
     javax.swing.JTextField txtPositionName;
     javax.swing.JButton txtPrintEmpList;
     // End of variables declaration//GEN-END:variables

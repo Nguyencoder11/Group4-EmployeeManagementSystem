@@ -1,1 +1,2 @@
 100,Trần Hiếu Trung,19/12/2003,Nam,Hưng yên,0345695203,t.hieutrung2k3@gmail.com,Hưng Yên,2/2/2021,500.0,IT,ITer,ImgEmployee\\img3.jpg
+101,Trần Hoàng Tùng,21/10/2011,Nam,Hải Dương,023458325634,abc@gmail.com,Hà Nội,1/1/2021,12400.0,IT,ITer,ImgEmployee\\img5.jpg
