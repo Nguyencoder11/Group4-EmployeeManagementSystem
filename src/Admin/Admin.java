@@ -35,8 +35,9 @@ import java.text.MessageFormat;
 import javax.annotation.processing.FilerException;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
 public class Admin extends javax.swing.JFrame {
-    
+
     private boolean checkImg;
     private String getFileName;
     private List<Employee> employeesList = new ArrayList<>();
@@ -44,6 +45,7 @@ public class Admin extends javax.swing.JFrame {
     private List<Position> positionList = new ArrayList<>();
     private DefaultTableModel employeeModel;
     private DefaultTableModel departmentModel;
+
     public Admin() {
         initComponents();
         insertCbxDay();
@@ -55,189 +57,212 @@ public class Admin extends javax.swing.JFrame {
         updateDepartmentTable();
         insertCbxDepartmentFromEmployeeTable();
     }
+
     //EMPLOYEE====================================================================================================================
-    private void initEmployeeList(){ //Khởi tạo list từ file
+    private void initEmployeeList() { //Khởi tạo list từ file
         try {
             BufferedReader reader = new BufferedReader(new FileReader("data\\employee.txt"));
             String line;
-            while((line = reader.readLine()) != null){
-                
+            while ((line = reader.readLine()) != null) {
+
                 String[] parts = line.split(",");
-                    Employee e = new Employee(Integer.parseInt(parts[0]), parts[1],parts[2], parts[3], parts[4], parts[5], parts[6], parts[7], parts[8], Double.parseDouble(parts[9]), parts[10], parts[11],parts[12]);
-                    employeesList.add(e);
+                Employee e = new Employee(Integer.parseInt(parts[0]), parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7], parts[8], Double.parseDouble(parts[9]), parts[10], parts[11], parts[12]);
+                employeesList.add(e);
             }
             reader.close();
         } catch (IOException ex) {
             Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    private void addEmployeeList(){ //Thêm nhân viên vào list
-        Employee e = new Employee(Integer.parseInt(txtMaNV.getText()), txtHoTen.getText(), birthDay.getSelectedItem() + "/" + birthMonth.getSelectedItem() + "/" + birthYear.getSelectedItem(), txtGender.getText(), txtHomeTown.getText(), txtPhoneNum.getText(), txtEmail.getText(), txtContactAddress.getText(), hireDate.getText(), Double.parseDouble(salary.getText()), CbxDepartmentFromET.getSelectedItem().toString(), txtPosition.getText(),"ImgEmployee\\\\" + getFileName);
+
+    private void addEmployeeList() { //Thêm nhân viên vào list
+        Employee e = new Employee(Integer.parseInt(txtMaNV.getText()), txtHoTen.getText(), birthDay.getSelectedItem() + "/" + birthMonth.getSelectedItem() + "/" + birthYear.getSelectedItem(), txtGender.getText(), txtHomeTown.getText(), txtPhoneNum.getText(), txtEmail.getText(), txtContactAddress.getText(), hireDate.getText(), Double.parseDouble(salary.getText()), CbxDepartmentFromET.getSelectedItem().toString(), txtPosition.getText(), "ImgEmployee\\\\" + getFileName);
         employeesList.add(e);
     }
-    private void removeEmployeeFromTable(){ //Xóa nhân viên khỏi list và bảng
+
+    private void removeEmployeeFromTable() { //Xóa nhân viên khỏi list và bảng
         int sr = tableEmployee.getSelectedRow();
         List<Employee> removeList = new ArrayList<>();
-        if(sr != -1){
+        if (sr != -1) {
             int id = Integer.parseInt(tableEmployee.getValueAt(sr, 0).toString());
-            for(Employee e : employeesList){
-                if(e.getEmployeeID() == id){
+            for (Employee e : employeesList) {
+                if (e.getEmployeeID() == id) {
                     removeList.add(e);
                 }
             }
-            for(Employee e : removeList){
+            for (Employee e : removeList) {
                 employeesList.remove(e);
             }
-        }
-        else{
+        } else {
             JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 đối tượng!");
         }
     }
-    
-    private void writeEmployeeListToFile(){ // Lưu dữ liệu vào file
-        try{
+
+    private void writeEmployeeListToFile() { // Lưu dữ liệu vào file
+        try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("data\\employee.txt", false));
-            for(Employee e : employeesList){
-                String data = String.valueOf(e.getEmployeeID()) + "," + e.getEmployeeName()+ "," 
-                        + e.getDateOfBirth()+ "," + e.getGender()+ "," + e.getHometown()+ "," + e.getPhoneNumber()+ ","
-                        + e.getEmail()+ "," + e.getAddress()+ "," + e.getHireDate()+ "," + String.valueOf(e.getSalary())+ "," + e.getDepartment()+ "," + e.getPosition()+ "," + e.getImagePath();
+            for (Employee e : employeesList) {
+                String data = String.valueOf(e.getEmployeeID()) + "," + e.getEmployeeName() + ","
+                        + e.getDateOfBirth() + "," + e.getGender() + "," + e.getHometown() + "," + e.getPhoneNumber() + ","
+                        + e.getEmail() + "," + e.getAddress() + "," + e.getHireDate() + "," + String.valueOf(e.getSalary()) + "," + e.getDepartment() + "," + e.getPosition() + "," + e.getImagePath();
                 writer.write(data);
                 writer.newLine();
-        }
+            }
             JOptionPane.showMessageDialog(null, "Lưu thành công!");
             writer.close();
-        }catch(IOException ex){
+        } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Lưu không thành công!");
         }
     }
-    private void updateEmployeeTable(){ // Cập nhật bảng sau khi chỉnh sửa
+
+    private void updateEmployeeTable() { // Cập nhật bảng sau khi chỉnh sửa
         employeeModel = (DefaultTableModel) tableEmployee.getModel();
         employeeModel.setRowCount(0);
-        for(Employee e : employeesList){
+        for (Employee e : employeesList) {
             String[] dataRow = {String.valueOf(e.getEmployeeID()), e.getEmployeeName(), e.getDateOfBirth(), e.getGender(), e.getHometown(), e.getPhoneNumber(), e.getEmail(), e.getAddress(), e.getHireDate(), String.valueOf(e.getSalary()), e.getDepartment(), e.getPosition(), e.getImagePath()};
             employeeModel.addRow(dataRow);
-        }       
+        }
     }
-    public void insertCbxDay(){
+
+    public void insertCbxDay() {
         birthDay.removeAllItems();
-        for(int i = 1; i <= 31; i++){
+        for (int i = 1; i <= 31; i++) {
             birthDay.addItem(String.valueOf(i));
-        } 
+        }
         birthDay.setSelectedIndex(-1);
     }
-    public void insertCbxMonth(){
+
+    public void insertCbxMonth() {
         birthMonth.removeAllItems();
-        for(int i = 1; i <= 12; i++){
+        for (int i = 1; i <= 12; i++) {
             birthMonth.addItem(String.valueOf(i));
-        } 
+        }
         birthMonth.setSelectedIndex(-1);
     }
-    public void insertCbxYear(){
+
+    public void insertCbxYear() {
         birthYear.removeAllItems();
-        for(int i = 1900; i <= Calendar.getInstance().get(Calendar.YEAR); i++){
+        for (int i = 1900; i <= Calendar.getInstance().get(Calendar.YEAR); i++) {
             birthYear.addItem(String.valueOf(i));
         }
         birthYear.setSelectedIndex(-1);
     }
-    private void insertCbxDepartmentFromEmployeeTable(){
+
+    private void insertCbxDepartmentFromEmployeeTable() {
         CbxDepartmentFromET.removeAllItems();
-        for(Department d : departmentList){
+        for (Department d : departmentList) {
             CbxDepartmentFromET.addItem(d.getTenPhongBan());
         }
         CbxDepartmentFromET.setSelectedItem(-1);
     }
-    private boolean checkDepartmentIsSelected(){
-        if(CbxDepartmentFromET.getSelectedIndex() == -1){
+
+    private boolean checkDepartmentIsSelected() {
+        if (CbxDepartmentFromET.getSelectedIndex() == -1) {
             return false;
         }
         return true;
     }
-    public boolean checkBirthdayIsSelected(){
-        if(birthDay.getSelectedIndex() == -1 || birthMonth.getSelectedIndex() == -1 || birthYear.getSelectedIndex() == -1){
+
+    public boolean checkBirthdayIsSelected() {
+        if (birthDay.getSelectedIndex() == -1 || birthMonth.getSelectedIndex() == -1 || birthYear.getSelectedIndex() == -1) {
             return false;
         }
         return true;
     }
-    private void saveImage(File imageFile) throws IOException{
-        try{
+
+    private void saveImage(File imageFile) throws IOException {
+        try {
             String folderPath = "ImgEmployee";
             Path folder = Paths.get(folderPath);
-            if(!Files.exists(folder)){
+            if (!Files.exists(folder)) {
                 Files.createDirectories(folder);
             }
             Path des = Paths.get(folderPath, imageFile.getName());
             getFileName = imageFile.getName();
             int count = 0;
             String fileName;
-            while(Files.exists(des)){
-                fileName = "img" + count + ".jpg"; 
+            while (Files.exists(des)) {
+                fileName = "img" + count + ".jpg";
                 getFileName = fileName;
                 des = Paths.get(folderPath, fileName);
                 count++;
             }
             Files.copy(imageFile.toPath(), des);
-        }catch(IOException ex){
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
+
+    private boolean isCheckEmpID(int empID) {
+        for (Employee emp : employeesList) {
+            if (emp.getEmployeeID() == empID) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     //=============================================================================================================================
     //DEPARTMENT===================================================================================================================
-    private void initDepartmentList(){
-        try{
+    private void initDepartmentList() {
+        try {
             BufferedReader reader = new BufferedReader(new FileReader("data\\department.txt"));
             String line;
-            while((line = reader.readLine()) != null){
+            while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 Department d = new Department(Integer.parseInt(parts[0]), parts[1], parts[2], parts[3], parts[4]);
                 departmentList.add(d);
-                
+
             }
             reader.close();
-        }catch(IOException ex){
+        } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Khởi tạo dữ liệu Department không thành công!");
         }
     }
-    private void addDepartmentList(){
-        Department d = new Department(Integer.parseInt(txtDpmID.getText()),txtDepartmentName.getText(), txtDpmAddress.getText(), txtDpmPhoneNumber.getText() , txtDpmNote.getText());
+
+    private void addDepartmentList() {
+        Department d = new Department(Integer.parseInt(txtDpmID.getText()), txtDepartmentName.getText(), txtDpmAddress.getText(), txtDpmPhoneNumber.getText(), txtDpmNote.getText());
         departmentList.add(d);
     }
-    private void removeDepartment(){
+
+    private void removeDepartment() {
         int sr = tableDepartment.getSelectedRow();
         List<Department> removeList = new ArrayList<>();
-        if(sr != -1){
+        if (sr != -1) {
             int id = Integer.parseInt(tableDepartment.getValueAt(sr, 0).toString());
-            for(Department d : departmentList){
-                if(d.getIdPhongBan() == id ){
+            for (Department d : departmentList) {
+                if (d.getIdPhongBan() == id) {
                     removeList.add(d);
                 }
             }
-            for(Department d : removeList){
+            for (Department d : removeList) {
                 departmentList.remove(d);
             }
-        }
-        else{
+        } else {
             JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 đối tượng!");
         }
     }
-    private void updateDepartmentTable(){
+
+    private void updateDepartmentTable() {
         departmentModel = (DefaultTableModel) tableDepartment.getModel();
         departmentModel.setRowCount(0);
-        for(Department d : departmentList){
+        for (Department d : departmentList) {
             int countEmployee = 0;
-            for(Employee e : employeesList){
-                if(e.getDepartment().equals(d.getTenPhongBan())){
+            for (Employee e : employeesList) {
+                if (e.getDepartment().equals(d.getTenPhongBan())) {
                     countEmployee++;
                 }
             }
-            
+
             String[] datarow = {String.valueOf(d.getIdPhongBan()), d.getTenPhongBan(), d.getDiaChi(), d.getSdtPhong(), String.valueOf(countEmployee), d.getGhiChu()};
             departmentModel.addRow(datarow);
         }
     }
-    private void writeDepartmentToFile(){
+
+    private void writeDepartmentToFile() {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("data\\department.txt"));
-            for(Department d : departmentList){
+            for (Department d : departmentList) {
                 String data = d.getIdPhongBan() + "," + d.getTenPhongBan() + "," + d.getDiaChi() + "," + d.getSdtPhong() + "," + d.getGhiChu();
                 writer.write(data);
                 writer.newLine();
@@ -246,8 +271,49 @@ public class Admin extends javax.swing.JFrame {
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Lưu không thành công!");
         }
-        
     }
+
+    private boolean isCheckDepartID(int depID) {
+        for (Department dep : departmentList) {
+            if (dep.getIdPhongBan() == depID) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //=============================================================================================================================
+    //POSITION===================================================================================================================
+    private void initPositionList() {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("data\\position.txt"));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                Position p = new Position(Integer.parseInt(parts[0]), parts[1], parts[2]);
+                positionList.add(p);
+
+            }
+            reader.close();
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Khởi tạo dữ liệu Position không thành công!");
+        }
+    }
+
+    private void addPositionList() {
+        Position p = new Position(Integer.parseInt(txtPosID.getText()), txtPositionName.getText(), txtPosNote.getText());
+        positionList.add(p);
+    }
+
+    private boolean isCheckPosID(int posID) {
+        for (Position pos : positionList) {
+            if (pos.getIdChucVu() == posID) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -289,13 +355,13 @@ public class Admin extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         salary = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        jButton33 = new javax.swing.JButton();
+        btnUpload = new javax.swing.JButton();
         jPanel27 = new javax.swing.JPanel();
         labelImg = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
         txtPosition = new javax.swing.JTextField();
-        txtPrintEmpList = new javax.swing.JButton();
+        btnPrintEmpList = new javax.swing.JButton();
         jLabel28 = new javax.swing.JLabel();
         birthDay = new javax.swing.JComboBox<>();
         birthMonth = new javax.swing.JComboBox<>();
@@ -305,7 +371,7 @@ public class Admin extends javax.swing.JFrame {
         jPanel13 = new javax.swing.JPanel();
         jTextField2 = new javax.swing.JTextField();
         jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        btnAddDepartment = new javax.swing.JButton();
         btnSaveDepartmentData = new javax.swing.JButton();
         jPanel14 = new javax.swing.JPanel();
         jButton7 = new javax.swing.JButton();
@@ -324,12 +390,12 @@ public class Admin extends javax.swing.JFrame {
         jScrollPane9 = new javax.swing.JScrollPane();
         txtDpmNote = new javax.swing.JTextArea();
         jLabel27 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
+        btnPrintDpmList = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jPanel15 = new javax.swing.JPanel();
         jTextField3 = new javax.swing.JTextField();
         jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
+        btnAddPosition = new javax.swing.JButton();
         jPanel16 = new javax.swing.JPanel();
         jButton11 = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
@@ -342,7 +408,7 @@ public class Admin extends javax.swing.JFrame {
         jLabel24 = new javax.swing.JLabel();
         jScrollPane10 = new javax.swing.JScrollPane();
         txtPosNote = new javax.swing.JTextArea();
-        jButton3 = new javax.swing.JButton();
+        btnPrintPosList = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
@@ -593,10 +659,10 @@ public class Admin extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         jLabel13.setText("Ảnh:");
 
-        jButton33.setText("Upload...");
-        jButton33.addActionListener(new java.awt.event.ActionListener() {
+        btnUpload.setText("Upload...");
+        btnUpload.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton33ActionPerformed(evt);
+                btnUploadActionPerformed(evt);
             }
         });
 
@@ -624,10 +690,10 @@ public class Admin extends javax.swing.JFrame {
 
         txtPosition.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
 
-        txtPrintEmpList.setText("Xuất PDF");
-        txtPrintEmpList.addActionListener(new java.awt.event.ActionListener() {
+        btnPrintEmpList.setText("Xuất PDF");
+        btnPrintEmpList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPrintEmpListActionPerformed(evt);
+                btnPrintEmpListActionPerformed(evt);
             }
         });
 
@@ -717,7 +783,7 @@ public class Admin extends javax.swing.JFrame {
                         .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtPhoneNum, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel12Layout.createSequentialGroup()
-                                .addComponent(jButton33)
+                                .addComponent(btnUpload)
                                 .addGap(27, 27, 27)
                                 .addComponent(jPanel27, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel12Layout.createSequentialGroup()
@@ -732,7 +798,7 @@ public class Admin extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnDeleteEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtPrintEmpList, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnPrintEmpList, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel12Layout.setVerticalGroup(
@@ -769,7 +835,7 @@ public class Admin extends javax.swing.JFrame {
                                 .addComponent(jLabel10)
                                 .addComponent(txtContactAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel13)
-                                .addComponent(jButton33))
+                                .addComponent(btnUpload))
                             .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -794,7 +860,7 @@ public class Admin extends javax.swing.JFrame {
                 .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnUpdateEmployee, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
                     .addComponent(btnDeleteEmployee, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtPrintEmpList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnPrintEmpList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -827,10 +893,10 @@ public class Admin extends javax.swing.JFrame {
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/search.png"))); // NOI18N
         jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        jButton6.setText("Thêm mới");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        btnAddDepartment.setText("Thêm mới");
+        btnAddDepartment.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                btnAddDepartmentActionPerformed(evt);
             }
         });
 
@@ -853,7 +919,7 @@ public class Admin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnSaveDepartmentData, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAddDepartment, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26))
         );
         jPanel13Layout.setVerticalGroup(
@@ -861,7 +927,7 @@ public class Admin extends javax.swing.JFrame {
             .addGroup(jPanel13Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAddDepartment, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnSaveDepartmentData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel13Layout.createSequentialGroup()
                         .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -935,10 +1001,10 @@ public class Admin extends javax.swing.JFrame {
         jLabel27.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel27.setText("Danh sách các phòng:");
 
-        jButton4.setText("Xuất PDF");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnPrintDpmList.setText("Xuất PDF");
+        btnPrintDpmList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnPrintDpmListActionPerformed(evt);
             }
         });
 
@@ -957,7 +1023,7 @@ public class Admin extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnPrintDpmList, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel14Layout.createSequentialGroup()
                                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel18)
@@ -1009,7 +1075,7 @@ public class Admin extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                    .addComponent(btnPrintDpmList, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
                     .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
                     .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -1044,10 +1110,10 @@ public class Admin extends javax.swing.JFrame {
         jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/search.png"))); // NOI18N
         jButton9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        jButton10.setText("Thêm mới");
-        jButton10.addActionListener(new java.awt.event.ActionListener() {
+        btnAddPosition.setText("Thêm mới");
+        btnAddPosition.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton10ActionPerformed(evt);
+                btnAddPositionActionPerformed(evt);
             }
         });
 
@@ -1061,7 +1127,7 @@ public class Admin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 480, Short.MAX_VALUE)
-                .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAddPosition, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26))
         );
         jPanel15Layout.setVerticalGroup(
@@ -1069,7 +1135,7 @@ public class Admin extends javax.swing.JFrame {
             .addGroup(jPanel15Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                    .addComponent(btnAddPosition, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
                     .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE))
                 .addContainerGap(8, Short.MAX_VALUE))
@@ -1121,10 +1187,10 @@ public class Admin extends javax.swing.JFrame {
         txtPosNote.setRows(5);
         jScrollPane10.setViewportView(txtPosNote);
 
-        jButton3.setText("Xuất PDF");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnPrintPosList.setText("Xuất PDF");
+        btnPrintPosList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnPrintPosListActionPerformed(evt);
             }
         });
 
@@ -1143,7 +1209,7 @@ public class Admin extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnPrintPosList, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel16Layout.createSequentialGroup()
                                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1181,7 +1247,7 @@ public class Admin extends javax.swing.JFrame {
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton11, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
                     .addComponent(jButton12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnPrintPosList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -1688,54 +1754,52 @@ public class Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnQuitClickedActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        
+
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void btnAddEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddEmployeeActionPerformed
-        if(txtMaNV.getText().isEmpty() || txtHoTen.getText().isEmpty() || txtHomeTown.getText().isEmpty() || txtGender.getText().isEmpty() || txtEmail.getText().isEmpty() || txtContactAddress.getText().isEmpty()
+        if (txtMaNV.getText().isEmpty() || txtHoTen.getText().isEmpty() || txtHomeTown.getText().isEmpty() || txtGender.getText().isEmpty() || txtEmail.getText().isEmpty() || txtContactAddress.getText().isEmpty()
                 || hireDate.getText().isEmpty() || salary.getText().isEmpty() || !checkDepartmentIsSelected() || txtPosition.getText().isEmpty() || txtPhoneNum.getText().isEmpty()
-                 || !checkBirthdayIsSelected() || !checkImg){   
+                || !checkBirthdayIsSelected() || !checkImg) {
             JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin!");
-        }
-        else{
-            if(isCheckEmpID(Integer.parseInt(txtMaNV.getText()))){
+        } else {
+            if (isCheckEmpID(Integer.parseInt(txtMaNV.getText()))) {
                 JOptionPane.showMessageDialog(null, "Mã nhân viên này đã tồn tại. Vui lòng nhập mã nhân viên khác");
-            }else{
+            } else {
                 addEmployeeList();
-                updateEmployeeTable(); 
+                updateEmployeeTable();
             }
         }
     }//GEN-LAST:event_btnAddEmployeeActionPerformed
 
-    private void jButton33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton33ActionPerformed
+    private void btnUploadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUploadActionPerformed
         JFileChooser fileChooser = new JFileChooser();
-                FileNameExtensionFilter filter = new FileNameExtensionFilter("Image files", "jpg", "jpeg", "png", "gif");
-                fileChooser.setFileFilter(filter);
-                int returnValue = fileChooser.showOpenDialog(null);
-                if (returnValue == JFileChooser.APPROVE_OPTION) {
-                    File selectedFile = fileChooser.getSelectedFile();
-                    ImageIcon imageIcon = new ImageIcon(selectedFile.getAbsolutePath());
-                    Image image = imageIcon.getImage().getScaledInstance(labelImg.getWidth(), labelImg.getHeight(), Image.SCALE_SMOOTH);
-                    labelImg.setIcon(new ImageIcon(image));
-                try {
-                    saveImage(selectedFile);
-                    checkImg = true;
-                 } catch (IOException ex) {
-                    Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                    
-                }
-                else{
-                    checkImg = false;
-                }              
-    }//GEN-LAST:event_jButton33ActionPerformed
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Image files", "jpg", "jpeg", "png", "gif");
+        fileChooser.setFileFilter(filter);
+        int returnValue = fileChooser.showOpenDialog(null);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            ImageIcon imageIcon = new ImageIcon(selectedFile.getAbsolutePath());
+            Image image = imageIcon.getImage().getScaledInstance(labelImg.getWidth(), labelImg.getHeight(), Image.SCALE_SMOOTH);
+            labelImg.setIcon(new ImageIcon(image));
+            try {
+                saveImage(selectedFile);
+                checkImg = true;
+            } catch (IOException ex) {
+                Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        } else {
+            checkImg = false;
+        }
+    }//GEN-LAST:event_btnUploadActionPerformed
 
     private void btnUpdateEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateEmployeeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnUpdateEmployeeActionPerformed
 
     private void birthDayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_birthDayActionPerformed
-      
+
     }//GEN-LAST:event_birthDayActionPerformed
 
     private void btnDeleteEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteEmployeeActionPerformed
@@ -1745,24 +1809,22 @@ public class Admin extends javax.swing.JFrame {
 
     private void btnSaveEmployeeDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveEmployeeDataActionPerformed
         int op = JOptionPane.showConfirmDialog(null, "Bạn có muốn lưu dữ liệu?");
-        if(op == JOptionPane.YES_OPTION){
+        if (op == JOptionPane.YES_OPTION) {
             writeEmployeeListToFile();
-        }
-        else{
+        } else {
             return;
         }
     }//GEN-LAST:event_btnSaveEmployeeDataActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        if(isCheckDepartID(Integer.parseInt(txtDpmID.getText()))){
+    private void btnAddDepartmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDepartmentActionPerformed
+        if (isCheckDepartID(Integer.parseInt(txtDpmID.getText()))) {
             JOptionPane.showMessageDialog(null, "Mã phòng ban này đã tồn tại. Vui lòng nhập mã khác");
-        }
-        else{
+        } else {
             addDepartmentList();
             insertCbxDepartmentFromEmployeeTable();
             updateDepartmentTable();
         }
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_btnAddDepartmentActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         removeDepartment();
@@ -1772,63 +1834,62 @@ public class Admin extends javax.swing.JFrame {
 
     private void btnSaveDepartmentDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveDepartmentDataActionPerformed
         int op = JOptionPane.showConfirmDialog(null, "Bạn có muốn lưu dữ liệu?");
-        if(op == JOptionPane.YES_OPTION){
+        if (op == JOptionPane.YES_OPTION) {
             writeDepartmentToFile();
-        }
-        else{
+        } else {
             return;
         }
     }//GEN-LAST:event_btnSaveDepartmentDataActionPerformed
 
-    private void txtPrintEmpListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrintEmpListActionPerformed
-        try{
+    private void btnPrintEmpListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintEmpListActionPerformed
+        try {
             MessageFormat header = new MessageFormat("Danh sách nhân viên");
             MessageFormat footer = new MessageFormat("Page{0,number, integer}");
             tableEmployee.print(JTable.PrintMode.FIT_WIDTH, header, footer);
-        }catch (Exception e){
+        } catch (Exception e) {
             Logger.getLogger(Employee.class.getName()).log(Level.SEVERE, null, e);
         }
-    }//GEN-LAST:event_txtPrintEmpListActionPerformed
+    }//GEN-LAST:event_btnPrintEmpListActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        try{
+    private void btnPrintDpmListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintDpmListActionPerformed
+        try {
             MessageFormat header = new MessageFormat("Thông tin về phòng ban");
             MessageFormat footer = new MessageFormat("Page{0,number, integer}");
             tableDepartment.print(JTable.PrintMode.FIT_WIDTH, header, footer);
-        }catch (Exception e){
+        } catch (Exception e) {
             Logger.getLogger(Department.class.getName()).log(Level.SEVERE, null, e);
         }
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_btnPrintDpmListActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        try{
+    private void btnPrintPosListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintPosListActionPerformed
+        try {
             MessageFormat header = new MessageFormat("Thông tin về chức vụ");
             MessageFormat footer = new MessageFormat("Page{0,number, integer}");
             tablePosition.print(JTable.PrintMode.FIT_WIDTH, header, footer);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnPrintPosListActionPerformed
 
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        if(isCheckPosID(Integer.parseInt(txtPosID.getText()))){
+    private void btnAddPositionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPositionActionPerformed
+        if (isCheckPosID(Integer.parseInt(txtPosID.getText()))) {
             JOptionPane.showMessageDialog(null, "Mã chức vụ này đã tồn tại. Vui lòng nhập mã khác");
-        }else{
-            
+        } else {
+            addPositionList();
         }
-    }//GEN-LAST:event_jButton10ActionPerformed
+    }//GEN-LAST:event_btnAddPositionActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Admin().setVisible(true);
             }
         });
-        
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1836,23 +1897,24 @@ public class Admin extends javax.swing.JFrame {
     javax.swing.JComboBox<String> birthDay;
     javax.swing.JComboBox<String> birthMonth;
     javax.swing.JComboBox<String> birthYear;
+    javax.swing.JButton btnAddDepartment;
     javax.swing.JButton btnAddEmployee;
+    javax.swing.JButton btnAddPosition;
     javax.swing.JButton btnDeleteEmployee;
+    javax.swing.JButton btnPrintDpmList;
+    javax.swing.JButton btnPrintEmpList;
+    javax.swing.JButton btnPrintPosList;
     javax.swing.JButton btnQuitClicked;
     javax.swing.JButton btnSaveDepartmentData;
     javax.swing.JButton btnSaveEmployeeData;
     javax.swing.JButton btnUpdateEmployee;
+    javax.swing.JButton btnUpload;
     javax.swing.JTextField hireDate;
     javax.swing.JButton jButton1;
-    javax.swing.JButton jButton10;
     javax.swing.JButton jButton11;
     javax.swing.JButton jButton12;
     javax.swing.JButton jButton2;
-    javax.swing.JButton jButton3;
-    javax.swing.JButton jButton33;
-    javax.swing.JButton jButton4;
     javax.swing.JButton jButton5;
-    javax.swing.JButton jButton6;
     javax.swing.JButton jButton7;
     javax.swing.JButton jButton8;
     javax.swing.JButton jButton9;
@@ -1978,33 +2040,5 @@ public class Admin extends javax.swing.JFrame {
     javax.swing.JTextArea txtPosNote;
     javax.swing.JTextField txtPosition;
     javax.swing.JTextField txtPositionName;
-    javax.swing.JButton txtPrintEmpList;
     // End of variables declaration//GEN-END:variables
-
-    private boolean isCheckEmpID(int empID) {
-        for(Employee emp : employeesList){
-            if(emp.getEmployeeID() == empID){
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    private boolean isCheckDepartID(int depID) {
-        for(Department dep : departmentList){
-            if(dep.getIdPhongBan()== depID){
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    private boolean isCheckPosID(int posID) {
-        for(Position pos : positionList){
-            if(pos.getIdChucVu()== posID){
-                return true;
-            }
-        }
-        return false;
-    }
 }

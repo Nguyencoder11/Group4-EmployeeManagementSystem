@@ -384,7 +384,7 @@
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="txtPhoneNum" min="-2" pref="179" max="-2" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
-                                              <Component id="jButton33" min="-2" max="-2" attributes="0"/>
+                                              <Component id="btnUpload" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                                               <Component id="jPanel27" min="-2" max="-2" attributes="0"/>
                                           </Group>
@@ -403,7 +403,7 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="btnDeleteEmployee" min="-2" pref="103" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="txtPrintEmpList" min="-2" pref="110" max="-2" attributes="0"/>
+                                      <Component id="btnPrintEmpList" min="-2" pref="110" max="-2" attributes="0"/>
                                       <EmptySpace max="32767" attributes="0"/>
                                   </Group>
                               </Group>
@@ -450,7 +450,7 @@
                                               <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
                                               <Component id="txtContactAddress" alignment="3" min="-2" max="-2" attributes="0"/>
                                               <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jButton33" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="btnUpload" alignment="3" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <Component id="jLabel7" max="32767" attributes="0"/>
                                       </Group>
@@ -483,7 +483,7 @@
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="btnUpdateEmployee" pref="35" max="32767" attributes="0"/>
                                   <Component id="btnDeleteEmployee" max="32767" attributes="0"/>
-                                  <Component id="txtPrintEmpList" max="32767" attributes="0"/>
+                                  <Component id="btnPrintEmpList" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
@@ -763,12 +763,12 @@
                         <Property name="text" type="java.lang.String" value="&#x1ea2;nh:"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JButton" name="jButton33">
+                    <Component class="javax.swing.JButton" name="btnUpload">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Upload..."/>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton33ActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUploadActionPerformed"/>
                       </Events>
                     </Component>
                     <Container class="javax.swing.JPanel" name="jPanel27">
@@ -828,12 +828,12 @@
                         </Property>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JButton" name="txtPrintEmpList">
+                    <Component class="javax.swing.JButton" name="btnPrintEmpList">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Xu&#x1ea5;t PDF"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtPrintEmpListActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPrintEmpListActionPerformed"/>
                       </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel28">
@@ -971,7 +971,7 @@
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="btnSaveDepartmentData" min="-2" pref="103" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jButton6" min="-2" pref="120" max="-2" attributes="0"/>
+                              <Component id="btnAddDepartment" min="-2" pref="120" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -981,7 +981,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jButton6" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="btnAddDepartment" alignment="0" max="32767" attributes="0"/>
                                   <Component id="btnSaveDepartmentData" alignment="0" max="32767" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
@@ -1009,12 +1009,12 @@
                         </Property>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JButton" name="jButton6">
+                    <Component class="javax.swing.JButton" name="btnAddDepartment">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Th&#xea;m m&#x1edb;i"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton6ActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddDepartmentActionPerformed"/>
                       </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="btnSaveDepartmentData">
@@ -1055,7 +1055,7 @@
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="jButton8" min="-2" pref="103" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jButton4" min="-2" pref="110" max="-2" attributes="0"/>
+                                              <Component id="btnPrintDpmList" min="-2" pref="110" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
                                               <Group type="103" groupAlignment="0" attributes="0">
@@ -1124,7 +1124,7 @@
                               <Component id="jScrollPane2" min="-2" pref="267" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jButton4" pref="35" max="32767" attributes="0"/>
+                                  <Component id="btnPrintDpmList" pref="35" max="32767" attributes="0"/>
                                   <Component id="jButton7" alignment="0" pref="35" max="32767" attributes="0"/>
                                   <Component id="jButton8" alignment="0" max="32767" attributes="0"/>
                               </Group>
@@ -1301,12 +1301,12 @@
                         <Property name="text" type="java.lang.String" value="Danh s&#xe1;ch c&#xe1;c ph&#xf2;ng:"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JButton" name="jButton4">
+                    <Component class="javax.swing.JButton" name="btnPrintDpmList">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Xu&#x1ea5;t PDF"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton4ActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPrintDpmListActionPerformed"/>
                       </Events>
                     </Component>
                   </SubComponents>
@@ -1371,7 +1371,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jButton9" min="-2" max="-2" attributes="0"/>
                               <EmptySpace pref="480" max="32767" attributes="0"/>
-                              <Component id="jButton10" min="-2" pref="120" max="-2" attributes="0"/>
+                              <Component id="btnAddPosition" min="-2" pref="120" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -1381,7 +1381,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jButton10" pref="31" max="32767" attributes="0"/>
+                                  <Component id="btnAddPosition" pref="31" max="32767" attributes="0"/>
                                   <Component id="jButton9" alignment="0" pref="0" max="32767" attributes="0"/>
                                   <Component id="jTextField3" alignment="0" pref="31" max="32767" attributes="0"/>
                               </Group>
@@ -1403,12 +1403,12 @@
                         </Property>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JButton" name="jButton10">
+                    <Component class="javax.swing.JButton" name="btnAddPosition">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Th&#xea;m m&#x1edb;i"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton10ActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddPositionActionPerformed"/>
                       </Events>
                     </Component>
                   </SubComponents>
@@ -1441,7 +1441,7 @@
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="jButton12" min="-2" pref="103" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jButton3" min="-2" pref="93" max="-2" attributes="0"/>
+                                              <Component id="btnPrintPosList" min="-2" pref="93" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
                                               <Group type="103" groupAlignment="0" attributes="0">
@@ -1492,7 +1492,7 @@
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="jButton11" alignment="0" pref="35" max="32767" attributes="0"/>
                                   <Component id="jButton12" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jButton3" max="32767" attributes="0"/>
+                                  <Component id="btnPrintPosList" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
@@ -1614,12 +1614,12 @@
                         </Component>
                       </SubComponents>
                     </Container>
-                    <Component class="javax.swing.JButton" name="jButton3">
+                    <Component class="javax.swing.JButton" name="btnPrintPosList">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Xu&#x1ea5;t PDF"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPrintPosListActionPerformed"/>
                       </Events>
                     </Component>
                   </SubComponents>
