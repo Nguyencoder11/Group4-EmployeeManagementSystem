@@ -14,7 +14,7 @@ public class Position {
     private String tenChucVu;   // ten chuc vu
     private String ghiChu;  // ghi chu
 
-    public Position(int idChucVu, String maChucVu, String tenChucVu, String ghiChu) {
+    public Position(int idChucVu, String tenChucVu, String ghiChu) {
         this.idChucVu = idChucVu;
         this.tenChucVu = tenChucVu;
         this.ghiChu = ghiChu;
