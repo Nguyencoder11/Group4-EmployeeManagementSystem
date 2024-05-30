@@ -3,6 +3,7 @@ package Admin;
 import Model.Department;
 import View.Login;
 import Model.Employee;
+import Model.Position;
 import java.util.List;
 import java.util.ArrayList;
 import java.awt.Image;
@@ -40,6 +41,7 @@ public class Admin extends javax.swing.JFrame {
     private String getFileName;
     private List<Employee> employeesList = new ArrayList<>();
     private List<Department> departmentList = new ArrayList<>();
+    private List<Position> positionList = new ArrayList<>();
     private DefaultTableModel employeeModel;
     private DefaultTableModel departmentModel;
     public Admin() {
@@ -1008,9 +1010,8 @@ public class Admin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                        .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                    .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -1044,6 +1045,11 @@ public class Admin extends javax.swing.JFrame {
         jButton9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jButton10.setText("Thêm mới");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
@@ -1064,9 +1070,8 @@ public class Admin extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
-                    .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jButton9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)))
+                    .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE))
                 .addContainerGap(8, Short.MAX_VALUE))
         );
 
@@ -1468,8 +1473,8 @@ public class Admin extends javax.swing.JFrame {
                 .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jCheckBox3)
                     .addGroup(jPanel22Layout.createSequentialGroup()
-                        .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel31)
+                        .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel31, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel32))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1480,9 +1485,9 @@ public class Admin extends javax.swing.JFrame {
                                             .addComponent(jLabel33)
                                             .addComponent(jCheckBox1))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(jLabel34)
-                                            .addComponent(jLabel36)))
+                                        .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel36, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel34)))
                                     .addComponent(jCheckBox2))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1500,8 +1505,8 @@ public class Admin extends javax.swing.JFrame {
                                             .addComponent(jCheckBox5)))
                                     .addGap(28, 28, 28))))))
                 .addGap(79, 79, 79)
-                .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel41)
+                .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel41, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel42))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -1539,17 +1544,15 @@ public class Admin extends javax.swing.JFrame {
                     .addComponent(jLabel48)
                     .addComponent(jCheckBox13))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel51)
-                    .addComponent(jCheckBox16))
+                .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jCheckBox16)
+                    .addComponent(jLabel51))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jCheckBox15)
                     .addGroup(jPanel22Layout.createSequentialGroup()
                         .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel22Layout.createSequentialGroup()
-                                .addGap(3, 3, 3)
-                                .addComponent(jLabel49))
+                            .addComponent(jLabel49)
                             .addComponent(jCheckBox14))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel50)))
@@ -1685,7 +1688,7 @@ public class Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnQuitClickedActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void btnAddEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddEmployeeActionPerformed
@@ -1695,8 +1698,12 @@ public class Admin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin!");
         }
         else{
-            addEmployeeList();
-            updateEmployeeTable();   
+            if(isCheckEmpID(Integer.parseInt(txtMaNV.getText()))){
+                JOptionPane.showMessageDialog(null, "Mã nhân viên này đã tồn tại. Vui lòng nhập mã nhân viên khác");
+            }else{
+                addEmployeeList();
+                updateEmployeeTable(); 
+            }
         }
     }//GEN-LAST:event_btnAddEmployeeActionPerformed
 
@@ -1720,8 +1727,7 @@ public class Admin extends javax.swing.JFrame {
                 }
                 else{
                     checkImg = false;
-                }
-                
+                }              
     }//GEN-LAST:event_jButton33ActionPerformed
 
     private void btnUpdateEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateEmployeeActionPerformed
@@ -1748,9 +1754,14 @@ public class Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSaveEmployeeDataActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        addDepartmentList();
-        insertCbxDepartmentFromEmployeeTable();
-        updateDepartmentTable();
+        if(isCheckDepartID(Integer.parseInt(txtDpmID.getText()))){
+            JOptionPane.showMessageDialog(null, "Mã phòng ban này đã tồn tại. Vui lòng nhập mã khác");
+        }
+        else{
+            addDepartmentList();
+            insertCbxDepartmentFromEmployeeTable();
+            updateDepartmentTable();
+        }
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
@@ -1798,6 +1809,14 @@ public class Admin extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        if(isCheckPosID(Integer.parseInt(txtPosID.getText()))){
+            JOptionPane.showMessageDialog(null, "Mã chức vụ này đã tồn tại. Vui lòng nhập mã khác");
+        }else{
+            
+        }
+    }//GEN-LAST:event_jButton10ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1961,4 +1980,31 @@ public class Admin extends javax.swing.JFrame {
     javax.swing.JTextField txtPositionName;
     javax.swing.JButton txtPrintEmpList;
     // End of variables declaration//GEN-END:variables
+
+    private boolean isCheckEmpID(int empID) {
+        for(Employee emp : employeesList){
+            if(emp.getEmployeeID() == empID){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    private boolean isCheckDepartID(int depID) {
+        for(Department dep : departmentList){
+            if(dep.getIdPhongBan()== depID){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    private boolean isCheckPosID(int posID) {
+        for(Position pos : positionList){
+            if(pos.getIdChucVu()== posID){
+                return true;
+            }
+        }
+        return false;
+    }
 }
