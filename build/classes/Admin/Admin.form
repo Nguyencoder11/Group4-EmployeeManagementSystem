@@ -1934,9 +1934,6 @@
                           </Properties>
                         </Component>
                         <Component class="javax.swing.JLabel" name="jLabel29">
-                          <Properties>
-                            <Property name="text" type="java.lang.String" value="jLabel29"/>
-                          </Properties>
                         </Component>
                         <Component class="javax.swing.JLabel" name="jLabel30">
                           <Properties>
