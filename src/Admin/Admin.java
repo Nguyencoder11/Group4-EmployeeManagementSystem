@@ -344,37 +344,37 @@ public class Admin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Lưu không thành công!");
         }
     }
-    
-    private void removePositionFromTable(){
+
+    private void removePositionFromTable() {
         int sr = tablePosition.getSelectedRow();
         List<Position> removeList = new ArrayList<>();
-        if(sr != -1){
+        if (sr != -1) {
             int id = Integer.parseInt(tablePosition.getValueAt(sr, 0).toString());
-            for(Position p : positionList){
-                if(p.getIdChucVu() == id){
+            for (Position p : positionList) {
+                if (p.getIdChucVu() == id) {
                     removeList.add(p);
                 }
             }
-            for(Position p : removeList){
+            for (Position p : removeList) {
                 positionList.remove(p);
             }
-            JOptionPane.showMessageDialog(null, "Xóa thành công!!");
-        }
-        else{
+        } else {
             JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 đối tượng!!");
         }
     }
-    
+
     private void addPositionList() {
         Position p = new Position(Integer.parseInt(txtPosID.getText()), txtPositionName.getText(), txtPosNote.getText());
         positionList.add(p);
     }
-    private boolean PosIsEmpty(){
-        if(txtPosID.getText().isEmpty() || txtPositionName.getText().isEmpty() || txtPosNote.getText().isEmpty()){
+
+    private boolean PosIsEmpty() {
+        if (txtPosID.getText().isEmpty() || txtPositionName.getText().isEmpty() || txtPosNote.getText().isEmpty()) {
             return true;
         }
         return false;
     }
+
     private boolean isCheckPosID(int posID) {
         for (Position pos : positionList) {
             if (pos.getIdChucVu() == posID) {
@@ -383,20 +383,18 @@ public class Admin extends javax.swing.JFrame {
         }
         return false;
     }
-    private void updatePositionTable(List<Position> x){
+
+    private void updatePositionTable(List<Position> x) {
         positionModel = (DefaultTableModel) tablePosition.getModel();
         positionModel.setRowCount(0);
-        for(Position p : x){
+        for (Position p : x) {
             positionModel.addRow(p.dataRows());
         }
     }
-  
-    
-     //=============================================================================================================================
-    //DEPARTMENT===================================================================================================================
-    
-     //=============================================================================================================================
 
+    //=============================================================================================================================
+    //DEPARTMENT===================================================================================================================
+    //=============================================================================================================================
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -978,12 +976,6 @@ public class Admin extends javax.swing.JFrame {
         jPanel13.setBackground(new java.awt.Color(255, 204, 255));
         jPanel13.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 51, 153), 2, true));
 
-        txtFindDepartment.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFindDepartmentActionPerformed(evt);
-            }
-        });
-
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/search.png"))); // NOI18N
         jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -1211,12 +1203,6 @@ public class Admin extends javax.swing.JFrame {
         jPanel15.setBackground(new java.awt.Color(255, 204, 255));
         jPanel15.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 51, 153), 2, true));
 
-        txtFindPosition.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFindPositionActionPerformed(evt);
-            }
-        });
-
         jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/search.png"))); // NOI18N
         jButton9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton9.addActionListener(new java.awt.event.ActionListener() {
@@ -1270,6 +1256,11 @@ public class Admin extends javax.swing.JFrame {
         jPanel16.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 102, 153), 2, true));
 
         jButton11.setText("Cập nhật");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
 
         jButton12.setText("Xóa");
         jButton12.addActionListener(new java.awt.event.ActionListener() {
@@ -1478,13 +1469,16 @@ public class Admin extends javax.swing.JFrame {
 
         jLabel22.setText("Chi tiết tài khoản");
 
-        jLabel29.setText("jLabel29");
-
         jLabel30.setText("Quyền tài khoản");
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Employee", " " }));
 
         jButton2.setText("Lưu");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -1925,8 +1919,8 @@ public class Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUploadActionPerformed
 
     private void btnUpdateEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateEmployeeActionPerformed
-        if(isEmployeeEmpty()){
-            
+        if (isEmployeeEmpty()) {
+
         }
     }//GEN-LAST:event_btnUpdateEmployeeActionPerformed
 
@@ -1945,12 +1939,16 @@ public class Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSaveEmployeeDataActionPerformed
 
     private void btnAddDepartmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDepartmentActionPerformed
-        if (isCheckDepartID(Integer.parseInt(txtDpmID.getText()))) {
-            JOptionPane.showMessageDialog(null, "Mã phòng ban này đã tồn tại. Vui lòng nhập mã khác");
+        if (txtDpmID.getText().isEmpty() || txtDepartmentName.getText().isEmpty() || txtDpmAddress.getText().isEmpty() || txtDpmPhoneNumber.getText().isEmpty() || txtDpmNote.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin!");
         } else {
-            addDepartmentList();
-            insertCbxDepartmentFromEmployeeTable();
-            updateDepartmentTable(departmentList);
+            if (isCheckDepartID(Integer.parseInt(txtDpmID.getText()))) {
+                JOptionPane.showMessageDialog(null, "Mã phòng ban này đã tồn tại. Vui lòng nhập mã khác");
+            } else {
+                addDepartmentList();
+                insertCbxDepartmentFromEmployeeTable();
+                updateDepartmentTable(departmentList);
+            }
         }
     }//GEN-LAST:event_btnAddDepartmentActionPerformed
 
@@ -2000,13 +1998,12 @@ public class Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPrintPosListActionPerformed
 
     private void btnAddPositionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPositionActionPerformed
-        if (isCheckPosID(Integer.parseInt(txtPosID.getText()))) {
-            JOptionPane.showMessageDialog(null, "Mã chức vụ này đã tồn tại. Vui lòng nhập mã khác");
+        if (PosIsEmpty()) {
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin!!");
         } else {
-            if(PosIsEmpty()){
-                JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin!!");
-            }
-            else{
+            if (isCheckPosID(Integer.parseInt(txtPosID.getText()))) {
+                JOptionPane.showMessageDialog(null, "Mã chức vụ này đã tồn tại. Vui lòng nhập mã khác");
+            } else {
                 addPositionList();
                 updatePositionTable(positionList);
                 JOptionPane.showMessageDialog(null, "Thêm thành công!!");
@@ -2014,10 +2011,9 @@ public class Admin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnAddPositionActionPerformed
 
-
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         int op = JOptionPane.showConfirmDialog(null, "Bạn có muốn lưu dữ liệu không?");
-        if(op == JOptionPane.YES_OPTION){
+        if (op == JOptionPane.YES_OPTION) {
             writePositiontToFile();
             JOptionPane.showMessageDialog(null, "Lưu thành công!!");
         }
@@ -2026,25 +2022,16 @@ public class Admin extends javax.swing.JFrame {
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
         removePositionFromTable();
         updatePositionTable(positionList);
-        
+
     }//GEN-LAST:event_jButton12ActionPerformed
 
-    private void txtFindPositionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFindPositionActionPerformed
-        
-    }//GEN-LAST:event_txtFindPositionActionPerformed
-
-    private void txtFindDepartmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFindDepartmentActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFindDepartmentActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if(txtFindEmployee.getText().isEmpty()){
+        if (txtFindEmployee.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Vui lòng nhập tên cần tìm!!");
-        }
-        else{
+        } else {
             List<Employee> findList = new ArrayList<>();
-            for(Employee e : employeesList){
-                if(e.getEmployeeName().equals(txtFindEmployee.getText())){
+            for (Employee e : employeesList) {
+                if (e.getEmployeeName().equals(txtFindEmployee.getText())) {
                     findList.add(e);
                 }
             }
@@ -2053,13 +2040,12 @@ public class Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        if(txtFindDepartment.getText().isEmpty()){
+        if (txtFindDepartment.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Vui lòng nhập tên cần tìm!!");
-        }
-        else{
+        } else {
             List<Department> findList = new ArrayList<>();
-            for(Department d : departmentList){
-                if(d.getTenPhongBan().equals(txtFindDepartment.getText())){
+            for (Department d : departmentList) {
+                if (d.getTenPhongBan().equals(txtFindDepartment.getText())) {
                     findList.add(d);
                 }
             }
@@ -2068,13 +2054,12 @@ public class Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        if(txtFindPosition.getText().isEmpty()){
+        if (txtFindPosition.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Vui lòng nhập tên cần tìm!!");
-        }
-        else{
+        } else {
             List<Position> findList = new ArrayList<>();
-            for(Position e : positionList){
-                if(e.getTenChucVu().equals(txtFindPosition.getText())){
+            for (Position e : positionList) {
+                if (e.getTenChucVu().equals(txtFindPosition.getText())) {
                     findList.add(e);
                 }
             }
@@ -2085,16 +2070,24 @@ public class Admin extends javax.swing.JFrame {
     private void jLabel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MousePressed
         updateEmployeeTable(employeesList);
         updateDepartmentTable(departmentList);
-        updatePositionTable(positionList);        
+        updatePositionTable(positionList);
     }//GEN-LAST:event_jLabel1MousePressed
 
     private void btnUpdateDepartmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateDepartmentActionPerformed
-        
+
     }//GEN-LAST:event_btnUpdateDepartmentActionPerformed
 
     private void txtFindEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFindEmployeeActionPerformed
         
     }//GEN-LAST:event_txtFindEmployeeActionPerformed
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        
+    }//GEN-LAST:event_jButton11ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     /**
@@ -2262,8 +2255,7 @@ public class Admin extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private boolean isEmployeeEmpty() {
-        
-        
+
         return true;
     }
 }
