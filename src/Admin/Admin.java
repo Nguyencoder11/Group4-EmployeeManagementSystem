@@ -330,7 +330,6 @@ public class Admin extends javax.swing.JFrame {
             for (Position p : removeList) {
                 positionList.remove(p);
             }
-            JOptionPane.showMessageDialog(null, "Xóa thành công!!");
         } else {
             JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 đối tượng!!");
         }
@@ -1177,12 +1176,6 @@ public class Admin extends javax.swing.JFrame {
         jPanel15.setBackground(new java.awt.Color(255, 204, 255));
         jPanel15.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 51, 153), 2, true));
 
-        txtFindPosition.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFindPositionActionPerformed(evt);
-            }
-        });
-
         jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/search.png"))); // NOI18N
         jButton9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton9.addActionListener(new java.awt.event.ActionListener() {
@@ -2005,10 +1998,6 @@ public class Admin extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton12ActionPerformed
 
-    private void txtFindPositionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFindPositionActionPerformed
-
-    }//GEN-LAST:event_txtFindPositionActionPerformed
-
     private void txtFindDepartmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFindDepartmentActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFindDepartmentActionPerformed
@@ -2066,11 +2055,11 @@ public class Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUpdateDepartmentActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jButton11ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
