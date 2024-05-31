@@ -1,5 +1,13 @@
 package Admin;
 
+import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
 import Model.Department;
 import View.Login;
 import Model.Employee;
@@ -34,6 +42,8 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import javax.annotation.processing.FilerException;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
 public class Admin extends javax.swing.JFrame {
@@ -58,6 +68,24 @@ public class Admin extends javax.swing.JFrame {
         updateEmployeeTable(employeesList);
         updateDepartmentTable(departmentList);
         updatePositionTable(positionList);
+        txtFindEmployee.getDocument().addDocumentListener(new DocumentListener(){
+            @Override
+            public void insertUpdate(DocumentEvent e){
+                
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                 if(txtFindEmployee.getText().isEmpty()){
+                    updateEmployeeTable(employeesList);
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+               
+            }
+        });
         insertCbxDepartmentFromEmployeeTable();
     }
 
@@ -580,6 +608,11 @@ public class Admin extends javax.swing.JFrame {
         jPanel11.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 51, 153), 2, true));
 
         txtFindEmployee.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        txtFindEmployee.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFindEmployeeActionPerformed(evt);
+            }
+        });
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/search.png"))); // NOI18N
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -2058,6 +2091,10 @@ public class Admin extends javax.swing.JFrame {
     private void btnUpdateDepartmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateDepartmentActionPerformed
         
     }//GEN-LAST:event_btnUpdateDepartmentActionPerformed
+
+    private void txtFindEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFindEmployeeActionPerformed
+        
+    }//GEN-LAST:event_txtFindEmployeeActionPerformed
 
 
     /**
