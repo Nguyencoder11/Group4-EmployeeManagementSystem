@@ -37,7 +37,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 public class Admin extends javax.swing.JFrame {
-
+    
     private boolean checkImg;
     private String getFileName;
     private List<Employee> employeesList = new ArrayList<>();
@@ -46,7 +46,7 @@ public class Admin extends javax.swing.JFrame {
     private DefaultTableModel employeeModel;
     private DefaultTableModel departmentModel;
     private DefaultTableModel positionModel;
-
+    
     public Admin() {
         initComponents();
         insertCbxDay();
@@ -67,7 +67,7 @@ public class Admin extends javax.swing.JFrame {
             BufferedReader reader = new BufferedReader(new FileReader("data\\employee.txt"));
             String line;
             while ((line = reader.readLine()) != null) {
-
+                
                 String[] parts = line.split(",");
                 Employee e = new Employee(Integer.parseInt(parts[0]), parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7], parts[8], Double.parseDouble(parts[9]), parts[10], parts[11], parts[12]);
                 employeesList.add(e);
@@ -77,12 +77,12 @@ public class Admin extends javax.swing.JFrame {
             Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     private void addEmployeeList() { //Thêm nhân viên vào list
         Employee e = new Employee(Integer.parseInt(txtMaNV.getText()), txtHoTen.getText(), birthDay.getSelectedItem() + "/" + birthMonth.getSelectedItem() + "/" + birthYear.getSelectedItem(), txtGender.getText(), txtHomeTown.getText(), txtPhoneNum.getText(), txtEmail.getText(), txtContactAddress.getText(), hireDate.getText(), Double.parseDouble(salary.getText()), CbxDepartmentFromET.getSelectedItem().toString(), txtPosition.getText(), "ImgEmployee\\\\" + getFileName);
         employeesList.add(e);
     }
-
+    
     private void removeEmployeeFromTable() { //Xóa nhân viên khỏi list và bảng
         int sr = tableEmployee.getSelectedRow();
         List<Employee> removeList = new ArrayList<>();
@@ -96,11 +96,13 @@ public class Admin extends javax.swing.JFrame {
             for (Employee e : removeList) {
                 employeesList.remove(e);
             }
+            updateEmployeeTable(employeesList);
+            JOptionPane.showMessageDialog(null, "Đã xóa một nhân viên thành công!!");
         } else {
             JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 đối tượng!");
         }
     }
-
+    
     private void writeEmployeeListToFile() { // Lưu dữ liệu vào file
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("data\\employee.txt", false));
@@ -117,7 +119,7 @@ public class Admin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Lưu không thành công!");
         }
     }
-
+    
     private void updateEmployeeTable(List<Employee> x) { // Cập nhật bảng sau khi chỉnh sửa
         employeeModel = (DefaultTableModel) tableEmployee.getModel();
         employeeModel.setRowCount(0);
@@ -126,7 +128,7 @@ public class Admin extends javax.swing.JFrame {
             employeeModel.addRow(dataRow);
         }
     }
-
+    
     public void insertCbxDay() {
         birthDay.removeAllItems();
         for (int i = 1; i <= 31; i++) {
@@ -134,7 +136,7 @@ public class Admin extends javax.swing.JFrame {
         }
         birthDay.setSelectedIndex(-1);
     }
-
+    
     public void insertCbxMonth() {
         birthMonth.removeAllItems();
         for (int i = 1; i <= 12; i++) {
@@ -142,7 +144,7 @@ public class Admin extends javax.swing.JFrame {
         }
         birthMonth.setSelectedIndex(-1);
     }
-
+    
     public void insertCbxYear() {
         birthYear.removeAllItems();
         for (int i = 1900; i <= Calendar.getInstance().get(Calendar.YEAR); i++) {
@@ -150,7 +152,7 @@ public class Admin extends javax.swing.JFrame {
         }
         birthYear.setSelectedIndex(-1);
     }
-
+    
     private void insertCbxDepartmentFromEmployeeTable() {
         CbxDepartmentFromET.removeAllItems();
         for (Department d : departmentList) {
@@ -158,21 +160,21 @@ public class Admin extends javax.swing.JFrame {
         }
         CbxDepartmentFromET.setSelectedItem(-1);
     }
-
+    
     private boolean checkDepartmentIsSelected() {
         if (CbxDepartmentFromET.getSelectedIndex() == -1) {
             return false;
         }
         return true;
     }
-
+    
     public boolean checkBirthdayIsSelected() {
         if (birthDay.getSelectedIndex() == -1 || birthMonth.getSelectedIndex() == -1 || birthYear.getSelectedIndex() == -1) {
             return false;
         }
         return true;
     }
-
+    
     private void saveImage(File imageFile) throws IOException {
         try {
             String folderPath = "ImgEmployee";
@@ -195,7 +197,7 @@ public class Admin extends javax.swing.JFrame {
             ex.printStackTrace();
         }
     }
-
+    
     private boolean isCheckEmpID(int empID) {
         for (Employee emp : employeesList) {
             if (emp.getEmployeeID() == empID) {
@@ -215,19 +217,19 @@ public class Admin extends javax.swing.JFrame {
                 String[] parts = line.split(",");
                 Department d = new Department(Integer.parseInt(parts[0]), parts[1], parts[2], parts[3], parts[4]);
                 departmentList.add(d);
-
+                
             }
             reader.close();
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Khởi tạo dữ liệu Department không thành công!");
         }
     }
-
+    
     private void addDepartmentList() {
         Department d = new Department(Integer.parseInt(txtDpmID.getText()), txtDepartmentName.getText(), txtDpmAddress.getText(), txtDpmPhoneNumber.getText(), txtDpmNote.getText());
         departmentList.add(d);
     }
-
+    
     private void removeDepartment() {
         int sr = tableDepartment.getSelectedRow();
         List<Department> removeList = new ArrayList<>();
@@ -241,11 +243,13 @@ public class Admin extends javax.swing.JFrame {
             for (Department d : removeList) {
                 departmentList.remove(d);
             }
+            updateDepartmentTable(departmentList);
+            JOptionPane.showMessageDialog(null, "Đã xoá phòng ban thành công!!");
         } else {
             JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 đối tượng!");
         }
     }
-
+    
     private void updateDepartmentTable(List<Department> x) {
         departmentModel = (DefaultTableModel) tableDepartment.getModel();
         departmentModel.setRowCount(0);
@@ -256,12 +260,12 @@ public class Admin extends javax.swing.JFrame {
                     countEmployee++;
                 }
             }
-
+            
             String[] datarow = {String.valueOf(d.getIdPhongBan()), d.getTenPhongBan(), d.getDiaChi(), d.getSdtPhong(), String.valueOf(countEmployee), d.getGhiChu()};
             departmentModel.addRow(datarow);
         }
     }
-
+    
     private void writeDepartmentToFile() {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("data\\department.txt"));
@@ -275,7 +279,7 @@ public class Admin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Lưu không thành công!");
         }
     }
-
+    
     private boolean isCheckDepartID(int depID) {
         for (Department dep : departmentList) {
             if (dep.getIdPhongBan() == depID) {
@@ -295,14 +299,14 @@ public class Admin extends javax.swing.JFrame {
                 String[] parts = line.split(",");
                 Position p = new Position(Integer.parseInt(parts[0]), parts[1], parts[2]);
                 positionList.add(p);
-
+                
             }
             reader.close();
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Khởi tạo dữ liệu Position không thành công!");
         }
     }
-
+    
     private void writePositiontToFile() {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("data\\position.txt"));
@@ -316,7 +320,7 @@ public class Admin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Lưu không thành công!");
         }
     }
-
+    
     private void removePositionFromTable() {
         int sr = tablePosition.getSelectedRow();
         List<Position> removeList = new ArrayList<>();
@@ -330,23 +334,25 @@ public class Admin extends javax.swing.JFrame {
             for (Position p : removeList) {
                 positionList.remove(p);
             }
+            updatePositionTable(positionList);
+            JOptionPane.showMessageDialog(null, "Đã xoá chức vụ thành công!!");
         } else {
             JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 đối tượng!!");
         }
     }
-
+    
     private void addPositionList() {
         Position p = new Position(Integer.parseInt(txtPosID.getText()), txtPositionName.getText(), txtPosNote.getText());
         positionList.add(p);
     }
-
+    
     private boolean PosIsEmpty() {
         if (txtPosID.getText().isEmpty() || txtPositionName.getText().isEmpty() || txtPosNote.getText().isEmpty()) {
             return true;
         }
         return false;
     }
-
+    
     private boolean isCheckPosID(int posID) {
         for (Position pos : positionList) {
             if (pos.getIdChucVu() == posID) {
@@ -355,7 +361,7 @@ public class Admin extends javax.swing.JFrame {
         }
         return false;
     }
-
+    
     private void updatePositionTable(List<Position> x) {
         positionModel = (DefaultTableModel) tablePosition.getModel();
         positionModel.setRowCount(0);
@@ -764,8 +770,6 @@ public class Admin extends javax.swing.JFrame {
         jLabel28.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel28.setText("Danh sách nhân viên:");
 
-        CbxDepartmentFromET.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
         jPanel12Layout.setHorizontalGroup(
@@ -942,6 +946,12 @@ public class Admin extends javax.swing.JFrame {
 
         jPanel13.setBackground(new java.awt.Color(255, 204, 255));
         jPanel13.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 51, 153), 2, true));
+
+        txtFindDepartment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFindDepartmentActionPerformed(evt);
+            }
+        });
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/search.png"))); // NOI18N
         jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -1859,6 +1869,8 @@ public class Admin extends javax.swing.JFrame {
             } else {
                 addEmployeeList();
                 updateEmployeeTable(employeesList);
+                clearEmployeeTextFields();
+                JOptionPane.showMessageDialog(null, "Thêm thành công!!");
             }
         }
     }//GEN-LAST:event_btnAddEmployeeActionPerformed
@@ -1879,7 +1891,7 @@ public class Admin extends javax.swing.JFrame {
             } catch (IOException ex) {
                 Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
             }
-
+            
         } else {
             checkImg = false;
         }
@@ -1887,13 +1899,12 @@ public class Admin extends javax.swing.JFrame {
 
     private void btnUpdateEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateEmployeeActionPerformed
         if (isEmployeeEmpty()) {
-
+            
         }
     }//GEN-LAST:event_btnUpdateEmployeeActionPerformed
 
     private void btnDeleteEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteEmployeeActionPerformed
         removeEmployeeFromTable();
-        updateEmployeeTable(employeesList);
     }//GEN-LAST:event_btnDeleteEmployeeActionPerformed
 
     private void btnSaveEmployeeDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveEmployeeDataActionPerformed
@@ -1915,6 +1926,8 @@ public class Admin extends javax.swing.JFrame {
                 addDepartmentList();
                 insertCbxDepartmentFromEmployeeTable();
                 updateDepartmentTable(departmentList);
+                clearDepartmentTextfields();
+                JOptionPane.showMessageDialog(null, "Thêm thành công!!");
             }
         }
     }//GEN-LAST:event_btnAddDepartmentActionPerformed
@@ -1922,7 +1935,6 @@ public class Admin extends javax.swing.JFrame {
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         removeDepartment();
         insertCbxDepartmentFromEmployeeTable();
-        updateDepartmentTable(departmentList);
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void btnSaveDepartmentDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveDepartmentDataActionPerformed
@@ -1973,6 +1985,7 @@ public class Admin extends javax.swing.JFrame {
             } else {
                 addPositionList();
                 updatePositionTable(positionList);
+                clearPositionTextFields();
                 JOptionPane.showMessageDialog(null, "Thêm thành công!!");
             }
         }
@@ -1988,8 +2001,6 @@ public class Admin extends javax.swing.JFrame {
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
         removePositionFromTable();
-        updatePositionTable(positionList);
-
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -2052,17 +2063,21 @@ public class Admin extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void txtFindDepartmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFindDepartmentActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFindDepartmentActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Admin().setVisible(true);
             }
         });
-
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -2217,7 +2232,39 @@ public class Admin extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private boolean isEmployeeEmpty() {
-
+        
         return true;
+    }
+    
+    private void clearEmployeeTextFields() {
+        txtMaNV.setText(null);
+        txtHoTen.setText(null);
+        txtHomeTown.setText(null);
+        txtGender.setText(null);
+        txtEmail.setText(null);
+        txtContactAddress.setText(null);
+        hireDate.setText(null);
+        salary.setText(null);
+        txtPosition.setText(null);
+        txtPhoneNum.setText(null);
+        labelImg.setIcon(null);
+        CbxDepartmentFromET.setSelectedIndex(0);
+        birthDay.setSelectedIndex(-1);
+        birthMonth.setSelectedIndex(-1);
+        birthYear.setSelectedIndex(-1);
+    }
+    
+    private void clearDepartmentTextfields() {
+        txtDpmID.setText(null);
+        txtDepartmentName.setText(null);
+        txtDpmAddress.setText(null);
+        txtDpmPhoneNumber.setText(null);
+        txtDpmNote.setText(null);
+    }
+
+    private void clearPositionTextFields() {
+        txtPosID.setText(null);
+        txtPositionName.setText(null);
+        txtPosNote.setText(null);
     }
 }
