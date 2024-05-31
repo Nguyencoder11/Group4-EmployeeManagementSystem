@@ -429,7 +429,7 @@ public class Admin extends javax.swing.JFrame {
         btnAddDepartment = new javax.swing.JButton();
         btnSaveDepartmentData = new javax.swing.JButton();
         jPanel14 = new javax.swing.JPanel();
-        jButton7 = new javax.swing.JButton();
+        btnUpdateDepartment = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tableDepartment = new javax.swing.JTable();
@@ -766,12 +766,6 @@ public class Admin extends javax.swing.JFrame {
         jLabel28.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel28.setText("Danh sách nhân viên:");
 
-        birthDay.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                birthDayActionPerformed(evt);
-            }
-        });
-
         CbxDepartmentFromET.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
@@ -1012,7 +1006,12 @@ public class Admin extends javax.swing.JFrame {
         jPanel14.setBackground(new java.awt.Color(255, 204, 255));
         jPanel14.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 102, 153), 2, true));
 
-        jButton7.setText("Cập nhật");
+        btnUpdateDepartment.setText("Cập nhật");
+        btnUpdateDepartment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateDepartmentActionPerformed(evt);
+            }
+        });
 
         jButton8.setText("Xóa");
         jButton8.addActionListener(new java.awt.event.ActionListener() {
@@ -1091,7 +1090,7 @@ public class Admin extends javax.swing.JFrame {
                     .addGroup(jPanel14Layout.createSequentialGroup()
                         .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel14Layout.createSequentialGroup()
-                                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnUpdateDepartment, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1148,7 +1147,7 @@ public class Admin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnPrintDpmList, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                    .addComponent(btnUpdateDepartment, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
                     .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -1893,12 +1892,10 @@ public class Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUploadActionPerformed
 
     private void btnUpdateEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateEmployeeActionPerformed
-        // TODO add your handling code here:
+        if(isEmployeeEmpty()){
+            
+        }
     }//GEN-LAST:event_btnUpdateEmployeeActionPerformed
-
-    private void birthDayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_birthDayActionPerformed
-
-    }//GEN-LAST:event_birthDayActionPerformed
 
     private void btnDeleteEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteEmployeeActionPerformed
         removeEmployeeFromTable();
@@ -1984,6 +1981,7 @@ public class Admin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnAddPositionActionPerformed
 
+<<<<<<< HEAD
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         int op = JOptionPane.showConfirmDialog(null, "Bạn có muốn lưu dữ liệu không?");
         if(op == JOptionPane.YES_OPTION){
@@ -2056,6 +2054,11 @@ public class Admin extends javax.swing.JFrame {
         updateDepartmentTable(departmentList);
         updatePositionTable(positionList);        
     }//GEN-LAST:event_jLabel1MousePressed
+=======
+    private void btnUpdateDepartmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateDepartmentActionPerformed
+        
+    }//GEN-LAST:event_btnUpdateDepartmentActionPerformed
+>>>>>>> 47dfa8e2b0db79b00c5eaeee7981be6f3584aea2
 
     /**
      * @param args the command line arguments
@@ -2085,6 +2088,7 @@ public class Admin extends javax.swing.JFrame {
     javax.swing.JButton btnQuitClicked;
     javax.swing.JButton btnSaveDepartmentData;
     javax.swing.JButton btnSaveEmployeeData;
+    javax.swing.JButton btnUpdateDepartment;
     javax.swing.JButton btnUpdateEmployee;
     javax.swing.JButton btnUpload;
     javax.swing.JTextField hireDate;
@@ -2094,7 +2098,6 @@ public class Admin extends javax.swing.JFrame {
     javax.swing.JButton jButton2;
     javax.swing.JButton jButton3;
     javax.swing.JButton jButton5;
-    javax.swing.JButton jButton7;
     javax.swing.JButton jButton8;
     javax.swing.JButton jButton9;
     javax.swing.JCheckBox jCheckBox1;
@@ -2220,4 +2223,10 @@ public class Admin extends javax.swing.JFrame {
     javax.swing.JTextField txtPosition;
     javax.swing.JTextField txtPositionName;
     // End of variables declaration//GEN-END:variables
+
+    private boolean isEmployeeEmpty() {
+        
+        
+        return true;
+    }
 }
