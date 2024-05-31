@@ -1237,6 +1237,11 @@ public class Admin extends javax.swing.JFrame {
         jPanel16.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 102, 153), 2, true));
 
         jButton11.setText("Cập nhật");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
 
         jButton12.setText("Xóa");
         jButton12.addActionListener(new java.awt.event.ActionListener() {
@@ -1452,6 +1457,11 @@ public class Admin extends javax.swing.JFrame {
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Employee", " " }));
 
         jButton2.setText("Lưu");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -1981,7 +1991,6 @@ public class Admin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnAddPositionActionPerformed
 
-<<<<<<< HEAD
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         int op = JOptionPane.showConfirmDialog(null, "Bạn có muốn lưu dữ liệu không?");
         if(op == JOptionPane.YES_OPTION){
@@ -2054,11 +2063,19 @@ public class Admin extends javax.swing.JFrame {
         updateDepartmentTable(departmentList);
         updatePositionTable(positionList);        
     }//GEN-LAST:event_jLabel1MousePressed
-=======
+
     private void btnUpdateDepartmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateDepartmentActionPerformed
         
     }//GEN-LAST:event_btnUpdateDepartmentActionPerformed
->>>>>>> 47dfa8e2b0db79b00c5eaeee7981be6f3584aea2
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton11ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     /**
      * @param args the command line arguments
