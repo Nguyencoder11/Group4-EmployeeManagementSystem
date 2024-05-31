@@ -43,4 +43,11 @@ public class Position {
     public void setGhiChu(String ghiChu) {
         this.ghiChu = ghiChu;
     }
+    public String[] dataRows(){
+        return new String[]{String.valueOf(this.idChucVu), this.tenChucVu, this.ghiChu};
+    }
+    
+    public String data(){
+        return this.idChucVu + "," + this.tenChucVu + "," + this.ghiChu;
+    }
 }
