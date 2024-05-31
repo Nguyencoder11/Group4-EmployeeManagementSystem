@@ -1981,7 +1981,7 @@ public class Admin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnAddPositionActionPerformed
 
-<<<<<<< HEAD
+
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         int op = JOptionPane.showConfirmDialog(null, "Bạn có muốn lưu dữ liệu không?");
         if(op == JOptionPane.YES_OPTION){
@@ -2054,11 +2054,11 @@ public class Admin extends javax.swing.JFrame {
         updateDepartmentTable(departmentList);
         updatePositionTable(positionList);        
     }//GEN-LAST:event_jLabel1MousePressed
-=======
+
     private void btnUpdateDepartmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateDepartmentActionPerformed
         
     }//GEN-LAST:event_btnUpdateDepartmentActionPerformed
->>>>>>> 47dfa8e2b0db79b00c5eaeee7981be6f3584aea2
+
 
     /**
      * @param args the command line arguments
