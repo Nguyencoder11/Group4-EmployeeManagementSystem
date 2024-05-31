@@ -980,12 +980,6 @@ public class Admin extends javax.swing.JFrame {
         jPanel13.setBackground(new java.awt.Color(255, 204, 255));
         jPanel13.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 51, 153), 2, true));
 
-        txtFindDepartment.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFindDepartmentActionPerformed(evt);
-            }
-        });
-
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/search.png"))); // NOI18N
         jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -2099,13 +2093,6 @@ public class Admin extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         
     }//GEN-LAST:event_jButton2ActionPerformed
-
-<<<<<<< HEAD
-    private void txtFindDepartmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFindDepartmentActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFindDepartmentActionPerformed
-=======
->>>>>>> f99981f207345e97cc636f024524d0a1ec77b55f
 
     /**
      * @param args the command line arguments

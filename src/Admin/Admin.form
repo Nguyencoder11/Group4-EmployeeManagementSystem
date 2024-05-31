@@ -984,9 +984,6 @@
                   </Layout>
                   <SubComponents>
                     <Component class="javax.swing.JTextField" name="txtFindDepartment">
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtFindDepartmentActionPerformed"/>
-                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="jButton5">
                       <Properties>
