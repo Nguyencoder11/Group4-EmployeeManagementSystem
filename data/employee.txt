@@ -1,2 +1,3 @@
 100,Trần Hiếu Trung,19/12/2003,Nam,Hưng yên,0345695203,t.hieutrung2k3@gmail.com,Hưng Yên,2/2/2021,500.0,IT,ITer,ImgEmployee\\img3.jpg
 101,Nguyễn Thị Phương Thảo,6/6/2003,Nữ,Hà Nội,0234223223,pthao@gmai.com,Hà Nội,14/2/2018,300.0,Kế Toán,nhân viên,ImgEmployee\\avarta1.png
+102,Nông Quốc Mạnh,6/7/2003,Nam ,Lạng sơn,023782372,manhngo@gmail.com,Lạng sơn,21/7/2015,100.0,Kế Toán,Trưởng phòng,ImgEmployee\\DDT00302.jpg

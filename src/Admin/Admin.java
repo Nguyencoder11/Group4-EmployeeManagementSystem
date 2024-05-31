@@ -316,37 +316,37 @@ public class Admin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Lưu không thành công!");
         }
     }
-    
-    private void removePositionFromTable(){
+
+    private void removePositionFromTable() {
         int sr = tablePosition.getSelectedRow();
         List<Position> removeList = new ArrayList<>();
-        if(sr != -1){
+        if (sr != -1) {
             int id = Integer.parseInt(tablePosition.getValueAt(sr, 0).toString());
-            for(Position p : positionList){
-                if(p.getIdChucVu() == id){
+            for (Position p : positionList) {
+                if (p.getIdChucVu() == id) {
                     removeList.add(p);
                 }
             }
-            for(Position p : removeList){
+            for (Position p : removeList) {
                 positionList.remove(p);
             }
-            JOptionPane.showMessageDialog(null, "Xóa thành công!!");
-        }
-        else{
+        } else {
             JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 đối tượng!!");
         }
     }
-    
+
     private void addPositionList() {
         Position p = new Position(Integer.parseInt(txtPosID.getText()), txtPositionName.getText(), txtPosNote.getText());
         positionList.add(p);
     }
-    private boolean PosIsEmpty(){
-        if(txtPosID.getText().isEmpty() || txtPositionName.getText().isEmpty() || txtPosNote.getText().isEmpty()){
+
+    private boolean PosIsEmpty() {
+        if (txtPosID.getText().isEmpty() || txtPositionName.getText().isEmpty() || txtPosNote.getText().isEmpty()) {
             return true;
         }
         return false;
     }
+
     private boolean isCheckPosID(int posID) {
         for (Position pos : positionList) {
             if (pos.getIdChucVu() == posID) {
@@ -355,20 +355,18 @@ public class Admin extends javax.swing.JFrame {
         }
         return false;
     }
-    private void updatePositionTable(List<Position> x){
+
+    private void updatePositionTable(List<Position> x) {
         positionModel = (DefaultTableModel) tablePosition.getModel();
         positionModel.setRowCount(0);
-        for(Position p : x){
+        for (Position p : x) {
             positionModel.addRow(p.dataRows());
         }
     }
-  
-    
-     //=============================================================================================================================
-    //DEPARTMENT===================================================================================================================
-    
-     //=============================================================================================================================
 
+    //=============================================================================================================================
+    //DEPARTMENT===================================================================================================================
+    //=============================================================================================================================
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -382,7 +380,7 @@ public class Admin extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
         txtFindEmployee = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnSearchEmpByName = new javax.swing.JButton();
         btnAddEmployee = new javax.swing.JButton();
         btnSaveEmployeeData = new javax.swing.JButton();
         jPanel12 = new javax.swing.JPanel();
@@ -425,12 +423,12 @@ public class Admin extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jPanel13 = new javax.swing.JPanel();
         txtFindDepartment = new javax.swing.JTextField();
-        jButton5 = new javax.swing.JButton();
+        btnSearchDpmByName = new javax.swing.JButton();
         btnAddDepartment = new javax.swing.JButton();
         btnSaveDepartmentData = new javax.swing.JButton();
         jPanel14 = new javax.swing.JPanel();
         btnUpdateDepartment = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
+        btnDeleteDpm = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tableDepartment = new javax.swing.JTable();
         jLabel15 = new javax.swing.JLabel();
@@ -449,12 +447,12 @@ public class Admin extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jPanel15 = new javax.swing.JPanel();
         txtFindPosition = new javax.swing.JTextField();
-        jButton9 = new javax.swing.JButton();
+        btnSearchPosByName = new javax.swing.JButton();
         btnAddPosition = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jPanel16 = new javax.swing.JPanel();
-        jButton11 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
+        btnUpdatePos = new javax.swing.JButton();
+        btnDeletePos = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         tablePosition = new javax.swing.JTable();
         jLabel21 = new javax.swing.JLabel();
@@ -581,11 +579,11 @@ public class Admin extends javax.swing.JFrame {
 
         txtFindEmployee.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/search.png"))); // NOI18N
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnSearchEmpByName.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/search.png"))); // NOI18N
+        btnSearchEmpByName.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSearchEmpByName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnSearchEmpByNameActionPerformed(evt);
             }
         });
 
@@ -613,7 +611,7 @@ public class Admin extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addComponent(txtFindEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(btnSearchEmpByName)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnSaveEmployeeData, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -628,7 +626,7 @@ public class Admin extends javax.swing.JFrame {
                     .addComponent(btnSaveEmployeeData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSearchEmpByName, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtFindEmployee))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(btnAddEmployee, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -945,17 +943,11 @@ public class Admin extends javax.swing.JFrame {
         jPanel13.setBackground(new java.awt.Color(255, 204, 255));
         jPanel13.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 51, 153), 2, true));
 
-        txtFindDepartment.addActionListener(new java.awt.event.ActionListener() {
+        btnSearchDpmByName.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/search.png"))); // NOI18N
+        btnSearchDpmByName.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSearchDpmByName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFindDepartmentActionPerformed(evt);
-            }
-        });
-
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/search.png"))); // NOI18N
-        jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                btnSearchDpmByNameActionPerformed(evt);
             }
         });
 
@@ -981,7 +973,7 @@ public class Admin extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addComponent(txtFindDepartment, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton5)
+                .addComponent(btnSearchDpmByName)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnSaveDepartmentData, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -997,7 +989,7 @@ public class Admin extends javax.swing.JFrame {
                     .addComponent(btnSaveDepartmentData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel13Layout.createSequentialGroup()
                         .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jButton5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(btnSearchDpmByName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addComponent(txtFindDepartment, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -1013,10 +1005,10 @@ public class Admin extends javax.swing.JFrame {
             }
         });
 
-        jButton8.setText("Xóa");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        btnDeleteDpm.setText("Xóa");
+        btnDeleteDpm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                btnDeleteDpmActionPerformed(evt);
             }
         });
 
@@ -1092,7 +1084,7 @@ public class Admin extends javax.swing.JFrame {
                             .addGroup(jPanel14Layout.createSequentialGroup()
                                 .addComponent(btnUpdateDepartment, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnDeleteDpm, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnPrintDpmList, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel14Layout.createSequentialGroup()
@@ -1148,7 +1140,7 @@ public class Admin extends javax.swing.JFrame {
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnPrintDpmList, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
                     .addComponent(btnUpdateDepartment, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnDeleteDpm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -1178,17 +1170,11 @@ public class Admin extends javax.swing.JFrame {
         jPanel15.setBackground(new java.awt.Color(255, 204, 255));
         jPanel15.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 51, 153), 2, true));
 
-        txtFindPosition.addActionListener(new java.awt.event.ActionListener() {
+        btnSearchPosByName.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/search.png"))); // NOI18N
+        btnSearchPosByName.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSearchPosByName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFindPositionActionPerformed(evt);
-            }
-        });
-
-        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/search.png"))); // NOI18N
-        jButton9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
+                btnSearchPosByNameActionPerformed(evt);
             }
         });
 
@@ -1214,7 +1200,7 @@ public class Admin extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addComponent(txtFindPosition, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton9)
+                .addComponent(btnSearchPosByName)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -1228,7 +1214,7 @@ public class Admin extends javax.swing.JFrame {
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
                     .addComponent(btnAddPosition, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
-                    .addComponent(jButton9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(btnSearchPosByName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(txtFindPosition, javax.swing.GroupLayout.Alignment.LEADING))
                 .addContainerGap(8, Short.MAX_VALUE))
         );
@@ -1236,17 +1222,17 @@ public class Admin extends javax.swing.JFrame {
         jPanel16.setBackground(new java.awt.Color(255, 204, 255));
         jPanel16.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 102, 153), 2, true));
 
-        jButton11.setText("Cập nhật");
-        jButton11.addActionListener(new java.awt.event.ActionListener() {
+        btnUpdatePos.setText("Cập nhật");
+        btnUpdatePos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton11ActionPerformed(evt);
+                btnUpdatePosActionPerformed(evt);
             }
         });
 
-        jButton12.setText("Xóa");
-        jButton12.addActionListener(new java.awt.event.ActionListener() {
+        btnDeletePos.setText("Xóa");
+        btnDeletePos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton12ActionPerformed(evt);
+                btnDeletePosActionPerformed(evt);
             }
         });
 
@@ -1307,9 +1293,9 @@ public class Admin extends javax.swing.JFrame {
                     .addGroup(jPanel16Layout.createSequentialGroup()
                         .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel16Layout.createSequentialGroup()
-                                .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnUpdatePos, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnDeletePos, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnPrintPosList, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel16Layout.createSequentialGroup()
@@ -1339,16 +1325,14 @@ public class Admin extends javax.swing.JFrame {
                     .addComponent(txtPositionName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel16Layout.createSequentialGroup()
-                        .addComponent(jLabel24)
-                        .addGap(0, 66, Short.MAX_VALUE))
-                    .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                    .addComponent(jLabel24)
+                    .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton11, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(jButton12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnUpdatePos, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                    .addComponent(btnDeletePos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnPrintPosList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -1875,6 +1859,7 @@ public class Admin extends javax.swing.JFrame {
             } else {
                 addEmployeeList();
                 updateEmployeeTable(employeesList);
+                JOptionPane.showMessageDialog(null, "Thêm thành công!!");
             }
         }
     }//GEN-LAST:event_btnAddEmployeeActionPerformed
@@ -1902,8 +1887,8 @@ public class Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUploadActionPerformed
 
     private void btnUpdateEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateEmployeeActionPerformed
-        if(isEmployeeEmpty()){
-            
+        if (isEmployeeEmpty()) {
+
         }
     }//GEN-LAST:event_btnUpdateEmployeeActionPerformed
 
@@ -1922,20 +1907,25 @@ public class Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSaveEmployeeDataActionPerformed
 
     private void btnAddDepartmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDepartmentActionPerformed
-        if (isCheckDepartID(Integer.parseInt(txtDpmID.getText()))) {
-            JOptionPane.showMessageDialog(null, "Mã phòng ban này đã tồn tại. Vui lòng nhập mã khác");
+        if (txtDpmID.getText().isEmpty() || txtDepartmentName.getText().isEmpty() || txtDpmAddress.getText().isEmpty() || txtDpmPhoneNumber.getText().isEmpty() || txtDpmNote.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin!");
         } else {
-            addDepartmentList();
-            insertCbxDepartmentFromEmployeeTable();
-            updateDepartmentTable(departmentList);
+            if (isCheckDepartID(Integer.parseInt(txtDpmID.getText()))) {
+                JOptionPane.showMessageDialog(null, "Mã phòng ban này đã tồn tại. Vui lòng nhập mã khác");
+            } else {
+                addDepartmentList();
+                insertCbxDepartmentFromEmployeeTable();
+                updateDepartmentTable(departmentList);
+                JOptionPane.showMessageDialog(null, "Thêm thành công!!");
+            }
         }
     }//GEN-LAST:event_btnAddDepartmentActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+    private void btnDeleteDpmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteDpmActionPerformed
         removeDepartment();
         insertCbxDepartmentFromEmployeeTable();
         updateDepartmentTable(departmentList);
-    }//GEN-LAST:event_jButton8ActionPerformed
+    }//GEN-LAST:event_btnDeleteDpmActionPerformed
 
     private void btnSaveDepartmentDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveDepartmentDataActionPerformed
         int op = JOptionPane.showConfirmDialog(null, "Bạn có muốn lưu dữ liệu?");
@@ -1977,13 +1967,12 @@ public class Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPrintPosListActionPerformed
 
     private void btnAddPositionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPositionActionPerformed
-        if (isCheckPosID(Integer.parseInt(txtPosID.getText()))) {
-            JOptionPane.showMessageDialog(null, "Mã chức vụ này đã tồn tại. Vui lòng nhập mã khác");
+        if (PosIsEmpty()) {
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin!!");
         } else {
-            if(PosIsEmpty()){
-                JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin!!");
-            }
-            else{
+            if (isCheckPosID(Integer.parseInt(txtPosID.getText()))) {
+                JOptionPane.showMessageDialog(null, "Mã chức vụ này đã tồn tại. Vui lòng nhập mã khác");
+            } else {
                 addPositionList();
                 updatePositionTable(positionList);
                 JOptionPane.showMessageDialog(null, "Thêm thành công!!");
@@ -1993,89 +1982,76 @@ public class Admin extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         int op = JOptionPane.showConfirmDialog(null, "Bạn có muốn lưu dữ liệu không?");
-        if(op == JOptionPane.YES_OPTION){
+        if (op == JOptionPane.YES_OPTION) {
             writePositiontToFile();
             JOptionPane.showMessageDialog(null, "Lưu thành công!!");
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+    private void btnDeletePosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletePosActionPerformed
         removePositionFromTable();
-        updatePositionTable(positionList);
-        
-    }//GEN-LAST:event_jButton12ActionPerformed
+        updatePositionTable(positionList);     
+    }//GEN-LAST:event_btnDeletePosActionPerformed
 
-    private void txtFindPositionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFindPositionActionPerformed
-        
-    }//GEN-LAST:event_txtFindPositionActionPerformed
-
-    private void txtFindDepartmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFindDepartmentActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFindDepartmentActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if(txtFindEmployee.getText().isEmpty()){
+    private void btnSearchEmpByNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchEmpByNameActionPerformed
+        if (txtFindEmployee.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Vui lòng nhập tên cần tìm!!");
-        }
-        else{
+        } else {
             List<Employee> findList = new ArrayList<>();
-            for(Employee e : employeesList){
-                if(e.getEmployeeName().equals(txtFindEmployee.getText())){
+            for (Employee e : employeesList) {
+                if (e.getEmployeeName().equals(txtFindEmployee.getText())) {
                     findList.add(e);
                 }
             }
             updateEmployeeTable(findList);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnSearchEmpByNameActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        if(txtFindDepartment.getText().isEmpty()){
+    private void btnSearchDpmByNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchDpmByNameActionPerformed
+        if (txtFindDepartment.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Vui lòng nhập tên cần tìm!!");
-        }
-        else{
+        } else {
             List<Department> findList = new ArrayList<>();
-            for(Department d : departmentList){
-                if(d.getTenPhongBan().equals(txtFindDepartment.getText())){
+            for (Department d : departmentList) {
+                if (d.getTenPhongBan().equals(txtFindDepartment.getText())) {
                     findList.add(d);
                 }
             }
             updateDepartmentTable(findList);
         }
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_btnSearchDpmByNameActionPerformed
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        if(txtFindPosition.getText().isEmpty()){
+    private void btnSearchPosByNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchPosByNameActionPerformed
+        if (txtFindPosition.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Vui lòng nhập tên cần tìm!!");
-        }
-        else{
+        } else {
             List<Position> findList = new ArrayList<>();
-            for(Position e : positionList){
-                if(e.getTenChucVu().equals(txtFindPosition.getText())){
+            for (Position e : positionList) {
+                if (e.getTenChucVu().equals(txtFindPosition.getText())) {
                     findList.add(e);
                 }
             }
             updatePositionTable(findList);
         }
-    }//GEN-LAST:event_jButton9ActionPerformed
+    }//GEN-LAST:event_btnSearchPosByNameActionPerformed
 
     private void jLabel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MousePressed
         updateEmployeeTable(employeesList);
         updateDepartmentTable(departmentList);
-        updatePositionTable(positionList);        
+        updatePositionTable(positionList);
     }//GEN-LAST:event_jLabel1MousePressed
 
     private void btnUpdateDepartmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateDepartmentActionPerformed
-        
+
     }//GEN-LAST:event_btnUpdateDepartmentActionPerformed
 
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton11ActionPerformed
+    private void btnUpdatePosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdatePosActionPerformed
+        
+    }//GEN-LAST:event_btnUpdatePosActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
-
 
     /**
      * @param args the command line arguments
@@ -2098,25 +2074,25 @@ public class Admin extends javax.swing.JFrame {
     javax.swing.JButton btnAddDepartment;
     javax.swing.JButton btnAddEmployee;
     javax.swing.JButton btnAddPosition;
+    javax.swing.JButton btnDeleteDpm;
     javax.swing.JButton btnDeleteEmployee;
+    javax.swing.JButton btnDeletePos;
     javax.swing.JButton btnPrintDpmList;
     javax.swing.JButton btnPrintEmpList;
     javax.swing.JButton btnPrintPosList;
     javax.swing.JButton btnQuitClicked;
     javax.swing.JButton btnSaveDepartmentData;
     javax.swing.JButton btnSaveEmployeeData;
+    javax.swing.JButton btnSearchDpmByName;
+    javax.swing.JButton btnSearchEmpByName;
+    javax.swing.JButton btnSearchPosByName;
     javax.swing.JButton btnUpdateDepartment;
     javax.swing.JButton btnUpdateEmployee;
+    javax.swing.JButton btnUpdatePos;
     javax.swing.JButton btnUpload;
     javax.swing.JTextField hireDate;
-    javax.swing.JButton jButton1;
-    javax.swing.JButton jButton11;
-    javax.swing.JButton jButton12;
     javax.swing.JButton jButton2;
     javax.swing.JButton jButton3;
-    javax.swing.JButton jButton5;
-    javax.swing.JButton jButton8;
-    javax.swing.JButton jButton9;
     javax.swing.JCheckBox jCheckBox1;
     javax.swing.JCheckBox jCheckBox10;
     javax.swing.JCheckBox jCheckBox11;
@@ -2242,8 +2218,7 @@ public class Admin extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private boolean isEmployeeEmpty() {
-        
-        
+
         return true;
     }
 }
