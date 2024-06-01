@@ -75,10 +75,14 @@ public class Admin extends javax.swing.JFrame {
         updateDepartmentTable(departmentList);
         updatePositionTable(positionList);
         updateAccountTable(accountList);
+        insertCbxDepartmentFromEmployeeTable();
         txtFindEmployee.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
+            }
 
+            @Override
+            public void changedUpdate(DocumentEvent e) {
             }
 
             @Override
@@ -87,13 +91,39 @@ public class Admin extends javax.swing.JFrame {
                     updateEmployeeTable(employeesList);
                 }
             }
+        });
+        txtFindDepartment.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+            }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
+            }
 
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                if (txtFindDepartment.getText().isEmpty()) {
+                    updateDepartmentTable(departmentList);
+                }
             }
         });
-        insertCbxDepartmentFromEmployeeTable();
+        txtFindPosition.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                if (txtFindPosition.getText().isEmpty()) {
+                    updatePositionTable(positionList);
+                }
+            }
+        });
     }
 
     //EMPLOYEE====================================================================================================================
@@ -423,6 +453,20 @@ public class Admin extends javax.swing.JFrame {
         }
     }
 
+    private void writeAccountToFile() {
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("data\\account.txt", false));
+            for (Account acc : accountList) {
+                String data = acc.getUsername() + "," + acc.getPassword() + "," + acc.getAccType();
+                writer.write(data);
+                writer.newLine();
+            }
+            writer.close();
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Lưu không thành công!");
+        }
+    }
+
     private void updateAccountTable(List<Account> accountList) {
         accountModel = (DefaultTableModel) tblAccountDivide.getModel();
         accountModel.setRowCount(0);
@@ -595,11 +639,6 @@ public class Admin extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("QUẢN TRỊ");
-        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel1MousePressed(evt);
-            }
-        });
 
         btnQuitClicked.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/quit.png"))); // NOI18N
         btnQuitClicked.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -643,11 +682,6 @@ public class Admin extends javax.swing.JFrame {
         jPanel11.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 51, 153), 2, true));
 
         txtFindEmployee.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        txtFindEmployee.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFindEmployeeActionPerformed(evt);
-            }
-        });
 
         btnSearchEmp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/search.png"))); // NOI18N
         btnSearchEmp.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -2120,8 +2154,9 @@ public class Admin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Vui lòng nhập tên cần tìm!!");
         } else {
             List<Employee> findList = new ArrayList<>();
+            String searchText = txtFindEmployee.getText().trim().toLowerCase();
             for (Employee e : employeesList) {
-                if (e.getEmployeeName().equals(txtFindEmployee.getText())) {
+                if (e.getEmployeeName().toLowerCase().contains(searchText)) {
                     findList.add(e);
                 }
             }
@@ -2134,8 +2169,9 @@ public class Admin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Vui lòng nhập tên cần tìm!!");
         } else {
             List<Department> findList = new ArrayList<>();
+            String searchText = txtFindDepartment.getText().trim().toLowerCase();
             for (Department d : departmentList) {
-                if (d.getTenPhongBan().equals(txtFindDepartment.getText())) {
+                if (d.getTenPhongBan().toLowerCase().contains(searchText)) {
                     findList.add(d);
                 }
             }
@@ -2148,20 +2184,15 @@ public class Admin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Vui lòng nhập tên cần tìm!!");
         } else {
             List<Position> findList = new ArrayList<>();
+            String searchText = txtFindPosition.getText().trim().toLowerCase();
             for (Position e : positionList) {
-                if (e.getTenChucVu().equals(txtFindPosition.getText())) {
+                if (e.getTenChucVu().toLowerCase().contains(searchText)) {
                     findList.add(e);
                 }
             }
             updatePositionTable(findList);
         }
     }//GEN-LAST:event_btnSearchPosActionPerformed
-
-    private void jLabel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MousePressed
-        updateEmployeeTable(employeesList);
-        updateDepartmentTable(departmentList);
-        updatePositionTable(positionList);
-    }//GEN-LAST:event_jLabel1MousePressed
 
     private void btnUpdateDepartmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateDepartmentActionPerformed
         srIndex = tableDepartment.getSelectedRow();
@@ -2186,10 +2217,6 @@ public class Admin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnUpdateDepartmentActionPerformed
 
-    private void txtFindEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFindEmployeeActionPerformed
-
-    }//GEN-LAST:event_txtFindEmployeeActionPerformed
-
     private void btnUpdatePositionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdatePositionActionPerformed
         srIndex = tablePosition.getSelectedRow();
         if (srIndex != -1) {
@@ -2212,9 +2239,26 @@ public class Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUpdatePositionActionPerformed
 
     private void btnAccoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccoutActionPerformed
-        srIndex = tablePosition.getSelectedRow();
+        srIndex = tblAccountDivide.getSelectedRow();
+        int type = jComboBox2.getSelectedItem().equals("admin") ? 0 : 1;
+
         if (srIndex != -1) {
-            
+            String username = jTextField1.getText();
+            boolean found = false;
+            for (Account acc : accountList) {
+                if (acc.getUsername().equals(username)) {
+                    acc.setAccType(type);
+                    tblAccountDivide.setValueAt(type, srIndex, 2);
+                    JOptionPane.showMessageDialog(null, "Đã lưu thành công!");
+                    found = true;
+                }
+            }
+            if (found) {
+                writeAccountToFile();
+                JOptionPane.showMessageDialog(null, "Đã lưu thành công!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Tài khoản không tồn tại!");
+            }
         } else {
             JOptionPane.showMessageDialog(null, "Chưa chọn bản ghi!");
         }
@@ -2492,5 +2536,4 @@ public class Admin extends javax.swing.JFrame {
         txtPositionName.setText(null);
         txtPosNote.setText(null);
     }
-
 }
