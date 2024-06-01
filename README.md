@@ -17,15 +17,19 @@ Xây dựng phầm mềm quản lý nhân sự bằng Java
 + Các chức năng giao diện của trang quản trị (khi đăng nhập bằng tk admin)
 
 - Database:
++ dark theme:
 <img src="./database_dark.png">
++ light theme:
 <img src="./database_light.png>
 
 
 - Các giao diện của phần mềm:
 + Giao diện đăng nhập
 <img src="./loginGUI.png">
+
 + Giao diện đăng ký
 <img src="./signupGUI.png">
+
 +Giao diện phía quản trị
 <img src="./admin_emp.png">
 <img src="./admin_dep.png">
