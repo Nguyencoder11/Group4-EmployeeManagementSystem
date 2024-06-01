@@ -16,7 +16,7 @@ Các chức năng chính:
 + Các chức năng giao diện của trang nhân viên (khi đăng nhập bằng tài khoản nhân viên)
 + Các chức năng giao diện của trang quản trị (khi đăng nhập bằng tk admin)
 
-- Database:
+- Database:<br>
 dark theme:
 <img src="./database_dark.png">
 light theme:
