@@ -208,7 +208,7 @@ public class SignUp extends javax.swing.JFrame {
             // lay thong tin nguoi dung
             String username = txtUser.getText().trim();
             String password = new String(txtPassword.getPassword()).trim();
-            int userType = 1;   // set mac dinh tk employee
+            int userType = 1;   // set mac dinh cho tk khac admin
 
             // neu dang ky username co chua tu "admin" thi la tai khoan admin
             if (username.toLowerCase().contains("admin")) {

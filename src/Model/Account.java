@@ -13,7 +13,8 @@ public class Account {
 
     private String username;
     private String password;
-    private int accType;    // 0: admin, 1: nhan vien
+    private int accType;    // 0: quyen admin, 1: ngoai quyen admin
+    private String role;    // neu la admin thi role la admin, ngoai ra la cac quyen khac
 
     public Account(String username, String password) {
         this.username = username;
@@ -49,4 +50,12 @@ public class Account {
     public void setAccType(int accType) {
         this.accType = accType;
     }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    } 
 }
