@@ -48,6 +48,14 @@ public class Employee {
         return position;
     }
 
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
     public int getEmployeeID() {
         return employeeID;
     }

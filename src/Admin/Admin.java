@@ -47,7 +47,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
 public class Admin extends javax.swing.JFrame {
-    
+
     private boolean checkImg;
     private String getFileName;
     private List<Employee> employeesList = new ArrayList<>();
@@ -56,7 +56,9 @@ public class Admin extends javax.swing.JFrame {
     private DefaultTableModel employeeModel;
     private DefaultTableModel departmentModel;
     private DefaultTableModel positionModel;
-    
+    private int srIndex;
+    private DefaultTableModel model;
+
     public Admin() {
         initComponents();
         insertCbxDay();
@@ -68,22 +70,22 @@ public class Admin extends javax.swing.JFrame {
         updateEmployeeTable(employeesList);
         updateDepartmentTable(departmentList);
         updatePositionTable(positionList);
-        txtFindEmployee.getDocument().addDocumentListener(new DocumentListener(){
+        txtFindEmployee.getDocument().addDocumentListener(new DocumentListener() {
             @Override
-            public void insertUpdate(DocumentEvent e){
-                
+            public void insertUpdate(DocumentEvent e) {
+
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                 if(txtFindEmployee.getText().isEmpty()){
+                if (txtFindEmployee.getText().isEmpty()) {
                     updateEmployeeTable(employeesList);
                 }
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-               
+
             }
         });
         insertCbxDepartmentFromEmployeeTable();
@@ -95,7 +97,7 @@ public class Admin extends javax.swing.JFrame {
             BufferedReader reader = new BufferedReader(new FileReader("data\\employee.txt"));
             String line;
             while ((line = reader.readLine()) != null) {
-                
+
                 String[] parts = line.split(",");
                 Employee e = new Employee(Integer.parseInt(parts[0]), parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7], parts[8], Double.parseDouble(parts[9]), parts[10], parts[11], parts[12]);
                 employeesList.add(e);
@@ -105,12 +107,12 @@ public class Admin extends javax.swing.JFrame {
             Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     private void addEmployeeList() { //Thêm nhân viên vào list
         Employee e = new Employee(Integer.parseInt(txtMaNV.getText()), txtHoTen.getText(), birthDay.getSelectedItem() + "/" + birthMonth.getSelectedItem() + "/" + birthYear.getSelectedItem(), txtGender.getText(), txtHomeTown.getText(), txtPhoneNum.getText(), txtEmail.getText(), txtContactAddress.getText(), hireDate.getText(), Double.parseDouble(salary.getText()), CbxDepartmentFromET.getSelectedItem().toString(), txtPosition.getText(), "ImgEmployee\\\\" + getFileName);
         employeesList.add(e);
     }
-    
+
     private void removeEmployeeFromTable() { //Xóa nhân viên khỏi list và bảng
         int sr = tableEmployee.getSelectedRow();
         List<Employee> removeList = new ArrayList<>();
@@ -130,7 +132,7 @@ public class Admin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 đối tượng!");
         }
     }
-    
+
     private void writeEmployeeListToFile() { // Lưu dữ liệu vào file
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("data\\employee.txt", false));
@@ -147,7 +149,7 @@ public class Admin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Lưu không thành công!");
         }
     }
-    
+
     private void updateEmployeeTable(List<Employee> x) { // Cập nhật bảng sau khi chỉnh sửa
         employeeModel = (DefaultTableModel) tableEmployee.getModel();
         employeeModel.setRowCount(0);
@@ -156,7 +158,7 @@ public class Admin extends javax.swing.JFrame {
             employeeModel.addRow(dataRow);
         }
     }
-    
+
     public void insertCbxDay() {
         birthDay.removeAllItems();
         for (int i = 1; i <= 31; i++) {
@@ -164,7 +166,7 @@ public class Admin extends javax.swing.JFrame {
         }
         birthDay.setSelectedIndex(-1);
     }
-    
+
     public void insertCbxMonth() {
         birthMonth.removeAllItems();
         for (int i = 1; i <= 12; i++) {
@@ -172,7 +174,7 @@ public class Admin extends javax.swing.JFrame {
         }
         birthMonth.setSelectedIndex(-1);
     }
-    
+
     public void insertCbxYear() {
         birthYear.removeAllItems();
         for (int i = 1900; i <= Calendar.getInstance().get(Calendar.YEAR); i++) {
@@ -180,7 +182,7 @@ public class Admin extends javax.swing.JFrame {
         }
         birthYear.setSelectedIndex(-1);
     }
-    
+
     private void insertCbxDepartmentFromEmployeeTable() {
         CbxDepartmentFromET.removeAllItems();
         for (Department d : departmentList) {
@@ -188,21 +190,21 @@ public class Admin extends javax.swing.JFrame {
         }
         CbxDepartmentFromET.setSelectedItem(-1);
     }
-    
+
     private boolean checkDepartmentIsSelected() {
         if (CbxDepartmentFromET.getSelectedIndex() == -1) {
             return false;
         }
         return true;
     }
-    
+
     public boolean checkBirthdayIsSelected() {
         if (birthDay.getSelectedIndex() == -1 || birthMonth.getSelectedIndex() == -1 || birthYear.getSelectedIndex() == -1) {
             return false;
         }
         return true;
     }
-    
+
     private void saveImage(File imageFile) throws IOException {
         try {
             String folderPath = "ImgEmployee";
@@ -225,7 +227,7 @@ public class Admin extends javax.swing.JFrame {
             ex.printStackTrace();
         }
     }
-    
+
     private boolean isCheckEmpID(int empID) {
         for (Employee emp : employeesList) {
             if (emp.getEmployeeID() == empID) {
@@ -245,19 +247,19 @@ public class Admin extends javax.swing.JFrame {
                 String[] parts = line.split(",");
                 Department d = new Department(Integer.parseInt(parts[0]), parts[1], parts[2], parts[3], parts[4]);
                 departmentList.add(d);
-                
+
             }
             reader.close();
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Khởi tạo dữ liệu Department không thành công!");
         }
     }
-    
+
     private void addDepartmentList() {
         Department d = new Department(Integer.parseInt(txtDpmID.getText()), txtDepartmentName.getText(), txtDpmAddress.getText(), txtDpmPhoneNumber.getText(), txtDpmNote.getText());
         departmentList.add(d);
     }
-    
+
     private void removeDepartment() {
         int sr = tableDepartment.getSelectedRow();
         List<Department> removeList = new ArrayList<>();
@@ -277,7 +279,7 @@ public class Admin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 đối tượng!");
         }
     }
-    
+
     private void updateDepartmentTable(List<Department> x) {
         departmentModel = (DefaultTableModel) tableDepartment.getModel();
         departmentModel.setRowCount(0);
@@ -288,12 +290,12 @@ public class Admin extends javax.swing.JFrame {
                     countEmployee++;
                 }
             }
-            
+
             String[] datarow = {String.valueOf(d.getIdPhongBan()), d.getTenPhongBan(), d.getDiaChi(), d.getSdtPhong(), String.valueOf(countEmployee), d.getGhiChu()};
             departmentModel.addRow(datarow);
         }
     }
-    
+
     private void writeDepartmentToFile() {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("data\\department.txt"));
@@ -307,7 +309,7 @@ public class Admin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Lưu không thành công!");
         }
     }
-    
+
     private boolean isCheckDepartID(int depID) {
         for (Department dep : departmentList) {
             if (dep.getIdPhongBan() == depID) {
@@ -327,14 +329,14 @@ public class Admin extends javax.swing.JFrame {
                 String[] parts = line.split(",");
                 Position p = new Position(Integer.parseInt(parts[0]), parts[1], parts[2]);
                 positionList.add(p);
-                
+
             }
             reader.close();
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Khởi tạo dữ liệu Position không thành công!");
         }
     }
-    
+
     private void writePositiontToFile() {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("data\\position.txt"));
@@ -348,7 +350,7 @@ public class Admin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Lưu không thành công!");
         }
     }
-    
+
     private void removePositionFromTable() {
         int sr = tablePosition.getSelectedRow();
         List<Position> removeList = new ArrayList<>();
@@ -368,19 +370,19 @@ public class Admin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 đối tượng!!");
         }
     }
-    
+
     private void addPositionList() {
         Position p = new Position(Integer.parseInt(txtPosID.getText()), txtPositionName.getText(), txtPosNote.getText());
         positionList.add(p);
     }
-    
+
     private boolean PosIsEmpty() {
         if (txtPosID.getText().isEmpty() || txtPositionName.getText().isEmpty() || txtPosNote.getText().isEmpty()) {
             return true;
         }
         return false;
     }
-    
+
     private boolean isCheckPosID(int posID) {
         for (Position pos : positionList) {
             if (pos.getIdChucVu() == posID) {
@@ -389,7 +391,7 @@ public class Admin extends javax.swing.JFrame {
         }
         return false;
     }
-    
+
     private void updatePositionTable(List<Position> x) {
         positionModel = (DefaultTableModel) tablePosition.getModel();
         positionModel.setRowCount(0);
@@ -485,7 +487,7 @@ public class Admin extends javax.swing.JFrame {
         btnAddPosition = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jPanel16 = new javax.swing.JPanel();
-        jButton11 = new javax.swing.JButton();
+        btnUpdatePosition = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         tablePosition = new javax.swing.JTable();
@@ -709,6 +711,11 @@ public class Admin extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tableEmployee.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableEmployeeMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tableEmployee);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
@@ -738,6 +745,11 @@ public class Admin extends javax.swing.JFrame {
         jLabel8.setText("Số ĐT:");
 
         txtPhoneNum.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        txtPhoneNum.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPhoneNumKeyTyped(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         jLabel9.setText("Quê quán:");
@@ -1068,6 +1080,11 @@ public class Admin extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tableDepartment.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableDepartmentMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tableDepartment);
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
@@ -1259,10 +1276,10 @@ public class Admin extends javax.swing.JFrame {
         jPanel16.setBackground(new java.awt.Color(255, 204, 255));
         jPanel16.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 102, 153), 2, true));
 
-        jButton11.setText("Cập nhật");
-        jButton11.addActionListener(new java.awt.event.ActionListener() {
+        btnUpdatePosition.setText("Cập nhật");
+        btnUpdatePosition.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton11ActionPerformed(evt);
+                btnUpdatePositionActionPerformed(evt);
             }
         });
 
@@ -1290,6 +1307,11 @@ public class Admin extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tablePosition.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablePositionMouseClicked(evt);
             }
         });
         jScrollPane3.setViewportView(tablePosition);
@@ -1330,7 +1352,7 @@ public class Admin extends javax.swing.JFrame {
                     .addGroup(jPanel16Layout.createSequentialGroup()
                         .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel16Layout.createSequentialGroup()
-                                .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnUpdatePosition, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1370,7 +1392,7 @@ public class Admin extends javax.swing.JFrame {
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton11, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                    .addComponent(btnUpdatePosition, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
                     .addComponent(jButton12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnPrintPosList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -1918,15 +1940,41 @@ public class Admin extends javax.swing.JFrame {
             } catch (IOException ex) {
                 Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
         } else {
             checkImg = false;
         }
     }//GEN-LAST:event_btnUploadActionPerformed
 
     private void btnUpdateEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateEmployeeActionPerformed
-        if (isEmployeeEmpty()) {
-            
+        srIndex = tableEmployee.getSelectedRow();
+        if (srIndex != -1) {
+            int id = Integer.parseInt(txtMaNV.getText());
+            for (Employee e : employeesList) {
+                if (e.getEmployeeID() == id) {
+                    e.setEmployeeName(txtHoTen.getText());
+                    e.setDateOfBirth(birthDay.getSelectedItem() + "/" + birthMonth.getSelectedItem() + "/" + birthYear.getSelectedItem());
+                    e.setGender(txtGender.getText());
+                    e.setHometown(txtHomeTown.getText());
+                    e.setPhoneNumber(txtPhoneNum.getText());
+                    e.setEmail(txtEmail.getText());
+                    e.setAddress(txtContactAddress.getText());
+                    e.setHireDate(hireDate.getText());
+                    e.setSalary(Double.parseDouble(salary.getText()));
+                    e.setDepartment(CbxDepartmentFromET.getSelectedItem().toString());
+                    e.setPosition(txtPosition.getText());
+                    if (checkImg) {
+                        e.setImagePath("ImgEmployee\\" + getFileName);
+                    }
+                    updateEmployeeTable(employeesList);
+                    clearEmployeeTextFields();
+                    txtMaNV.setEditable(true);
+                    JOptionPane.showMessageDialog(null, "Đã sửa thông tin nhân viên!!");
+                    break;
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Chưa chọn bản ghi!");
         }
     }//GEN-LAST:event_btnUpdateEmployeeActionPerformed
 
@@ -2079,32 +2127,132 @@ public class Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel1MousePressed
 
     private void btnUpdateDepartmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateDepartmentActionPerformed
+        srIndex = tableDepartment.getSelectedRow();
+        if (srIndex != -1) {
+            int id = Integer.parseInt(txtDpmID.getText());
+            for (Department d : departmentList) {
+                if (d.getIdPhongBan() == id) {
+                    d.setTenPhongBan(txtDepartmentName.getText());
+                    d.setDiaChi(txtDpmAddress.getText());
+                    d.setSdtPhong(txtDpmPhoneNumber.getText());
+                    d.setGhiChu(txtDpmNote.getText());
 
+                    updateDepartmentTable(departmentList);
+                    clearDepartmentTextfields();
+                    txtDpmID.setEditable(true);
+                    JOptionPane.showMessageDialog(null, "Đã sửa thông tin phòng ban!!");
+                    break;
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Chưa chọn bản ghi!");
+        }
     }//GEN-LAST:event_btnUpdateDepartmentActionPerformed
 
     private void txtFindEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFindEmployeeActionPerformed
-        
+
     }//GEN-LAST:event_txtFindEmployeeActionPerformed
 
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        
-    }//GEN-LAST:event_jButton11ActionPerformed
+    private void btnUpdatePositionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdatePositionActionPerformed
+        srIndex = tablePosition.getSelectedRow();
+        if (srIndex != -1) {
+            int id = Integer.parseInt(txtPosID.getText());
+            for (Position p : positionList) {
+                if (p.getIdChucVu() == id) {
+                    p.setTenChucVu(txtPositionName.getText());
+                    p.setGhiChu(txtPosNote.getText());
+
+                    updatePositionTable(positionList);
+                    clearPositionTextFields();
+                    txtPosID.setEditable(true);
+                    JOptionPane.showMessageDialog(null, "Đã sửa thông tin chức vụ!!");
+                    break;
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Chưa chọn bản ghi!");
+        }
+    }//GEN-LAST:event_btnUpdatePositionActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
+
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void tableEmployeeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableEmployeeMouseClicked
+        model = (DefaultTableModel) tableEmployee.getModel();
+        srIndex = tableEmployee.getSelectedRow();
+        txtMaNV.setText(model.getValueAt(srIndex, 0).toString());
+        txtMaNV.setEditable(false);
+        txtHoTen.setText(model.getValueAt(srIndex, 1).toString());
+
+        String birthTime = model.getValueAt(srIndex, 2).toString();
+        String[] parts = birthTime.split("/");
+        birthDay.setSelectedItem(parts[0]);
+        birthMonth.setSelectedItem(parts[1]);
+        birthYear.setSelectedItem(parts[2]);
+
+        txtGender.setText(model.getValueAt(srIndex, 3).toString());
+        txtHomeTown.setText(model.getValueAt(srIndex, 4).toString());
+        txtPhoneNum.setText(model.getValueAt(srIndex, 5).toString());
+        txtEmail.setText(model.getValueAt(srIndex, 6).toString());
+        txtContactAddress.setText(model.getValueAt(srIndex, 7).toString());
+        hireDate.setText(model.getValueAt(srIndex, 8).toString());
+        salary.setText(model.getValueAt(srIndex, 9).toString());
+
+        String department = model.getValueAt(srIndex, 10).toString();
+        CbxDepartmentFromET.setSelectedItem(department);
+
+        txtPosition.setText(model.getValueAt(srIndex, 11).toString());
+        String image_path = model.getValueAt(srIndex, 12).toString();
+        if (image_path != null && !image_path.isEmpty()) {
+            ImageIcon imageIcon = new ImageIcon(image_path);
+            Image originImage = imageIcon.getImage();
+
+            Image resizedImage = originImage.getScaledInstance(labelImg.getWidth(), labelImg.getHeight(), Image.SCALE_SMOOTH);
+            ImageIcon resizeIcon = new ImageIcon(resizedImage);
+            labelImg.setIcon(resizeIcon);
+        } else {
+            labelImg.setIcon(null);
+        }
+    }//GEN-LAST:event_tableEmployeeMouseClicked
+
+    private void tableDepartmentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableDepartmentMouseClicked
+        model = (DefaultTableModel) tableDepartment.getModel();
+        srIndex = tableDepartment.getSelectedRow();
+        txtDpmID.setText(model.getValueAt(srIndex, 0).toString());
+        txtDpmID.setEditable(false);
+        txtDepartmentName.setText(model.getValueAt(srIndex, 1).toString());
+        txtDpmAddress.setText(model.getValueAt(srIndex, 2).toString());
+        txtDpmPhoneNumber.setText(model.getValueAt(srIndex, 3).toString());
+        txtDpmNote.setText(model.getValueAt(srIndex, 5).toString());
+    }//GEN-LAST:event_tableDepartmentMouseClicked
+
+    private void tablePositionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePositionMouseClicked
+        model = (DefaultTableModel) tablePosition.getModel();
+        srIndex = tablePosition.getSelectedRow();
+        txtPosID.setText(model.getValueAt(srIndex, 0).toString());
+        txtPosID.setEditable(false);
+        txtPositionName.setText(model.getValueAt(srIndex, 1).toString());
+        txtPosNote.setText(model.getValueAt(srIndex, 2).toString());
+    }//GEN-LAST:event_tablePositionMouseClicked
+
+    private void txtPhoneNumKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPhoneNumKeyTyped
+        if (!Character.isDigit(evt.getKeyChar())) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtPhoneNumKeyTyped
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Admin().setVisible(true);
             }
         });
-        
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -2124,10 +2272,10 @@ public class Admin extends javax.swing.JFrame {
     javax.swing.JButton btnSaveEmployeeData;
     javax.swing.JButton btnUpdateDepartment;
     javax.swing.JButton btnUpdateEmployee;
+    javax.swing.JButton btnUpdatePosition;
     javax.swing.JButton btnUpload;
     javax.swing.JTextField hireDate;
     javax.swing.JButton jButton1;
-    javax.swing.JButton jButton11;
     javax.swing.JButton jButton12;
     javax.swing.JButton jButton2;
     javax.swing.JButton jButton3;
@@ -2258,11 +2406,6 @@ public class Admin extends javax.swing.JFrame {
     javax.swing.JTextField txtPositionName;
     // End of variables declaration//GEN-END:variables
 
-    private boolean isEmployeeEmpty() {
-        
-        return true;
-    }
-    
     private void clearEmployeeTextFields() {
         txtMaNV.setText(null);
         txtHoTen.setText(null);
@@ -2280,7 +2423,7 @@ public class Admin extends javax.swing.JFrame {
         birthMonth.setSelectedIndex(-1);
         birthYear.setSelectedIndex(-1);
     }
-    
+
     private void clearDepartmentTextfields() {
         txtDpmID.setText(null);
         txtDepartmentName.setText(null);
