@@ -1,6 +1,7 @@
 package Admin;
 
 import Model.Account;
+import Model.ESalary;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -41,10 +42,13 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.time.LocalDate;
 import javax.annotation.processing.FilerException;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 public class Admin extends javax.swing.JFrame {
@@ -54,10 +58,12 @@ public class Admin extends javax.swing.JFrame {
     private List<Employee> employeesList = new ArrayList<>();
     private List<Department> departmentList = new ArrayList<>();
     private List<Position> positionList = new ArrayList<>();
+     private List<ESalary> esList = new ArrayList<>();
     private List<Account> accountList = new ArrayList<>();
     private DefaultTableModel employeeModel;
     private DefaultTableModel departmentModel;
     private DefaultTableModel positionModel;
+    private DefaultTableModel SEModel;
     private DefaultTableModel accountModel;
     private int srIndex;
     private DefaultTableModel model;
@@ -71,6 +77,8 @@ public class Admin extends javax.swing.JFrame {
         initDepartmentList();
         initPositionList();
         initAccountList();
+        initESalary();
+        updateSETable(esList);
         updateEmployeeTable(employeesList);
         updateDepartmentTable(departmentList);
         updatePositionTable(positionList);
@@ -124,8 +132,59 @@ public class Admin extends javax.swing.JFrame {
                 }
             }
         });
+        tableES.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                upload();
+            }
+        });
+        insertCbxDepartmentFromEmployeeTable();
     }
-
+    private void initESalary(){
+        try{
+            BufferedReader reader = new BufferedReader(new FileReader("data\\salary.txt"));
+            String line;
+            while((line = reader.readLine()) != null){
+                List<LocalDate> ldList = new ArrayList<>();
+                String[] parts = line.split("-");
+                for(String s : parts){
+                    System.out.println(s);
+                }
+                String[] wDates = parts[2].split(";");
+                for(int i = 0; i < wDates.length; i++){
+                    String[] date = wDates[i].split(",");
+                    ldList.add(LocalDate.of(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2])));
+                    System.out.println(wDates[i]);
+                }
+                
+                esList.add(new ESalary(Integer.parseInt(parts[0]), parts[1], ldList));
+            }
+            reader.close();
+        }catch (IOException ex) {
+            System.out.println("Loi");
+        }
+    }
+    private void upload(){
+        int sr = tableES.getSelectedRow();
+        List<LocalDate> x = new ArrayList<>();
+        if(sr != -1){
+            int id = Integer.parseInt(tableES.getValueAt(sr, 0).toString());
+            for (ESalary e : esList) {
+                if (e.getId() == id) {
+                    x = e.getDate();
+                }
+            }
+        }
+        calendarPanel1.setWorkingDays(x);
+    }
+    private void updateSETable(List<ESalary> x) { // Cập nhật bảng sau khi chỉnh sửa
+        SEModel = (DefaultTableModel) tableES.getModel();
+        SEModel.setRowCount(0);
+        for (ESalary e : x) {
+            String[] dataRow = {String.valueOf(e.getId()), e.getName()};
+            SEModel.addRow(dataRow);
+        }
+    }
     //EMPLOYEE====================================================================================================================
     private void initEmployeeList() { //Khởi tạo list từ file
         try {
@@ -593,6 +652,9 @@ public class Admin extends javax.swing.JFrame {
         txtPosNote = new javax.swing.JTextArea();
         btnPrintPosList = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
+        calendarPanel1 = new JCalendar.CalendarPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tableES = new javax.swing.JTable();
         jPanel8 = new javax.swing.JPanel();
         jPanel21 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
@@ -1504,15 +1566,40 @@ public class Admin extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Quản lý chức vụ", jPanel4);
 
+        calendarPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        tableES.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "ID", "Họ Tên"
+            }
+        ));
+        jScrollPane4.setViewportView(tableES);
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1079, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(calendarPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 612, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 567, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(calendarPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 555, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Lương, chấm công", jPanel5);
@@ -2408,6 +2495,7 @@ public class Admin extends javax.swing.JFrame {
     javax.swing.JButton btnUpdateEmployee;
     javax.swing.JButton btnUpdatePosition;
     javax.swing.JButton btnUpload;
+    JCalendar.CalendarPanel calendarPanel1;
     javax.swing.JTextField hireDate;
     javax.swing.JCheckBox jCheckBox1;
     javax.swing.JCheckBox jCheckBox10;
@@ -2501,6 +2589,7 @@ public class Admin extends javax.swing.JFrame {
     javax.swing.JScrollPane jScrollPane10;
     javax.swing.JScrollPane jScrollPane2;
     javax.swing.JScrollPane jScrollPane3;
+    javax.swing.JScrollPane jScrollPane4;
     javax.swing.JScrollPane jScrollPane6;
     javax.swing.JScrollPane jScrollPane9;
     javax.swing.JTabbedPane jTabbedPane1;
@@ -2508,6 +2597,7 @@ public class Admin extends javax.swing.JFrame {
     javax.swing.JLabel labelImg;
     javax.swing.JTextField salary;
     javax.swing.JTable tableDepartment;
+    javax.swing.JTable tableES;
     javax.swing.JTable tableEmployee;
     javax.swing.JTable tablePosition;
     javax.swing.JTable tblAccountDivide;
