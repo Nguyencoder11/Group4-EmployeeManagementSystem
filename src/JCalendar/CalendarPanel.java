@@ -54,23 +54,19 @@ public class CalendarPanel extends JPanel {
 
     private void updateCalendar() {
         calendarGrid.removeAll();
-
         // Set the month label
         YearMonth yearMonth = YearMonth.of(currentDate.getYear(), currentDate.getMonth());
         monthLabel.setText(yearMonth.getMonth().name() + " " + yearMonth.getYear());
-
         // Get the number of days in the month and the first day of the month
         int daysInMonth = yearMonth.lengthOfMonth();
         LocalDate firstDayOfMonth = currentDate.withDayOfMonth(1);
         int firstDayOfWeek = firstDayOfMonth.getDayOfWeek().getValue(); // Monday = 1, ..., Sunday = 7
-
         // Add day of week labels
         String[] dayNames = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
         for (String dayName : dayNames) {
             JLabel dayLabel = new JLabel(dayName, SwingConstants.CENTER);
             calendarGrid.add(dayLabel);
         }
-
         // Add empty labels for days before the first day of the month
         for (int i = 1; i < firstDayOfWeek; i++) {
             JLabel emptyLabel = new JLabel("");
