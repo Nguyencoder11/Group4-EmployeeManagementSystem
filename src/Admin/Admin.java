@@ -476,6 +476,26 @@ public class Admin extends javax.swing.JFrame {
         }
     }
 
+    private void removeAccount() {
+        int sr = tblAccountDivide.getSelectedRow();
+        List<Account> removeList = new ArrayList<>();
+        if (sr != -1) {
+            String username = jTextField1.getText();
+            for (Account account : accountList) {
+                if (account.getUsername().equals(username)) {
+                    removeList.add(account);
+                }
+            }
+            for (Account acc : removeList) {
+                accountList.remove(acc);
+            }
+            updateAccountTable(accountList);
+            JOptionPane.showMessageDialog(null, "Đã xoá tài khoản thành công!!");
+        } else {
+            JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 đối tượng!!");
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -586,6 +606,7 @@ public class Admin extends javax.swing.JFrame {
         jComboBox2 = new javax.swing.JComboBox<>();
         btnAccout = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
+        btnDelAcc = new javax.swing.JButton();
         jPanel22 = new javax.swing.JPanel();
         jLabel31 = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
@@ -1563,6 +1584,13 @@ public class Admin extends javax.swing.JFrame {
         jTextField1.setEditable(false);
         jTextField1.setBackground(new java.awt.Color(204, 204, 204));
 
+        btnDelAcc.setText("Xóa");
+        btnDelAcc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDelAccActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
@@ -1575,9 +1603,15 @@ public class Admin extends javax.swing.JFrame {
                     .addComponent(jLabel30, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(51, 51, 51)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAccout)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE))
+                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel10Layout.createSequentialGroup()
+                                .addComponent(btnAccout)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnDelAcc))
+                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
@@ -1594,7 +1628,9 @@ public class Admin extends javax.swing.JFrame {
                     .addComponent(jLabel30)
                     .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(btnAccout)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAccout)
+                    .addComponent(btnDelAcc))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
@@ -2273,17 +2309,17 @@ public class Admin extends javax.swing.JFrame {
                     e.setPosition(txtPosition.getText());
                     if (checkImg) {
                         e.setImagePath("ImgEmployee\\" + getFileName);
-                        }
-                        updateEmployeeTable(employeesList);
-                        clearEmployeeTextFields();
-                        txtMaNV.setEditable(true);
-                        JOptionPane.showMessageDialog(null, "Đã sửa thông tin nhân viên!!");
-                        break;
                     }
+                    updateEmployeeTable(employeesList);
+                    clearEmployeeTextFields();
+                    txtMaNV.setEditable(true);
+                    JOptionPane.showMessageDialog(null, "Đã sửa thông tin nhân viên!!");
+                    break;
                 }
-            } else {
-                JOptionPane.showMessageDialog(null, "Chưa chọn bản ghi!");
             }
+        } else {
+            JOptionPane.showMessageDialog(null, "Chưa chọn bản ghi!");
+        }
     }//GEN-LAST:event_btnUpdateEmployeeActionPerformed
 
     private void btnSaveEmployeeDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveEmployeeDataActionPerformed
@@ -2297,8 +2333,8 @@ public class Admin extends javax.swing.JFrame {
 
     private void btnAddEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddEmployeeActionPerformed
         if (txtMaNV.getText().isEmpty() || txtHoTen.getText().isEmpty() || txtHomeTown.getText().isEmpty() || txtGender.getText().isEmpty() || txtEmail.getText().isEmpty() || txtContactAddress.getText().isEmpty()
-            || hireDate.getText().isEmpty() || salary.getText().isEmpty() || !checkDepartmentIsSelected() || txtPosition.getText().isEmpty() || txtPhoneNum.getText().isEmpty()
-            || !checkBirthdayIsSelected() || !checkImg) {
+                || hireDate.getText().isEmpty() || salary.getText().isEmpty() || !checkDepartmentIsSelected() || txtPosition.getText().isEmpty() || txtPhoneNum.getText().isEmpty()
+                || !checkBirthdayIsSelected() || !checkImg) {
             JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin!");
         } else {
             if (isCheckEmpID(Integer.parseInt(txtMaNV.getText()))) {
@@ -2327,6 +2363,11 @@ public class Admin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSearchEmpActionPerformed
 
+    private void btnDelAccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelAccActionPerformed
+        removeAccount();
+        writeAccountToFile();
+    }//GEN-LAST:event_btnDelAccActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -2349,6 +2390,7 @@ public class Admin extends javax.swing.JFrame {
     javax.swing.JButton btnAddDepartment;
     javax.swing.JButton btnAddEmployee;
     javax.swing.JButton btnAddPosition;
+    javax.swing.JButton btnDelAcc;
     javax.swing.JButton btnDeleteDpm;
     javax.swing.JButton btnDeleteEmployee;
     javax.swing.JButton btnDeletePosition;
