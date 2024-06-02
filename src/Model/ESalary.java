@@ -14,12 +14,12 @@ import java.util.List;
 public class ESalary {
     private int id;
     private String name;
-    private List<LocalDate> date;
+    private List<DayStatus> workDays;
 
-    public ESalary(int id, String name, List<LocalDate> date) {
+    public ESalary(int id, String name, List<DayStatus> date) {
         this.id = id;
         this.name = name;
-        this.date = date;
+        this.workDays = date;
     }
     
     public int getId() {
@@ -38,12 +38,14 @@ public class ESalary {
         this.name = name;
     }
 
-    public List<LocalDate> getDate() {
-        return date;
+    public List<DayStatus> getWorkDays() {
+        return workDays;
     }
 
-    public void setDate(List<LocalDate> date) {
-        this.date = date;
+    public void setWorkDays(List<DayStatus> workDays) {
+        this.workDays = workDays;
     }
+
+   
    
 }

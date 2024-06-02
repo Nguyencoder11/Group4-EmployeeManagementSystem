@@ -1,6 +1,7 @@
 
 package JCalendar;
 
+import Model.DayStatus;
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
@@ -12,7 +13,7 @@ public class CalendarPanel extends JPanel {
     private LocalDate currentDate;
     private JLabel monthLabel;
     private JPanel calendarGrid;
-    private List<LocalDate> workingDays;
+    private List<DayStatus> workingDays;
 
     public CalendarPanel() {
         this.currentDate = LocalDate.now();
@@ -26,7 +27,7 @@ public class CalendarPanel extends JPanel {
         // Create the calendar grid
         calendarGrid = new JPanel(new GridLayout(0, 7));
         add(calendarGrid, BorderLayout.CENTER);
-JButton prevButton = new JButton("<");
+        JButton prevButton = new JButton("<");
         JButton nextButton = new JButton(">");
         prevButton.addActionListener(e -> {
             currentDate = currentDate.minusMonths(1);
@@ -46,7 +47,7 @@ JButton prevButton = new JButton("<");
     }
 
     // Set working days
-    public void setWorkingDays(List<LocalDate> workingDays) {
+    public void setWorkingDays(List<DayStatus> workingDays) {
         this.workingDays = workingDays;
         updateCalendar();
     }
@@ -75,18 +76,31 @@ JButton prevButton = new JButton("<");
             JLabel emptyLabel = new JLabel("");
             calendarGrid.add(emptyLabel);
         }
-
-        // Add buttons for each day of the month
         for (int day = 1; day <= daysInMonth; day++) {
-            Cell dayButton = new Cell(String.valueOf(day));
+             Cell dayButton = new Cell(String.valueOf(day));
             LocalDate date = LocalDate.of(currentDate.getYear(), currentDate.getMonth(), day);
+            for(DayStatus d : workingDays){
+                if(d.getDate().isEqual(date)){
+                    if(d.getStatus().equals("1")){
+                       
+                        dayButton.setBackground(Color.red);
+                    }
+                    else if(d.getStatus().equals("0")){
+                        dayButton.setBackground(Color.green);
+                    }
+                    else{
+                        dayButton = new Cell(String.valueOf(day) + "\n" + d.getStatus());
+                        dayButton.setBackground(Color.green);
+                    }
+                }
+            }
+           
+            
             if (workingDays.contains(date)) {
                 dayButton.setBackground(Color.red); // Set text color to red for working days
             }
             calendarGrid.add(dayButton);
         }
-
-        // Refresh the panel
         calendarGrid.revalidate();
         calendarGrid.repaint();
     }

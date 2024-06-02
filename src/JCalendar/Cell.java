@@ -14,9 +14,9 @@ public class Cell extends JPanel{
     private JLabel label;
     public Cell(String s){
         setLayout(new BorderLayout());
-
+        String htmlS = "<html><div style='text-align: center;'>" + s.replaceAll("\n", "<br>") + "</div></html>";
         // Initialize the label with the provided text
-        label = new JLabel(s, SwingConstants.CENTER);
+        label = new JLabel(htmlS, SwingConstants.CENTER);
 
         // Add the label to the panel
         add(label, BorderLayout.CENTER);

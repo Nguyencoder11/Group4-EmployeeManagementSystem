@@ -1,6 +1,7 @@
 package Admin;
 
 import Model.Account;
+import Model.DayStatus;
 import Model.ESalary;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -142,22 +143,20 @@ public class Admin extends javax.swing.JFrame {
     }
     private void initESalary(){
         try{
-            BufferedReader reader = new BufferedReader(new FileReader("data\\salary.txt"));
+            BufferedReader reader = new BufferedReader(new FileReader("data\\timeKeeping.txt"));
             String line;
             while((line = reader.readLine()) != null){
-                List<LocalDate> ldList = new ArrayList<>();
+                List<DayStatus> dayStatus = new ArrayList<>();
                 String[] parts = line.split("-");
-                for(String s : parts){
-                    System.out.println(s);
-                }
                 String[] wDates = parts[2].split(";");
                 for(int i = 0; i < wDates.length; i++){
-                    String[] date = wDates[i].split(",");
-                    ldList.add(LocalDate.of(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2])));
-                    System.out.println(wDates[i]);
+                    String[] string1 = wDates[i].split("_");
+                    String[] string2 = string1[0].split(",");
+                    LocalDate localDate = LocalDate.of(Integer.parseInt(string2[0]), Integer.parseInt(string2[1]), Integer.parseInt(string2[2]));
+                    dayStatus.add(new DayStatus(localDate, string1[1]));
                 }
                 
-                esList.add(new ESalary(Integer.parseInt(parts[0]), parts[1], ldList));
+                esList.add(new ESalary(Integer.parseInt(parts[0]), parts[1], dayStatus));
             }
             reader.close();
         }catch (IOException ex) {
@@ -166,12 +165,12 @@ public class Admin extends javax.swing.JFrame {
     }
     private void upload(){
         int sr = tableES.getSelectedRow();
-        List<LocalDate> x = new ArrayList<>();
+        List<DayStatus> x = new ArrayList<>();
         if(sr != -1){
             int id = Integer.parseInt(tableES.getValueAt(sr, 0).toString());
             for (ESalary e : esList) {
                 if (e.getId() == id) {
-                    x = e.getDate();
+                    x = e.getWorkDays();
                 }
             }
         }
