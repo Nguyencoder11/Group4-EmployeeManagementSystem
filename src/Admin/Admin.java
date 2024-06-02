@@ -2384,7 +2384,8 @@ public class Admin extends javax.swing.JFrame {
             for (Employee e : employeesList) {
                 if (e.getEmployeeID() == id) {
                     e.setEmployeeName(txtHoTen.getText());
-                    e.setDateOfBirth(birthDay.getSelectedItem() + "/" + birthMonth.getSelectedItem() + "/" + birthYear.getSelectedItem());
+                    e.setDateOfBirth(birthDay.getSelectedItem() + "/" + birthMonth.getSelectedItem() + "/" 
+                            + birthYear.getSelectedItem());
                     e.setGender(txtGender.getText());
                     e.setHometown(txtHomeTown.getText());
                     e.setPhoneNumber(txtPhoneNum.getText());
@@ -2419,13 +2420,17 @@ public class Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSaveEmployeeDataActionPerformed
 
     private void btnAddEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddEmployeeActionPerformed
-        if (txtMaNV.getText().isEmpty() || txtHoTen.getText().isEmpty() || txtHomeTown.getText().isEmpty() || txtGender.getText().isEmpty() || txtEmail.getText().isEmpty() || txtContactAddress.getText().isEmpty()
-                || hireDate.getText().isEmpty() || salary.getText().isEmpty() || !checkDepartmentIsSelected() || txtPosition.getText().isEmpty() || txtPhoneNum.getText().isEmpty()
+        if (txtMaNV.getText().isEmpty() || txtHoTen.getText().isEmpty() 
+                || txtHomeTown.getText().isEmpty() || txtGender.getText().isEmpty() 
+                || txtEmail.getText().isEmpty() || txtContactAddress.getText().isEmpty()
+                || hireDate.getText().isEmpty() || salary.getText().isEmpty() || !checkDepartmentIsSelected() 
+                || txtPosition.getText().isEmpty() || txtPhoneNum.getText().isEmpty()
                 || !checkBirthdayIsSelected() || !checkImg) {
             JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin!");
         } else {
             if (isCheckEmpID(Integer.parseInt(txtMaNV.getText()))) {
-                JOptionPane.showMessageDialog(null, "Mã nhân viên này đã tồn tại. Vui lòng nhập mã nhân viên khác");
+                JOptionPane.showMessageDialog(null, "Mã nhân viên này đã tồn tại. "
+                        + "Vui lòng nhập mã nhân viên khác");
             } else {
                 addEmployeeList();
                 updateEmployeeTable(employeesList);
