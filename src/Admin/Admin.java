@@ -143,7 +143,6 @@ public class Admin extends javax.swing.JFrame {
         });
         insertCbxDepartmentFromEmployeeTable();
     }
-<<<<<<< HEAD
     private void initESalary(){
         try{
             BufferedReader reader = new BufferedReader(new FileReader("data\\timeKeeping.txt"));
@@ -160,43 +159,18 @@ public class Admin extends javax.swing.JFrame {
                 }
                 
                 esList.add(new ESalary(Integer.parseInt(parts[0]), parts[1], dayStatus));
-=======
-
-    private void initESalary() {
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader("data\\salary.txt"));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                List<LocalDate> ldList = new ArrayList<>();
-                String[] parts = line.split("-");
-                for (String s : parts) {
-                    System.out.println(s);
-                }
-                String[] wDates = parts[2].split(";");
-                for (int i = 0; i < wDates.length; i++) {
-                    String[] date = wDates[i].split(",");
-                    ldList.add(LocalDate.of(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2])));
-                    System.out.println(wDates[i]);
-                }
-
-                esList.add(new ESalary(Integer.parseInt(parts[0]), parts[1], ldList));
->>>>>>> 6a147aafda759b8439850d404e0cffb7904713c6
             }
-            reader.close();
-        } catch (IOException ex) {
-            System.out.println("Loi");
+        }catch(IOException e){
+            System.out.println("Admin.Admin.initESalary()");
         }
     }
 
+
     private void upload() {
         int sr = tableES.getSelectedRow();
-<<<<<<< HEAD
         List<DayStatus> x = new ArrayList<>();
         if(sr != -1){
-=======
-        List<LocalDate> x = new ArrayList<>();
         if (sr != -1) {
->>>>>>> 6a147aafda759b8439850d404e0cffb7904713c6
             int id = Integer.parseInt(tableES.getValueAt(sr, 0).toString());
             for (ESalary e : esList) {
                 if (e.getId() == id) {
@@ -206,7 +180,7 @@ public class Admin extends javax.swing.JFrame {
         }
         calendarPanel1.setWorkingDays(x);
     }
-
+    }
     private void updateSETable(List<ESalary> x) { // Cập nhật bảng sau khi chỉnh sửa
         SEModel = (DefaultTableModel) tableES.getModel();
         SEModel.setRowCount(0);
@@ -2534,7 +2508,7 @@ public class Admin extends javax.swing.JFrame {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Admin().setVisible(true);
+                new Login().setVisible(true);
             }
         });
 
