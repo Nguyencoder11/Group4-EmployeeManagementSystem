@@ -4,4 +4,3 @@ manh26,6666,1
 nguyen,123456,1
 hau1248,haui,1
 nongmanh,123456,1
-admin123,abc,0
