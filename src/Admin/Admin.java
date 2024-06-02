@@ -572,7 +572,6 @@ public class Admin extends javax.swing.JFrame {
         jScrollPane10 = new javax.swing.JScrollPane();
         txtPosNote = new javax.swing.JTextArea();
         btnPrintPosList = new javax.swing.JButton();
-        jPanel7 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jPanel21 = new javax.swing.JPanel();
@@ -1484,19 +1483,6 @@ public class Admin extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Quản lý chức vụ", jPanel4);
 
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1079, Short.MAX_VALUE)
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 567, Short.MAX_VALUE)
-        );
-
-        jTabbedPane1.addTab("Quản lý lịch làm việc", jPanel7);
-
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -1978,266 +1964,6 @@ public class Admin extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton7ActionPerformed
 
-    private void btnAddEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddEmployeeActionPerformed
-        if (txtMaNV.getText().isEmpty() || txtHoTen.getText().isEmpty() || txtHomeTown.getText().isEmpty() || txtGender.getText().isEmpty() || txtEmail.getText().isEmpty() || txtContactAddress.getText().isEmpty()
-                || hireDate.getText().isEmpty() || salary.getText().isEmpty() || !checkDepartmentIsSelected() || txtPosition.getText().isEmpty() || txtPhoneNum.getText().isEmpty()
-                || !checkBirthdayIsSelected() || !checkImg) {
-            JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin!");
-        } else {
-            if (isCheckEmpID(Integer.parseInt(txtMaNV.getText()))) {
-                JOptionPane.showMessageDialog(null, "Mã nhân viên này đã tồn tại. Vui lòng nhập mã nhân viên khác");
-            } else {
-                addEmployeeList();
-                updateEmployeeTable(employeesList);
-                clearEmployeeTextFields();
-                JOptionPane.showMessageDialog(null, "Thêm thành công!!");
-            }
-        }
-    }//GEN-LAST:event_btnAddEmployeeActionPerformed
-
-    private void btnUploadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUploadActionPerformed
-        JFileChooser fileChooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Image files", "jpg", "jpeg", "png", "gif");
-        fileChooser.setFileFilter(filter);
-        int returnValue = fileChooser.showOpenDialog(null);
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
-            ImageIcon imageIcon = new ImageIcon(selectedFile.getAbsolutePath());
-            Image image = imageIcon.getImage().getScaledInstance(labelImg.getWidth(), labelImg.getHeight(), Image.SCALE_SMOOTH);
-            labelImg.setIcon(new ImageIcon(image));
-            try {
-                saveImage(selectedFile);
-                checkImg = true;
-            } catch (IOException ex) {
-                Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        } else {
-            checkImg = false;
-        }
-    }//GEN-LAST:event_btnUploadActionPerformed
-
-    private void btnUpdateEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateEmployeeActionPerformed
-        srIndex = tableEmployee.getSelectedRow();
-        if (srIndex != -1) {
-            int id = Integer.parseInt(txtMaNV.getText());
-            for (Employee e : employeesList) {
-                if (e.getEmployeeID() == id) {
-                    e.setEmployeeName(txtHoTen.getText());
-                    e.setDateOfBirth(birthDay.getSelectedItem() + "/" + birthMonth.getSelectedItem() + "/" + birthYear.getSelectedItem());
-                    e.setGender(txtGender.getText());
-                    e.setHometown(txtHomeTown.getText());
-                    e.setPhoneNumber(txtPhoneNum.getText());
-                    e.setEmail(txtEmail.getText());
-                    e.setAddress(txtContactAddress.getText());
-                    e.setHireDate(hireDate.getText());
-                    e.setSalary(Double.parseDouble(salary.getText()));
-                    e.setDepartment(CbxDepartmentFromET.getSelectedItem().toString());
-                    e.setPosition(txtPosition.getText());
-                    if (checkImg) {
-                        e.setImagePath("ImgEmployee\\" + getFileName);
-                    }
-                    updateEmployeeTable(employeesList);
-                    clearEmployeeTextFields();
-                    txtMaNV.setEditable(true);
-                    JOptionPane.showMessageDialog(null, "Đã sửa thông tin nhân viên!!");
-                    break;
-                }
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Chưa chọn bản ghi!");
-        }
-    }//GEN-LAST:event_btnUpdateEmployeeActionPerformed
-
-    private void btnDeleteEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteEmployeeActionPerformed
-        removeEmployeeFromTable();
-    }//GEN-LAST:event_btnDeleteEmployeeActionPerformed
-
-    private void btnSaveEmployeeDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveEmployeeDataActionPerformed
-        int op = JOptionPane.showConfirmDialog(null, "Bạn có muốn lưu dữ liệu?");
-        if (op == JOptionPane.YES_OPTION) {
-            writeEmployeeListToFile();
-        } else {
-            return;
-        }
-    }//GEN-LAST:event_btnSaveEmployeeDataActionPerformed
-
-    private void btnAddDepartmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDepartmentActionPerformed
-        if (txtDpmID.getText().isEmpty() || txtDepartmentName.getText().isEmpty() || txtDpmAddress.getText().isEmpty() || txtDpmPhoneNumber.getText().isEmpty() || txtDpmNote.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin!");
-        } else {
-            if (isCheckDepartID(Integer.parseInt(txtDpmID.getText()))) {
-                JOptionPane.showMessageDialog(null, "Mã phòng ban này đã tồn tại. Vui lòng nhập mã khác");
-            } else {
-                addDepartmentList();
-                insertCbxDepartmentFromEmployeeTable();
-                updateDepartmentTable(departmentList);
-                clearDepartmentTextfields();
-                JOptionPane.showMessageDialog(null, "Thêm thành công!!");
-            }
-        }
-    }//GEN-LAST:event_btnAddDepartmentActionPerformed
-
-    private void btnDeleteDpmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteDpmActionPerformed
-        removeDepartment();
-        insertCbxDepartmentFromEmployeeTable();
-    }//GEN-LAST:event_btnDeleteDpmActionPerformed
-
-    private void btnSaveDepartmentDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveDepartmentDataActionPerformed
-        int op = JOptionPane.showConfirmDialog(null, "Bạn có muốn lưu dữ liệu?");
-        if (op == JOptionPane.YES_OPTION) {
-            writeDepartmentToFile();
-        } else {
-            return;
-        }
-    }//GEN-LAST:event_btnSaveDepartmentDataActionPerformed
-
-    private void btnPrintEmpListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintEmpListActionPerformed
-        try {
-            MessageFormat header = new MessageFormat("Danh sách nhân viên");
-            MessageFormat footer = new MessageFormat("Page{0,number, integer}");
-            tableEmployee.print(JTable.PrintMode.FIT_WIDTH, header, footer);
-        } catch (Exception e) {
-            Logger.getLogger(Employee.class.getName()).log(Level.SEVERE, null, e);
-        }
-    }//GEN-LAST:event_btnPrintEmpListActionPerformed
-
-    private void btnPrintDpmListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintDpmListActionPerformed
-        try {
-            MessageFormat header = new MessageFormat("Thông tin về phòng ban");
-            MessageFormat footer = new MessageFormat("Page{0,number, integer}");
-            tableDepartment.print(JTable.PrintMode.FIT_WIDTH, header, footer);
-        } catch (Exception e) {
-            Logger.getLogger(Department.class.getName()).log(Level.SEVERE, null, e);
-        }
-    }//GEN-LAST:event_btnPrintDpmListActionPerformed
-
-    private void btnPrintPosListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintPosListActionPerformed
-        try {
-            MessageFormat header = new MessageFormat("Thông tin về chức vụ");
-            MessageFormat footer = new MessageFormat("Page{0,number, integer}");
-            tablePosition.print(JTable.PrintMode.FIT_WIDTH, header, footer);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_btnPrintPosListActionPerformed
-
-    private void btnAddPositionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPositionActionPerformed
-        if (PosIsEmpty()) {
-            JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin!!");
-        } else {
-            if (isCheckPosID(Integer.parseInt(txtPosID.getText()))) {
-                JOptionPane.showMessageDialog(null, "Mã chức vụ này đã tồn tại. Vui lòng nhập mã khác");
-            } else {
-                addPositionList();
-                updatePositionTable(positionList);
-                clearPositionTextFields();
-                JOptionPane.showMessageDialog(null, "Thêm thành công!!");
-            }
-        }
-    }//GEN-LAST:event_btnAddPositionActionPerformed
-
-    private void btnSavePosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSavePosActionPerformed
-        int op = JOptionPane.showConfirmDialog(null, "Bạn có muốn lưu dữ liệu không?");
-        if (op == JOptionPane.YES_OPTION) {
-            writePositiontToFile();
-            JOptionPane.showMessageDialog(null, "Lưu thành công!!");
-        }
-    }//GEN-LAST:event_btnSavePosActionPerformed
-
-    private void btnDeletePositionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletePositionActionPerformed
-        removePositionFromTable();
-    }//GEN-LAST:event_btnDeletePositionActionPerformed
-
-    private void btnSearchEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchEmpActionPerformed
-        if (txtFindEmployee.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Vui lòng nhập tên cần tìm!!");
-        } else {
-            List<Employee> findList = new ArrayList<>();
-            String searchText = txtFindEmployee.getText().trim().toLowerCase();
-            for (Employee e : employeesList) {
-                if (e.getEmployeeName().toLowerCase().contains(searchText)) {
-                    findList.add(e);
-                }
-            }
-            updateEmployeeTable(findList);
-        }
-    }//GEN-LAST:event_btnSearchEmpActionPerformed
-
-    private void btnSearchDpmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchDpmActionPerformed
-        if (txtFindDepartment.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Vui lòng nhập tên cần tìm!!");
-        } else {
-            List<Department> findList = new ArrayList<>();
-            String searchText = txtFindDepartment.getText().trim().toLowerCase();
-            for (Department d : departmentList) {
-                if (d.getTenPhongBan().toLowerCase().contains(searchText)) {
-                    findList.add(d);
-                }
-            }
-            updateDepartmentTable(findList);
-        }
-    }//GEN-LAST:event_btnSearchDpmActionPerformed
-
-    private void btnSearchPosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchPosActionPerformed
-        if (txtFindPosition.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Vui lòng nhập tên cần tìm!!");
-        } else {
-            List<Position> findList = new ArrayList<>();
-            String searchText = txtFindPosition.getText().trim().toLowerCase();
-            for (Position e : positionList) {
-                if (e.getTenChucVu().toLowerCase().contains(searchText)) {
-                    findList.add(e);
-                }
-            }
-            updatePositionTable(findList);
-        }
-    }//GEN-LAST:event_btnSearchPosActionPerformed
-
-    private void btnUpdateDepartmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateDepartmentActionPerformed
-        srIndex = tableDepartment.getSelectedRow();
-        if (srIndex != -1) {
-            int id = Integer.parseInt(txtDpmID.getText());
-            for (Department d : departmentList) {
-                if (d.getIdPhongBan() == id) {
-                    d.setTenPhongBan(txtDepartmentName.getText());
-                    d.setDiaChi(txtDpmAddress.getText());
-                    d.setSdtPhong(txtDpmPhoneNumber.getText());
-                    d.setGhiChu(txtDpmNote.getText());
-
-                    updateDepartmentTable(departmentList);
-                    clearDepartmentTextfields();
-                    txtDpmID.setEditable(true);
-                    JOptionPane.showMessageDialog(null, "Đã sửa thông tin phòng ban!!");
-                    break;
-                }
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Chưa chọn bản ghi!");
-        }
-    }//GEN-LAST:event_btnUpdateDepartmentActionPerformed
-
-    private void btnUpdatePositionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdatePositionActionPerformed
-        srIndex = tablePosition.getSelectedRow();
-        if (srIndex != -1) {
-            int id = Integer.parseInt(txtPosID.getText());
-            for (Position p : positionList) {
-                if (p.getIdChucVu() == id) {
-                    p.setTenChucVu(txtPositionName.getText());
-                    p.setGhiChu(txtPosNote.getText());
-
-                    updatePositionTable(positionList);
-                    clearPositionTextFields();
-                    txtPosID.setEditable(true);
-                    JOptionPane.showMessageDialog(null, "Đã sửa thông tin chức vụ!!");
-                    break;
-                }
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Chưa chọn bản ghi!");
-        }
-    }//GEN-LAST:event_btnUpdatePositionActionPerformed
-
     private void btnAccoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccoutActionPerformed
         srIndex = tblAccountDivide.getSelectedRow();
         int type = jComboBox2.getSelectedItem().equals("admin") ? 0 : 1;
@@ -2263,6 +1989,228 @@ public class Admin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Chưa chọn bản ghi!");
         }
     }//GEN-LAST:event_btnAccoutActionPerformed
+
+    private void tblAccountDivideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAccountDivideMouseClicked
+        model = (DefaultTableModel) tblAccountDivide.getModel();
+        srIndex = tblAccountDivide.getSelectedRow();
+        jTextField1.setText(model.getValueAt(srIndex, 0).toString());
+        String type = model.getValueAt(srIndex, 2).toString();
+        int accType = Integer.parseInt(type);
+        if (accType == 0) {
+            jComboBox2.setSelectedItem("admin");
+        } else {
+            jComboBox2.setSelectedItem("employee");
+        }
+    }//GEN-LAST:event_tblAccountDivideMouseClicked
+
+    private void btnPrintPosListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintPosListActionPerformed
+        try {
+            MessageFormat header = new MessageFormat("Thông tin về chức vụ");
+            MessageFormat footer = new MessageFormat("Page{0,number, integer}");
+            tablePosition.print(JTable.PrintMode.FIT_WIDTH, header, footer);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnPrintPosListActionPerformed
+
+    private void tablePositionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePositionMouseClicked
+        model = (DefaultTableModel) tablePosition.getModel();
+        srIndex = tablePosition.getSelectedRow();
+        txtPosID.setText(model.getValueAt(srIndex, 0).toString());
+        txtPosID.setEditable(false);
+        txtPositionName.setText(model.getValueAt(srIndex, 1).toString());
+        txtPosNote.setText(model.getValueAt(srIndex, 2).toString());
+    }//GEN-LAST:event_tablePositionMouseClicked
+
+    private void btnDeletePositionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletePositionActionPerformed
+        removePositionFromTable();
+    }//GEN-LAST:event_btnDeletePositionActionPerformed
+
+    private void btnUpdatePositionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdatePositionActionPerformed
+        srIndex = tablePosition.getSelectedRow();
+        if (srIndex != -1) {
+            int id = Integer.parseInt(txtPosID.getText());
+            for (Position p : positionList) {
+                if (p.getIdChucVu() == id) {
+                    p.setTenChucVu(txtPositionName.getText());
+                    p.setGhiChu(txtPosNote.getText());
+
+                    updatePositionTable(positionList);
+                    clearPositionTextFields();
+                    txtPosID.setEditable(true);
+                    JOptionPane.showMessageDialog(null, "Đã sửa thông tin chức vụ!!");
+                    break;
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Chưa chọn bản ghi!");
+        }
+    }//GEN-LAST:event_btnUpdatePositionActionPerformed
+
+    private void btnSavePosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSavePosActionPerformed
+        int op = JOptionPane.showConfirmDialog(null, "Bạn có muốn lưu dữ liệu không?");
+        if (op == JOptionPane.YES_OPTION) {
+            writePositiontToFile();
+            JOptionPane.showMessageDialog(null, "Lưu thành công!!");
+        }
+    }//GEN-LAST:event_btnSavePosActionPerformed
+
+    private void btnAddPositionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPositionActionPerformed
+        if (PosIsEmpty()) {
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin!!");
+        } else {
+            if (isCheckPosID(Integer.parseInt(txtPosID.getText()))) {
+                JOptionPane.showMessageDialog(null, "Mã chức vụ này đã tồn tại. Vui lòng nhập mã khác");
+            } else {
+                addPositionList();
+                updatePositionTable(positionList);
+                clearPositionTextFields();
+                JOptionPane.showMessageDialog(null, "Thêm thành công!!");
+            }
+        }
+    }//GEN-LAST:event_btnAddPositionActionPerformed
+
+    private void btnSearchPosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchPosActionPerformed
+        if (txtFindPosition.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập tên cần tìm!!");
+        } else {
+            List<Position> findList = new ArrayList<>();
+            String searchText = txtFindPosition.getText().trim().toLowerCase();
+            for (Position e : positionList) {
+                if (e.getTenChucVu().toLowerCase().contains(searchText)) {
+                    findList.add(e);
+                }
+            }
+            updatePositionTable(findList);
+        }
+    }//GEN-LAST:event_btnSearchPosActionPerformed
+
+    private void btnPrintDpmListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintDpmListActionPerformed
+        try {
+            MessageFormat header = new MessageFormat("Thông tin về phòng ban");
+            MessageFormat footer = new MessageFormat("Page{0,number, integer}");
+            tableDepartment.print(JTable.PrintMode.FIT_WIDTH, header, footer);
+        } catch (Exception e) {
+            Logger.getLogger(Department.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }//GEN-LAST:event_btnPrintDpmListActionPerformed
+
+    private void tableDepartmentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableDepartmentMouseClicked
+        model = (DefaultTableModel) tableDepartment.getModel();
+        srIndex = tableDepartment.getSelectedRow();
+        txtDpmID.setText(model.getValueAt(srIndex, 0).toString());
+        txtDpmID.setEditable(false);
+        txtDepartmentName.setText(model.getValueAt(srIndex, 1).toString());
+        txtDpmAddress.setText(model.getValueAt(srIndex, 2).toString());
+        txtDpmPhoneNumber.setText(model.getValueAt(srIndex, 3).toString());
+        txtDpmNote.setText(model.getValueAt(srIndex, 5).toString());
+    }//GEN-LAST:event_tableDepartmentMouseClicked
+
+    private void btnDeleteDpmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteDpmActionPerformed
+        removeDepartment();
+        insertCbxDepartmentFromEmployeeTable();
+    }//GEN-LAST:event_btnDeleteDpmActionPerformed
+
+    private void btnUpdateDepartmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateDepartmentActionPerformed
+        srIndex = tableDepartment.getSelectedRow();
+        if (srIndex != -1) {
+            int id = Integer.parseInt(txtDpmID.getText());
+            for (Department d : departmentList) {
+                if (d.getIdPhongBan() == id) {
+                    d.setTenPhongBan(txtDepartmentName.getText());
+                    d.setDiaChi(txtDpmAddress.getText());
+                    d.setSdtPhong(txtDpmPhoneNumber.getText());
+                    d.setGhiChu(txtDpmNote.getText());
+
+                    updateDepartmentTable(departmentList);
+                    clearDepartmentTextfields();
+                    txtDpmID.setEditable(true);
+                    JOptionPane.showMessageDialog(null, "Đã sửa thông tin phòng ban!!");
+                    break;
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Chưa chọn bản ghi!");
+        }
+    }//GEN-LAST:event_btnUpdateDepartmentActionPerformed
+
+    private void btnSaveDepartmentDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveDepartmentDataActionPerformed
+        int op = JOptionPane.showConfirmDialog(null, "Bạn có muốn lưu dữ liệu?");
+        if (op == JOptionPane.YES_OPTION) {
+            writeDepartmentToFile();
+        } else {
+            return;
+        }
+    }//GEN-LAST:event_btnSaveDepartmentDataActionPerformed
+
+    private void btnAddDepartmentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDepartmentActionPerformed
+        if (txtDpmID.getText().isEmpty() || txtDepartmentName.getText().isEmpty() || txtDpmAddress.getText().isEmpty() || txtDpmPhoneNumber.getText().isEmpty() || txtDpmNote.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin!");
+        } else {
+            if (isCheckDepartID(Integer.parseInt(txtDpmID.getText()))) {
+                JOptionPane.showMessageDialog(null, "Mã phòng ban này đã tồn tại. Vui lòng nhập mã khác");
+            } else {
+                addDepartmentList();
+                insertCbxDepartmentFromEmployeeTable();
+                updateDepartmentTable(departmentList);
+                clearDepartmentTextfields();
+                JOptionPane.showMessageDialog(null, "Thêm thành công!!");
+            }
+        }
+    }//GEN-LAST:event_btnAddDepartmentActionPerformed
+
+    private void btnSearchDpmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchDpmActionPerformed
+        if (txtFindDepartment.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập tên cần tìm!!");
+        } else {
+            List<Department> findList = new ArrayList<>();
+            String searchText = txtFindDepartment.getText().trim().toLowerCase();
+            for (Department d : departmentList) {
+                if (d.getTenPhongBan().toLowerCase().contains(searchText)) {
+                    findList.add(d);
+                }
+            }
+            updateDepartmentTable(findList);
+        }
+    }//GEN-LAST:event_btnSearchDpmActionPerformed
+
+    private void btnPrintEmpListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintEmpListActionPerformed
+        try {
+            MessageFormat header = new MessageFormat("Danh sách nhân viên");
+            MessageFormat footer = new MessageFormat("Page{0,number, integer}");
+            tableEmployee.print(JTable.PrintMode.FIT_WIDTH, header, footer);
+        } catch (Exception e) {
+            Logger.getLogger(Employee.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }//GEN-LAST:event_btnPrintEmpListActionPerformed
+
+    private void btnUploadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUploadActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Image files", "jpg", "jpeg", "png", "gif");
+        fileChooser.setFileFilter(filter);
+        int returnValue = fileChooser.showOpenDialog(null);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            ImageIcon imageIcon = new ImageIcon(selectedFile.getAbsolutePath());
+            Image image = imageIcon.getImage().getScaledInstance(labelImg.getWidth(), labelImg.getHeight(), Image.SCALE_SMOOTH);
+            labelImg.setIcon(new ImageIcon(image));
+            try {
+                saveImage(selectedFile);
+                checkImg = true;
+            } catch (IOException ex) {
+                Logger.getLogger(Admin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        } else {
+            checkImg = false;
+        }
+    }//GEN-LAST:event_btnUploadActionPerformed
+
+    private void txtPhoneNumKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPhoneNumKeyTyped
+        if (!Character.isDigit(evt.getKeyChar())) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtPhoneNumKeyTyped
 
     private void tableEmployeeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableEmployeeMouseClicked
         model = (DefaultTableModel) tableEmployee.getModel();
@@ -2302,44 +2250,82 @@ public class Admin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tableEmployeeMouseClicked
 
-    private void tableDepartmentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableDepartmentMouseClicked
-        model = (DefaultTableModel) tableDepartment.getModel();
-        srIndex = tableDepartment.getSelectedRow();
-        txtDpmID.setText(model.getValueAt(srIndex, 0).toString());
-        txtDpmID.setEditable(false);
-        txtDepartmentName.setText(model.getValueAt(srIndex, 1).toString());
-        txtDpmAddress.setText(model.getValueAt(srIndex, 2).toString());
-        txtDpmPhoneNumber.setText(model.getValueAt(srIndex, 3).toString());
-        txtDpmNote.setText(model.getValueAt(srIndex, 5).toString());
-    }//GEN-LAST:event_tableDepartmentMouseClicked
+    private void btnDeleteEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteEmployeeActionPerformed
+        removeEmployeeFromTable();
+    }//GEN-LAST:event_btnDeleteEmployeeActionPerformed
 
-    private void tablePositionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablePositionMouseClicked
-        model = (DefaultTableModel) tablePosition.getModel();
-        srIndex = tablePosition.getSelectedRow();
-        txtPosID.setText(model.getValueAt(srIndex, 0).toString());
-        txtPosID.setEditable(false);
-        txtPositionName.setText(model.getValueAt(srIndex, 1).toString());
-        txtPosNote.setText(model.getValueAt(srIndex, 2).toString());
-    }//GEN-LAST:event_tablePositionMouseClicked
+    private void btnUpdateEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateEmployeeActionPerformed
+        srIndex = tableEmployee.getSelectedRow();
+        if (srIndex != -1) {
+            int id = Integer.parseInt(txtMaNV.getText());
+            for (Employee e : employeesList) {
+                if (e.getEmployeeID() == id) {
+                    e.setEmployeeName(txtHoTen.getText());
+                    e.setDateOfBirth(birthDay.getSelectedItem() + "/" + birthMonth.getSelectedItem() + "/" + birthYear.getSelectedItem());
+                    e.setGender(txtGender.getText());
+                    e.setHometown(txtHomeTown.getText());
+                    e.setPhoneNumber(txtPhoneNum.getText());
+                    e.setEmail(txtEmail.getText());
+                    e.setAddress(txtContactAddress.getText());
+                    e.setHireDate(hireDate.getText());
+                    e.setSalary(Double.parseDouble(salary.getText()));
+                    e.setDepartment(CbxDepartmentFromET.getSelectedItem().toString());
+                    e.setPosition(txtPosition.getText());
+                    if (checkImg) {
+                        e.setImagePath("ImgEmployee\\" + getFileName);
+                        }
+                        updateEmployeeTable(employeesList);
+                        clearEmployeeTextFields();
+                        txtMaNV.setEditable(true);
+                        JOptionPane.showMessageDialog(null, "Đã sửa thông tin nhân viên!!");
+                        break;
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Chưa chọn bản ghi!");
+            }
+    }//GEN-LAST:event_btnUpdateEmployeeActionPerformed
 
-    private void txtPhoneNumKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPhoneNumKeyTyped
-        if (!Character.isDigit(evt.getKeyChar())) {
-            evt.consume();
-        }
-    }//GEN-LAST:event_txtPhoneNumKeyTyped
-
-    private void tblAccountDivideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAccountDivideMouseClicked
-        model = (DefaultTableModel) tblAccountDivide.getModel();
-        srIndex = tblAccountDivide.getSelectedRow();
-        jTextField1.setText(model.getValueAt(srIndex, 0).toString());
-        String type = model.getValueAt(srIndex, 2).toString();
-        int accType = Integer.parseInt(type);
-        if (accType == 0) {
-            jComboBox2.setSelectedItem("admin");
+    private void btnSaveEmployeeDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveEmployeeDataActionPerformed
+        int op = JOptionPane.showConfirmDialog(null, "Bạn có muốn lưu dữ liệu?");
+        if (op == JOptionPane.YES_OPTION) {
+            writeEmployeeListToFile();
         } else {
-            jComboBox2.setSelectedItem("employee");
+            return;
         }
-    }//GEN-LAST:event_tblAccountDivideMouseClicked
+    }//GEN-LAST:event_btnSaveEmployeeDataActionPerformed
+
+    private void btnAddEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddEmployeeActionPerformed
+        if (txtMaNV.getText().isEmpty() || txtHoTen.getText().isEmpty() || txtHomeTown.getText().isEmpty() || txtGender.getText().isEmpty() || txtEmail.getText().isEmpty() || txtContactAddress.getText().isEmpty()
+            || hireDate.getText().isEmpty() || salary.getText().isEmpty() || !checkDepartmentIsSelected() || txtPosition.getText().isEmpty() || txtPhoneNum.getText().isEmpty()
+            || !checkBirthdayIsSelected() || !checkImg) {
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin!");
+        } else {
+            if (isCheckEmpID(Integer.parseInt(txtMaNV.getText()))) {
+                JOptionPane.showMessageDialog(null, "Mã nhân viên này đã tồn tại. Vui lòng nhập mã nhân viên khác");
+            } else {
+                addEmployeeList();
+                updateEmployeeTable(employeesList);
+                clearEmployeeTextFields();
+                JOptionPane.showMessageDialog(null, "Thêm thành công!!");
+            }
+        }
+    }//GEN-LAST:event_btnAddEmployeeActionPerformed
+
+    private void btnSearchEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchEmpActionPerformed
+        if (txtFindEmployee.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập tên cần tìm!!");
+        } else {
+            List<Employee> findList = new ArrayList<>();
+            String searchText = txtFindEmployee.getText().trim().toLowerCase();
+            for (Employee e : employeesList) {
+                if (e.getEmployeeName().toLowerCase().contains(searchText)) {
+                    findList.add(e);
+                }
+            }
+            updateEmployeeTable(findList);
+        }
+    }//GEN-LAST:event_btnSearchEmpActionPerformed
 
     /**
      * @param args the command line arguments
@@ -2467,7 +2453,6 @@ public class Admin extends javax.swing.JFrame {
     javax.swing.JPanel jPanel4;
     javax.swing.JPanel jPanel5;
     javax.swing.JPanel jPanel6;
-    javax.swing.JPanel jPanel7;
     javax.swing.JPanel jPanel8;
     javax.swing.JPanel jPanel9;
     javax.swing.JScrollPane jScrollPane1;
