@@ -53,12 +53,14 @@ import javax.swing.table.DefaultTableModel;
 
 public class Admin extends javax.swing.JFrame {
 
+    private static final String EMAIL_PATTERN = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+    private static final String DATE_PATTERN = "^\\d{2}/\\d{2}/\\d{4}$";
     private boolean checkImg;
     private String getFileName;
     private List<Employee> employeesList = new ArrayList<>();
     private List<Department> departmentList = new ArrayList<>();
     private List<Position> positionList = new ArrayList<>();
-     private List<ESalary> esList = new ArrayList<>();
+    private List<ESalary> esList = new ArrayList<>();
     private List<Account> accountList = new ArrayList<>();
     private DefaultTableModel employeeModel;
     private DefaultTableModel departmentModel;
@@ -140,34 +142,36 @@ public class Admin extends javax.swing.JFrame {
         });
         insertCbxDepartmentFromEmployeeTable();
     }
-    private void initESalary(){
-        try{
+
+    private void initESalary() {
+        try {
             BufferedReader reader = new BufferedReader(new FileReader("data\\salary.txt"));
             String line;
-            while((line = reader.readLine()) != null){
+            while ((line = reader.readLine()) != null) {
                 List<LocalDate> ldList = new ArrayList<>();
                 String[] parts = line.split("-");
-                for(String s : parts){
+                for (String s : parts) {
                     System.out.println(s);
                 }
                 String[] wDates = parts[2].split(";");
-                for(int i = 0; i < wDates.length; i++){
+                for (int i = 0; i < wDates.length; i++) {
                     String[] date = wDates[i].split(",");
                     ldList.add(LocalDate.of(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2])));
                     System.out.println(wDates[i]);
                 }
-                
+
                 esList.add(new ESalary(Integer.parseInt(parts[0]), parts[1], ldList));
             }
             reader.close();
-        }catch (IOException ex) {
+        } catch (IOException ex) {
             System.out.println("Loi");
         }
     }
-    private void upload(){
+
+    private void upload() {
         int sr = tableES.getSelectedRow();
         List<LocalDate> x = new ArrayList<>();
-        if(sr != -1){
+        if (sr != -1) {
             int id = Integer.parseInt(tableES.getValueAt(sr, 0).toString());
             for (ESalary e : esList) {
                 if (e.getId() == id) {
@@ -177,6 +181,7 @@ public class Admin extends javax.swing.JFrame {
         }
         calendarPanel1.setWorkingDays(x);
     }
+
     private void updateSETable(List<ESalary> x) { // Cập nhật bảng sau khi chỉnh sửa
         SEModel = (DefaultTableModel) tableES.getModel();
         SEModel.setRowCount(0);
@@ -185,6 +190,7 @@ public class Admin extends javax.swing.JFrame {
             SEModel.addRow(dataRow);
         }
     }
+
     //EMPLOYEE====================================================================================================================
     private void initEmployeeList() { //Khởi tạo list từ file
         try {
@@ -1246,6 +1252,11 @@ public class Admin extends javax.swing.JFrame {
         jLabel18.setText("Số điện thoại:");
 
         txtDpmPhoneNumber.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        txtDpmPhoneNumber.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDpmPhoneNumberKeyTyped(evt);
+            }
+        });
 
         jLabel19.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         jLabel19.setText("Địa chỉ:");
@@ -2384,7 +2395,7 @@ public class Admin extends javax.swing.JFrame {
             for (Employee e : employeesList) {
                 if (e.getEmployeeID() == id) {
                     e.setEmployeeName(txtHoTen.getText());
-                    e.setDateOfBirth(birthDay.getSelectedItem() + "/" + birthMonth.getSelectedItem() + "/" 
+                    e.setDateOfBirth(birthDay.getSelectedItem() + "/" + birthMonth.getSelectedItem() + "/"
                             + birthYear.getSelectedItem());
                     e.setGender(txtGender.getText());
                     e.setHometown(txtHomeTown.getText());
@@ -2420,10 +2431,10 @@ public class Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSaveEmployeeDataActionPerformed
 
     private void btnAddEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddEmployeeActionPerformed
-        if (txtMaNV.getText().isEmpty() || txtHoTen.getText().isEmpty() 
-                || txtHomeTown.getText().isEmpty() || txtGender.getText().isEmpty() 
+        if (txtMaNV.getText().isEmpty() || txtHoTen.getText().isEmpty()
+                || txtHomeTown.getText().isEmpty() || txtGender.getText().isEmpty()
                 || txtEmail.getText().isEmpty() || txtContactAddress.getText().isEmpty()
-                || hireDate.getText().isEmpty() || salary.getText().isEmpty() || !checkDepartmentIsSelected() 
+                || hireDate.getText().isEmpty() || salary.getText().isEmpty() || !checkDepartmentIsSelected()
                 || txtPosition.getText().isEmpty() || txtPhoneNum.getText().isEmpty()
                 || !checkBirthdayIsSelected() || !checkImg) {
             JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin!");
@@ -2459,6 +2470,37 @@ public class Admin extends javax.swing.JFrame {
         removeAccount();
         writeAccountToFile();
     }//GEN-LAST:event_btnDelAccActionPerformed
+
+    private void txtDpmPhoneNumberKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDpmPhoneNumberKeyTyped
+        if (!Character.isDigit(evt.getKeyChar())) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtDpmPhoneNumberKeyTyped
+
+    private boolean checkPhoneNumber() {
+        if (txtPhoneNum.getText().trim().length() < 10 || txtPhoneNum.getText().trim().length() > 12) {
+            return false;
+        }
+        if (txtDpmPhoneNumber.getText().trim().length() < 10 || txtDpmPhoneNumber.getText().trim().length() > 12) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean checkEmail() {
+        if (!txtEmail.getText().trim().matches(EMAIL_PATTERN)) {
+            return false;
+        }
+        return true;
+    }
+    
+    private boolean checkHireDate(){
+        if(hireDate.getText().trim().matches(DATE_PATTERN)){
+            return false;
+        }
+        return true;
+    }
 
     /**
      * @param args the command line arguments
