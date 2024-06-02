@@ -81,6 +81,10 @@ public class CalendarPanel extends JPanel {
                        
                         dayButton.setBackground(Color.red);
                     }
+                    else if(d.getStatus().startsWith("Trễ")){
+                        dayButton = new Cell(String.valueOf(day) + "\n" + d.getStatus());
+                        dayButton.setBackground(Color.yellow);
+                    }
                     else if(d.getStatus().equals("0")){
                         dayButton.setBackground(Color.green);
                     }
