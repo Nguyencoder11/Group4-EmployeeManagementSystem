@@ -3,12 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/whyia/Desktop/Group4-EmployeeManagementSystem/src/JCalendar/CalendarPanel.java</file>
             <file>file:/C:/Users/whyia/Desktop/Group4-EmployeeManagementSystem/src/JCalendar/Cell.java</file>
             <file>file:/C:/Users/whyia/Desktop/Group4-EmployeeManagementSystem/src/Model/Attendance.java</file>
             <file>file:/C:/Users/whyia/Desktop/Group4-EmployeeManagementSystem/src/Admin/Admin.java</file>
             <file>file:/C:/Users/whyia/Desktop/Group4-EmployeeManagementSystem/src/Model/DayStatus.java</file>
             <file>file:/C:/Users/whyia/Desktop/Group4-EmployeeManagementSystem/src/Model/ESalary.java</file>
+=======
+            <file>file:/E:/Group4-EmployeeManagementSystem/src/Admin/Admin.java</file>
+>>>>>>> 6a147aafda759b8439850d404e0cffb7904713c6
         </group>
     </open-files>
 </project-private>

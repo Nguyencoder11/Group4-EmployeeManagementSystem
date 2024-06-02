@@ -1246,6 +1246,9 @@
                           <Font name="Segoe UI" size="13" style="0"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtDpmPhoneNumberKeyTyped"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel19">
                       <Properties>
